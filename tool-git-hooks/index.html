@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="最近发现了githooks这个宝藏，前端对hook应该都不陌生，就是钩子。githooks就是在特定动作发生时触发自定义脚本。很多前端项目都会采用Husky在代码提交前进行Lint校验和commit提交校验。想起来曾经写过《常规eslint配置》和《git commit辅助工具》，文章提到的方案只能靠开发自觉遵守，但是有了这个githooks就能用一些相对比较强硬的手段。当然，想要更加强硬的话甚至">
+<meta property="og:type" content="article">
+<meta property="og:title" content="githooks">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-git-hooks/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="最近发现了githooks这个宝藏，前端对hook应该都不陌生，就是钩子。githooks就是在特定动作发生时触发自定义脚本。很多前端项目都会采用Husky在代码提交前进行Lint校验和commit提交校验。想起来曾经写过《常规eslint配置》和《git commit辅助工具》，文章提到的方案只能靠开发自觉遵守，但是有了这个githooks就能用一些相对比较强硬的手段。当然，想要更加强硬的话甚至">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-21T07:21:40.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.816Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-git-hooks/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-git-hooks/","path":"tool-git-hooks/","title":"githooks"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>githooks | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#githooks%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">githooks分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AFHooks"><span class="nav-number">1.1.</span> <span class="nav-text">客户端Hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">提交工作流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">其他工作流</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AFHooks"><span class="nav-number">1.2.</span> <span class="nav-text">服务器端Hooks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%B0%9D%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">简单尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Husky"><span class="nav-number">3.</span> <span class="nav-text">Husky</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">安装和使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yorkie"><span class="nav-number">4.</span> <span class="nav-text">yorkie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">5.</span> <span class="nav-text">小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E5%B7%A5%E7%A8%8B%E5%8C%96"><span class="nav-number">5.1.</span> <span class="nav-text">辅助工程化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hook%E6%B5%8B%E8%AF%95%E5%92%8C%E7%A6%81%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">hook测试和禁用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NodeJs%E8%84%9A%E6%9C%AC%E6%A0%B7%E4%BE%8B-%E2%80%94%E2%80%94-Husky"><span class="nav-number">5.3.</span> <span class="nav-text">NodeJs脚本样例 —— Husky</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-git-hooks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          githooks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-21 15:21:40" itemprop="dateCreated datePublished" datetime="2022-02-21T15:21:40+08:00">2022-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>最近发现了<a target="_blank" rel="noopener" href="https://git-scm.com/docs/githooks">githooks</a>这个宝藏，前端对hook应该都不陌生，就是钩子。githooks就是在特定动作发生时触发自定义脚本。很多前端项目都会采用Husky在代码提交前进行Lint校验和commit提交校验。想起来曾经写过<a href="/tool-eslint/">《常规eslint配置》</a>和<a href="/tool-git-commit">《git commit辅助工具》</a>，文章提到的方案只能靠开发自觉遵守，但是有了这个githooks就能用一些相对比较强硬的手段。当然，想要更加强硬的话甚至可以把校验放在部署那块。</p>
+<span id="more"></span>
+
+<h2 id="githooks分类"><a href="#githooks分类" class="headerlink" title="githooks分类"></a>githooks分类</h2><p>githooks可分为客户端hooks和服务端hooks。hooks太多了，就挑一些常用的介绍下，其他的看<a target="_blank" rel="noopener" href="https://git-scm.com/docs/githooks">官网</a>。</p>
+<blockquote>
+<p><code>pre-</code>前缀代表即将发生，通常用于检查；<code>post-</code>前缀代表已结束，通常用于通知。</p>
+</blockquote>
+<h3 id="客户端Hooks"><a href="#客户端Hooks" class="headerlink" title="客户端Hooks"></a>客户端Hooks</h3><p>客户端Hooks可分为提交工作流、E-mail工作流和其他工作流。E-mail工作流基本用不到，所以跳过。</p>
+<h4 id="提交工作流"><a href="#提交工作流" class="headerlink" title="提交工作流"></a>提交工作流</h4><p>关于<code>git commit</code>的有四个挂钩，触发顺序为：pre-commit、prepare-commit-msg、commit-msg、post-commit。</p>
+<ul>
+<li><strong>pre-commit</strong>：在填写提交信息和生成提交对象之前执行。可以用来做初步的code review，检查代码是否符合规范、自动化测试等。</li>
+<li><strong>prepare-commit-msg</strong>：提交信息显示之前，默认信息被创建之后调用。可以结合提交模板，为合并提交、压缩提交、修订提交等这类会自动产生默认信息的提交，动态地插入信息。</li>
+<li><strong>commit-msg</strong>：在用户输入提交信息之后调用。可以用来检查提交信息是否符合规范。</li>
+<li><strong>post-commit</strong>：在整个提交过程完成后调用。通常用来提示一些信息。</li>
+</ul>
+<h4 id="其他工作流"><a href="#其他工作流" class="headerlink" title="其他工作流"></a>其他工作流</h4><ul>
+<li><strong>pre-rebase</strong>：在<code>git rebase</code>执行之前调用。可以用来规范rebase操作，建议阅读<code>.git/hooks/pre-rebase.sample</code>中的代码。</li>
+<li><strong>post-checkout</strong>：<code>git checkout</code>执行完成后调用。可以用来清理一些不被git追踪的临时文件。</li>
+<li><strong>post-merge</strong>：<code>git merge</code>执行完成后调用。可以用来恢复Git无法跟踪的工作区数据。</li>
+<li><strong>pre-push</strong>：<code>git push</code>之前调用，可以在推送之前验证对引用的更新操作。</li>
+</ul>
+<h3 id="服务器端Hooks"><a href="#服务器端Hooks" class="headerlink" title="服务器端Hooks"></a>服务器端Hooks</h3><ul>
+<li><strong>pre-receive</strong>：处理来自客户端的推送操作时最先被调用。可以用来阻止对引用进行非快进（non-fast-forward）的更新，或对该推送修改的所有引用和文件进行访问控制。</li>
+<li><strong>update</strong>：在pre-receive之后调用，且与pre-receive类似，区别是它会为推送者更新的每一个分支运行一次。</li>
+<li><strong>post-receive</strong>：在成功推送之后调用。可以用来发邮件、通知持续集成的服务器、更新issues等等。</li>
+</ul>
+<h2 id="简单尝试"><a href="#简单尝试" class="headerlink" title="简单尝试"></a>简单尝试</h2><p>每个git仓库下都有个很核心的<code>.git</code>文件夹，因为<code>.git</code>里的信息比较敏感，所以git不会将它上传到远程仓库，vscode默认也是隐藏的。<code>.git/hooks</code>目录下存储的就是各种hooks，文件名就对应着不同的钩子，在执行特定命令时就会调用这些脚本，其中<code>.sample</code>后缀的就是官网样例。</p>
+<ol>
+<li><p>可以在vscode的设置中修改工作区配置(<code>.vscode/settings.json</code>)，显示出<code>.git/hooks</code>文件夹。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;files.exclude&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;**/.git&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;**/.git/&#123;objects,[!hooks]*&#125;&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>项目根目录新建一个<code>.githooks</code>文件夹，此文件夹下新建<code>post-checkout</code>文件，并写入以下内容：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">curBranch=`git branch | grep <span class="string">&quot;*&quot;</span>`</span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;# 当前分支：<span class="variable">$&#123;curBranch:2&#125;</span> \n# 当前commit：<span class="variable">$&#123;2&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果git版本在2.9以上，可以手动配置githooks所在的目录，在项目根目录下执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config core.hooksPath .githooks</span><br></pre></td></tr></table></figure>
+<p>  如果git版本在2.9以下，可以创建软链指向到<code>.git/hooks</code>：</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find .git/hooks -<span class="built_in">type</span> l -<span class="built_in">exec</span> <span class="built_in">rm</span> &#123;&#125; \; &amp;&amp; find .githooks -<span class="built_in">type</span> f -<span class="built_in">exec</span> <span class="built_in">ln</span> -sf ../../&#123;&#125; .git/hooks/ \;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后设置hook文件的可执行权限进行脚本激活：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x .githooks/post-checkout</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Husky"><a href="#Husky" class="headerlink" title="Husky"></a>Husky</h2><p>Husky（二哈.png）可以自动配置githooks，个人项目里使用Husky会变得更加便利，团队里也可以使用Husky来做hooks共享。webpack、babel、angular、antd等大型开源项目都使用了Husky，还是比较值得信赖的。不放心可以去看下源码，代码很短也不复杂。</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>不同版本Husky工作原理略有不同，其中Husky 6可以作为一个分水岭。所谓用新不用旧嘛，如果老项目里用的还是旧版，可以使用<a target="_blank" rel="noopener" href="https://typicode.github.io/husky/#/?id=migrate-from-v4-to-v7">husky-4-to-7</a>工具快速迁移到新版。</p>
+<ul>
+<li><strong>原理</strong>：旧版是直接修改<code>.git/hooks</code>中的脚本，Husky 6则开始采用git 2.9的特性<code>core.hooksPath</code>来指定githooks所在的目录，同时也解决了一些根本上的问题。</li>
+<li><strong>使用方式</strong>：旧版支持在<code>package.json</code>中通过<code>husky: &#123;hooks: &#123;&quot;pre-commit&quot;: xxx&#125; &#125;</code>的方式来更新脚本，而新版仅支持修改<code>.husky/</code>目录下的脚本文件。</li>
+</ul>
+<p>新版Husky中有<code>npx husky-init</code>这个关键命令，通过它就能大致了解Husky的工作原理，下面以npm为例：</p>
+<ul>
+<li>利用npx临时下载并运行<a target="_blank" rel="noopener" href="https://github.com/typicode/husky-init"><code>husky-init</code></a>这个依赖包。<ul>
+<li>读取<code>package.json</code>文件，在<code>devDependencies</code>中添加<code>husky</code>包，在script中添加<code>&quot;prepare&quot;: &quot;husky install&quot;</code>指令。</li>
+<li>在根目录生成<code>.husky</code>文件夹，也会生成一个<code>pre-commit</code>样例。</li>
+</ul>
+</li>
+<li>再借助<code>husky</code>依赖包的<code>install</code>完成：<ul>
+<li>在根目录的<code>.husky</code>中生成<code>_</code>文件夹，其中有关键的<code>husky.sh</code>文件。</li>
+<li>执行<code>config core.hooksPath .husky</code>（需要git2.9以上），将githooks目录指向<code>.husky</code>。若git版本不够，建议升级，要是实在升不了，安装旧版husky。</li>
+</ul>
+</li>
+</ul>
+<h3 id="安装和使用"><a href="#安装和使用" class="headerlink" title="安装和使用"></a>安装和使用</h3><p>由于Husky的功能与编译无关，遵循<a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli/v7/using-npm/scripts#best-practices">“The only valid use of install or preinstall scripts is for compilation which must be done on the target architecture”</a>，Husky不再支持自动安装，所以还需要做<code>npm install husky</code>以外的事情。</p>
+<p>完整教程请看<a target="_blank" rel="noopener" href="https://typicode.github.io/husky/#/">官方文档</a>，例如关于Monorepo、环境变量、Git-flow等等文档里都写的很清楚。Yarn使用husky稍微有点复杂，不支持<code>prepare</code>，私有仓库公有仓库配置也不同，用Yarn的就直接看<a target="_blank" rel="noopener" href="https://typicode.github.io/husky/#/?id=yarn-2">官网文档</a>吧。Npm使用起来就比较简单，所以下面就只从npm的角度介绍。</p>
+<ol>
+<li><p>首次安装直接运行以下对应的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx husky-init &amp;&amp; npm install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果不想使用步骤一的自动安装，也可以选择手动安装，相当于是拆分了<code>husky-init</code>，只需分步执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install husky --save-dev</span><br><span class="line">npx husky install</span><br><span class="line">npm set-script prepare <span class="string">&quot;husky install&quot;</span></span><br></pre></td></tr></table></figure>
+<p>  其中<code>npm set-script</code>需要npm7以上，如果版本过低，建议升级或自己手动向<code>package.json</code>添加。</p>
+</li>
+<li><p>添加hook：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx husky add .husky/commit-msg <span class="string">&#x27;npx --no-install commitlint --edit &quot;$1&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果不想执行hook，可以利用HUSKY环境变量绕过hook：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HUSKY=0 git push</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>卸载Husky：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall husky &amp;&amp; git config --<span class="built_in">unset</span> core.hooksPath</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="yorkie"><a href="#yorkie" class="headerlink" title="yorkie"></a>yorkie</h2><p><a target="_blank" rel="noopener" href="https://github.com/yyx990803/yorkie">yorkie</a>是尤大fork自husky，并内置到了<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/cli-service.html#git-hook">Vue CLI</a>，能在<code>package.json</code>的<code>gitHooks</code>字段中方便地指定Git hook。<br>yorkie对husky并不兼容，它对monorepo进行了改良，同时也修改了配置字段。但是yorkie最后一次更新是18年🤷🏻‍♀️基本上算是停止维护了。而且它fork的是旧版husky，即原理仍是直接修改<code>.git/hooks</code>中的脚本。这时候就会面临yorkie和husky二选一，因为同时使用会产生冲突，如果yorkie够用，则不需要再安装husky。如果想要新功能或者发现了一些无法解决的问题，可以选择husky。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;gitHooks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;pre-commit&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lint-staged&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;lint-staged&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;*.&#123;js,vue&#125;&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vue-cli-service lint&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h2><ul>
+<li>githooks支持shell、Perl、Ruby、Python等脚本语言，可以选用任意你擅长的，甚至是NodeJs。</li>
+<li>建议阅读<code>.sample</code>后缀的官网样例，里面有hook基本介绍、参数说明和实用代码，非常值得借鉴。</li>
+<li>大多都是使用hooks来辅助团队内的编码规范和commit规范，此外hooks还能做流程规范、自动部署（不太好用）等等。</li>
+<li>如果有使用sourcetree这类工具，hooks可能不会生效，主要是环境变量问题，此时需要在脚本中添加<code>export PATH=/usr/local/bin:$PATH</code>，来临时指定PATH环境变量。</li>
+</ul>
+<h3 id="辅助工程化"><a href="#辅助工程化" class="headerlink" title="辅助工程化"></a>辅助工程化</h3><p>网上教程很多，步骤也挺多，我就只写一下常见的组合吧😝</p>
+<ul>
+<li><strong>代码规范</strong>：<a target="_blank" rel="noopener" href="https://typicode.github.io/husky/">husky</a> + <a target="_blank" rel="noopener" href="https://github.com/okonet/lint-staged">lint-staged</a> + <a target="_blank" rel="noopener" href="http://eslint.cn/">eslint</a> + <a target="_blank" rel="noopener" href="https://prettier.io/">prettier</a></li>
+<li><strong>git commit规范</strong>：<a target="_blank" rel="noopener" href="https://typicode.github.io/husky/">husky</a> + <a target="_blank" rel="noopener" href="https://commitlint.js.org/#/">commitlint</a></li>
+</ul>
+<h3 id="hook测试和禁用"><a href="#hook测试和禁用" class="headerlink" title="hook测试和禁用"></a>hook测试和禁用</h3><p>exit命令一般用于结束脚本，执行成功会返回0，非零退出则表示脚本执行失败。<br>所以，要测试hook可以在脚本末尾添加<code>exit 1</code>来中止git命令。禁用也一样，例如想要禁用rebase，就可以这样创建<code>pre-rebase</code>脚本：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Disallow all rebasing</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;pre-rebase: Rebasing is dangerous. Don&#x27;t do it.&quot;</span></span><br><span class="line"><span class="built_in">exit</span> 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="NodeJs脚本样例-——-Husky"><a href="#NodeJs脚本样例-——-Husky" class="headerlink" title="NodeJs脚本样例 —— Husky"></a>NodeJs脚本样例 —— Husky</h3><p>创建<code>.husky/post-checkout.js</code>文件，写入js代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(process.<span class="property">argv</span>)</span><br></pre></td></tr></table></figure>
+
+<p>创建post-checkout脚本，调用js文件，同时传入参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">. <span class="string">&quot;<span class="subst">$(dirname <span class="string">&quot;<span class="variable">$0</span>&quot;</span>)</span>/_/husky.sh&quot;</span></span><br><span class="line"><span class="comment"># 支持 sourcetree</span></span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/bin:<span class="variable">$PATH</span></span><br><span class="line">node ./.husky/post-checkout.js <span class="variable">$0</span> <span class="variable">$1</span> <span class="variable">$2</span> <span class="variable">$3</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-git-workflow/" rel="prev" title="版本控制漫谈">
+                  <i class="fa fa-chevron-left"></i> 版本控制漫谈
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-hexo-2022/" rel="next" title="2022，新Hexo">
+                  2022，新Hexo <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

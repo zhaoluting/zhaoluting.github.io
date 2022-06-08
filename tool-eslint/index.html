@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="eslint配置过程安装需要依赖的npm包123456&quot;eslint&quot;: &quot;^4.19.1&quot;, &#x2F;&#x2F; 必须&quot;babel-eslint&quot;: &quot;^8.2.4&quot;, &#x2F;&#x2F; 支持babel&quot;eslint-loader&quot;: &quot;^2.0.0&quot;, &#x2F;&#x2F; 使webpack支持eslint&amp;quot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常规eslint配置">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-eslint/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="eslint配置过程安装需要依赖的npm包123456&quot;eslint&quot;: &quot;^4.19.1&quot;, &#x2F;&#x2F; 必须&quot;babel-eslint&quot;: &quot;^8.2.4&quot;, &#x2F;&#x2F; 支持babel&quot;eslint-loader&quot;: &quot;^2.0.0&quot;, &#x2F;&#x2F; 使webpack支持eslint&amp;quot">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-22T08:24:36.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.812Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-eslint/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-eslint/","path":"tool-eslint/","title":"常规eslint配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>常规eslint配置 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#eslint%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">eslint配置过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%9C%80%E8%A6%81%E4%BE%9D%E8%B5%96%E7%9A%84npm%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装需要依赖的npm包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E6%9C%80%E5%A4%96%E5%B1%82%E6%96%B0%E5%BB%BA%E5%B9%B6%E7%BC%96%E8%BE%91-eslintrc-js%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">在项目最外层新建并编辑.eslintrc.js文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8webpack-config-js%E6%96%87%E4%BB%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">在webpack.config.js文件中添加配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visio-studio-code-%E9%85%8D%E7%BD%AEeslint"><span class="nav-number">1.4.</span> <span class="nav-text">visio studio code 配置eslint</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eslint%E4%BF%AE%E6%94%B9%E6%8A%80%E5%B7%A7"><span class="nav-number">2.</span> <span class="nav-text">eslint修改技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#eslint-%E2%80%93-fix-%E4%BF%AE%E5%A4%8D%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">eslint – fix 修复指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode-%E4%BF%9D%E5%AD%98%E8%87%AA%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96eslint%E4%BB%A3%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">vscode 保存自动格式化eslint代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%BD%E7%95%A5ESLint%E6%A3%80%E6%B5%8B"><span class="nav-number">2.3.</span> <span class="nav-text">忽略ESLint检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A3%80%E6%B5%8B%E3%80%81%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.</span> <span class="nav-text">命令行检测、修改文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-eslint/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常规eslint配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-22 16:24:36" itemprop="dateCreated datePublished" datetime="2018-07-22T16:24:36+08:00">2018-07-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="eslint配置过程"><a href="#eslint配置过程" class="headerlink" title="eslint配置过程"></a>eslint配置过程</h2><h3 id="安装需要依赖的npm包"><a href="#安装需要依赖的npm包" class="headerlink" title="安装需要依赖的npm包"></a>安装需要依赖的npm包</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;eslint&quot;</span>: <span class="string">&quot;^4.19.1&quot;</span>, <span class="comment">// 必须</span></span><br><span class="line"><span class="string">&quot;babel-eslint&quot;</span>: <span class="string">&quot;^8.2.4&quot;</span>, <span class="comment">// 支持babel</span></span><br><span class="line"><span class="string">&quot;eslint-loader&quot;</span>: <span class="string">&quot;^2.0.0&quot;</span>, <span class="comment">// 使webpack支持eslint</span></span><br><span class="line"><span class="string">&quot;eslint-config-google&quot;</span>: <span class="string">&quot;^0.9.1&quot;</span>, <span class="comment">// Google的ESLint可共享配置</span></span><br><span class="line"><span class="string">&quot;eslint-plugin-vue&quot;</span>: <span class="string">&quot;^4.5.0&quot;</span>, <span class="comment">// Vue.js的官方ESLint插件</span></span><br><span class="line"><span class="string">&quot;eslint-plugin-import&quot;</span>: <span class="string">&quot;^2.13.0&quot;</span>, <span class="comment">// 支持使用第三方的扩展</span></span><br></pre></td></tr></table></figure>
+<p><strong>项目下运行命令行</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save-dev eslint@4.19.1 babel-eslint@8.2.4 eslint-loader@2.0.0 eslint-config-google@0.9.1 eslint-plugin-vue@4.5.0 eslint-plugin-import@2.13.0</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="在项目最外层新建并编辑-eslintrc-js文件"><a href="#在项目最外层新建并编辑-eslintrc-js文件" class="headerlink" title="在项目最外层新建并编辑.eslintrc.js文件"></a>在项目最外层新建并编辑.eslintrc.js文件</h3><p><strong>加入以下代码</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">// 默认情况下，ESLint会在所有父级组件中寻找配置文件，一直到根目录。ESLint一旦发现配置文件中有 &quot;root&quot;: true，它就会停止在父级目录中寻找。</span></span><br><span class="line">    <span class="string">&quot;root&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 扩展流行的风格指南</span></span><br><span class="line">    <span class="string">&quot;extends&quot;</span>: [<span class="string">&quot;plugin:vue/recommended&quot;</span>, <span class="string">&#x27;plugin:vue/essential&#x27;</span>, <span class="string">&quot;eslint:recommended&quot;</span>, <span class="string">&quot;google&quot;</span>],</span><br><span class="line">    <span class="comment">// 此插件用来识别.html 和 .vue文件中的js代码</span></span><br><span class="line">    <span class="string">&quot;plugins&quot;</span>: [<span class="string">&quot;import&quot;</span>, <span class="string">&quot;vue&quot;</span>],</span><br><span class="line">    <span class="comment">// 对Babel解析器的包装使其与 ESLint 兼容。</span></span><br><span class="line">    <span class="string">&quot;parserOptions&quot;</span>: &#123;<span class="string">&quot;parser&quot;</span>: <span class="string">&quot;babel-eslint&quot;</span>&#125;,</span><br><span class="line">    <span class="comment">// 自己的个性化规则</span></span><br><span class="line">    <span class="string">&quot;rules&quot;</span>: &#123;</span><br><span class="line">        <span class="comment">// 禁用 switch 中冒号前后的空格规则</span></span><br><span class="line">        <span class="string">&quot;switch-colon-spacing&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="comment">// 禁用 jsdoc 规则</span></span><br><span class="line">        <span class="string">&quot;require-jsdoc&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="comment">// 禁用每行字数限制规则</span></span><br><span class="line">        <span class="string">&quot;max-len&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="comment">// 允许打 console.log</span></span><br><span class="line">        <span class="string">&quot;no-console&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="comment">// 允许使用debugger语句</span></span><br><span class="line">        <span class="string">&quot;no-debugger&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="comment">// 禁用代码块首尾必须要空行的规则</span></span><br><span class="line">        <span class="string">&quot;padded-blocks&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="comment">// 不检查行尾空格</span></span><br><span class="line">        <span class="string">&quot;no-trailing-spaces&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="comment">// 使用 === 替代 ==</span></span><br><span class="line">        <span class="string">&quot;eqeqeq&quot;</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="string">&quot;vue/no-parsing-error&quot;</span>: [<span class="number">2</span>, &#123;</span><br><span class="line">            <span class="comment">// 关闭标签闭合检查 </span></span><br><span class="line">            <span class="string">&quot;x-invalid-end-tag&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">        &#125;],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>“off” 或 0       &#x3D;&gt; 关闭规则<br>“warn” 或 1      &#x3D;&gt;开启规则，使用警告级别的错误：warn (不会导致程序退出)<br>“error” 或 2     &#x3D;&gt;开启规则，使用错误级别的错误：error (当被触发的时候，程序会退出)</p>
+</blockquote>
+<p><strong>如果在webpack.config文件中设置了resolver配置，那么还需要:</strong></p>
+<ul>
+<li>安装<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/eslint-import-resolver-webpack">eslint-import-resolver-webpack</a>依赖。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i --save-dev eslint-import-resolver-webpack@0.10.1</span><br></pre></td></tr></table></figure></li>
+<li>默认情况下，会从项目的compile&#x2F;webpack.base.config.js文件中寻找webpack的resolver配置，但是这并不一定准确，因此可以自己重新配置正确的位置。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="string">&quot;extends&quot;</span>: [<span class="string">&quot;plugin:vue/recommended&quot;</span>, <span class="string">&#x27;plugin:vue/essential&#x27;</span>, <span class="string">&quot;eslint:recommended&quot;</span>, <span class="string">&quot;google&quot;</span>],</span><br><span class="line">    <span class="string">&quot;settings&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;import/resolver&#x27;</span>: &#123;</span><br><span class="line">            <span class="attr">webpack</span>: &#123;</span><br><span class="line">                <span class="attr">config</span>: <span class="string">&#x27;compile/webpack.base.conf.js&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="在webpack-config-js文件中添加配置"><a href="#在webpack-config-js文件中添加配置" class="headerlink" title="在webpack.config.js文件中添加配置"></a>在webpack.config.js文件中添加配置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">		&#123;</span><br><span class="line">        	<span class="attr">test</span>: <span class="regexp">/\.(js|jsx|vue)$/</span>,</span><br><span class="line">        	<span class="attr">loader</span>: <span class="string">&#x27;eslint-loader&#x27;</span>,</span><br><span class="line">        	<span class="attr">enforce</span>: <span class="string">&#x27;pre&#x27;</span>,</span><br><span class="line">      	&#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="visio-studio-code-配置eslint"><a href="#visio-studio-code-配置eslint" class="headerlink" title="visio studio code 配置eslint"></a>visio studio code 配置eslint</h3><p><strong>如果想在代码编写时 使编辑器将错误代码用红色波浪线标出 并提示错误，那么就可以做下面几步：</strong></p>
+<ol>
+<li>左侧菜单栏选择“扩展”，搜索“eslint”、“Vetur”安装并重新加载</li>
+<li>配置vscode实现对.vue .html文件中的js代码段的检测： 顶部选项Code -&gt; 首选项 -&gt; 设置，搜索编辑“eslint.validate”添加 “html”,”vue”<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;eslint.validate&quot;</span>: [</span><br><span class="line">      <span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">      <span class="string">&quot;javascriptreact&quot;</span>,</span><br><span class="line">      <span class="string">&quot;html&quot;</span>,</span><br><span class="line">      <span class="string">&quot;vue&quot;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure></li>
+<li>可以打开项目中.vue文件，不规范的语法就都已经被红色波浪线标记出来了。</li>
+</ol>
+<h2 id="eslint修改技巧"><a href="#eslint修改技巧" class="headerlink" title="eslint修改技巧"></a>eslint修改技巧</h2><h3 id="eslint-–-fix-修复指令"><a href="#eslint-–-fix-修复指令" class="headerlink" title="eslint – fix 修复指令"></a>eslint – fix 修复指令</h3><ul>
+<li>检查并修复项目所有代码<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_modules/.bin/eslint --fix *</span><br></pre></td></tr></table></figure></li>
+<li>检查并修复指定文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_modules/.bin/eslint --fix app.js</span><br></pre></td></tr></table></figure></li>
+<li><strong>tips: 如果直接运行  eslint – fix  会报 Cannot find module ‘@u51&#x2F;eslint-config-web’ 的错误。</strong>  <blockquote>
+<p>config文件是安装在当前项目，直接eslint –fix file调用的是全局的eslint，所以无法找到当前项目的config文件。故使用 node_modules&#x2F;.bin&#x2F;eslint –fix 。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="vscode-保存自动格式化eslint代码"><a href="#vscode-保存自动格式化eslint代码" class="headerlink" title="vscode 保存自动格式化eslint代码"></a>vscode 保存自动格式化eslint代码</h3><ul>
+<li>进入【设置】加上以下配置：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;vetur.format.defaultFormatter.html&quot;</span>: <span class="string">&quot;js-beautify-html&quot;</span>, <span class="comment">// 格式化.vue中html</span></span><br><span class="line">    <span class="string">&quot;vetur.format.defaultFormatter.js&quot;</span>: <span class="string">&quot;vscode-typescript&quot;</span>, <span class="comment">// 让vue中的js按编辑器自带的ts格式进行格式化</span></span><br><span class="line">    <span class="string">&quot;eslint.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;eslint.autoFixOnSave&quot;</span>:<span class="literal">true</span>, <span class="comment">// 保存时自动fix</span></span><br><span class="line">    <span class="string">&quot;eslint.run&quot;</span>: <span class="string">&quot;onType&quot;</span>,</span><br><span class="line">    <span class="string">&quot;eslint.options&quot;</span>: &#123;<span class="string">&quot;extensions&quot;</span>: [<span class="string">&quot;.js&quot;</span>,<span class="string">&quot;.vue&quot;</span>]&#125;,</span><br><span class="line">    <span class="string">&quot;eslint.validate&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">        <span class="string">&quot;javascriptreact&quot;</span>,</span><br><span class="line">        <span class="string">&quot;html&quot;</span>,</span><br><span class="line">        &#123;<span class="string">&quot;language&quot;</span>: <span class="string">&quot;vue&quot;</span>, <span class="string">&quot;autoFix&quot;</span>: <span class="literal">true</span>&#125; <span class="comment">//开启对.vue文件中错误的检查</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>重启后，右键“格式化文件”或者修改文件后点击“保存”，就可自动格式化代码了。</li>
+</ul>
+<h3 id="忽略ESLint检测"><a href="#忽略ESLint检测" class="headerlink" title="忽略ESLint检测"></a>忽略ESLint检测</h3><p>如果需要修改代码量太大，可以先将未修改的文件忽略掉，以后逐步修改。</p>
+<ul>
+<li>新建.eslintignore文件，放置需要ESLint忽略的文件。例如：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node_modules/</span><br><span class="line">src/components/input-tag.vue</span><br></pre></td></tr></table></figure></li>
+<li>将 <mark class="label success">/* eslint-disable */</mark>块注释放在文件顶部，可以在整个文件范围内禁止规则出现警告。</li>
+<li><mark class="label success">// eslint-disable-next-line</mark> 可关闭下一行校验。</li>
+</ul>
+<h3 id="命令行检测、修改文件"><a href="#命令行检测、修改文件" class="headerlink" title="命令行检测、修改文件"></a>命令行检测、修改文件</h3><ul>
+<li>打开package.json，在script里加入:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// -ext 后面写上指定检测文件的后缀，紧接着写上要检测的目录，即可用命令行来检测。</span></span><br><span class="line"><span class="string">&quot;lint&quot;</span>: <span class="string">&quot;eslint --ext .js,.jsx,.vue src/&quot;</span>,</span><br><span class="line"><span class="comment">// 加上--fix，即可在检测的同时将文件自动格式化。</span></span><br><span class="line"><span class="string">&quot;lint-fix&quot;</span>: <span class="string">&quot;eslint --fix --ext .js,.jsx,.vue src/&quot;</span>,</span><br></pre></td></tr></table></figure></li>
+<li>终端运行 <mark class="label default">npm run lint</mark> 或者 <mark class="label default">npm run lint-fix</mark></li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/default.md">eslint规则说明</a><br><a target="_blank" rel="noopener" href="http://eslint.cn/">ESLint官方文档</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ability-slefTest/" rel="prev" title="如何提高前端的自测能力">
+                  <i class="fa fa-chevron-left"></i> 如何提高前端的自测能力
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/performance-theory/" rel="next" title="性能优化专题-理论篇">
+                  性能优化专题-理论篇 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

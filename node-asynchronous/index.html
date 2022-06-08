@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="概念理解单线程、异步非阻塞I&#x2F;O、事件驱动 是Node.js的三大闪光点。其中，理解异步非阻塞I&#x2F;O模型是学习node过程中的一大难点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node.js的异步IO机制">
+<meta property="og:url" content="https://zhaoluting.github.io/node-asynchronous/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="概念理解单线程、异步非阻塞I&#x2F;O、事件驱动 是Node.js的三大闪光点。其中，理解异步非阻塞I&#x2F;O模型是学习node过程中的一大难点。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/%E5%BC%82%E6%AD%A5%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/%E5%A4%9A%E7%BA%BF%E7%A8%8B.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.png">
+<meta property="article:published_time" content="2018-05-29T09:33:10.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.803Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="node">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhaoluting.github.io/image/asynchronous/%E5%BC%82%E6%AD%A5%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/node-asynchronous/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/node-asynchronous/","path":"node-asynchronous/","title":"node.js的异步IO机制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>node.js的异步IO机制 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">概念理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFI-x2F-O"><span class="nav-number">1.1.</span> <span class="nav-text">什么是I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5I-x2F-O"><span class="nav-number">1.2.</span> <span class="nav-text">同步与异步I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9EI-x2F-O"><span class="nav-number">1.3.</span> <span class="nav-text">阻塞与非阻塞I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BE%E4%B8%AA%F0%9F%8C%B0"><span class="nav-number">1.4.</span> <span class="nav-text">举个🌰</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js%E4%B8%8E%E5%BC%82%E6%AD%A5"><span class="nav-number">2.</span> <span class="nav-text">Node.js与异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%89%E6%8B%A9%E5%BC%82%E6%AD%A5%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">Node为什么要选择异步？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6%EF%BC%9AJavaScript%E6%98%AF%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、前提条件：JavaScript是单线程的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E4%BB%8E%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E8%A7%92%E5%BA%A6%E8%AE%B2%EF%BC%8C%E5%BC%82%E6%AD%A5I-x2F-O%E5%8F%AF%E4%BB%A5%E6%B6%88%E9%99%A4UI%E9%98%BB%E5%A1%9E%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%93%8D%E5%BA%94%E8%B5%84%E6%BA%90"><span class="nav-number">2.1.2.</span> <span class="nav-text">2、从用户体验角度讲，异步I&#x2F;O可以消除UI阻塞，快速响应资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BB%8E%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E8%A7%92%E5%BA%A6%E8%AE%B2%EF%BC%8C%E5%BC%82%E6%AD%A5I-x2F-O%E5%8F%AF%E4%BB%A5%E8%AE%A9%E5%8D%95%E7%BA%BF%E7%A8%8B%E8%BF%9C%E7%A6%BB%E9%98%BB%E5%A1%9E%EF%BC%8C%E4%BB%A5%E6%9B%B4%E5%A5%BD%E5%9C%B0%E5%88%A9%E7%94%A8CPU"><span class="nav-number">2.1.3.</span> <span class="nav-text">3、从资源分配角度讲，异步I&#x2F;O可以让单线程远离阻塞，以更好地利用CPU</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5I-x2F-O%EF%BC%9F"><span class="nav-number">2.2.</span> <span class="nav-text">Node如何实现异步I&#x2F;O？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.1.</span> <span class="nav-text">名词解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%8B%9F"><span class="nav-number">2.2.2.</span> <span class="nav-text">代码模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6%E9%98%9F%E5%88%97"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">【1】定义事件队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AE%9A%E4%B9%89%E6%8E%A5%E6%94%B6%E8%AF%B7%E6%B1%82%E5%85%A5%E5%8F%A3"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">【2】定义接收请求入口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%AE%9A%E4%B9%89-Event-Loop"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">【3】定义 Event Loop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%A4%84%E7%90%86-I-x2F-O-%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">【4】处理 I&#x2F;O 任务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">2.2.3.</span> <span class="nav-text">缺陷</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">2.3.1.</span> <span class="nav-text">参考文档</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/node-asynchronous/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          node.js的异步IO机制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-05-29 17:33:10" itemprop="dateCreated datePublished" datetime="2018-05-29T17:33:10+08:00">2018-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="概念理解"><a href="#概念理解" class="headerlink" title="概念理解"></a>概念理解</h2><p><strong>单线程</strong>、<strong>异步非阻塞I&#x2F;O</strong>、<strong>事件驱动</strong> 是Node.js的三大闪光点。其中，理解异步非阻塞I&#x2F;O模型是学习node过程中的一大难点。</p>
+<span id="more"></span>
+
+<h3 id="什么是I-x2F-O"><a href="#什么是I-x2F-O" class="headerlink" title="什么是I&#x2F;O"></a>什么是I&#x2F;O</h3><p>I&#x2F;O在计算机中指Input&#x2F;Output，也就是输入和输出，分为I&#x2F;O设备和I&#x2F;O接口两个部分。</p>
+<ul>
+<li>I&#x2F;O接口是CPU和I&#x2F;O设备之间交换信息的媒介和桥梁。由于程序和运行时数据是在内存中驻留，由CPU这个超快的计算核心来执行，涉及到数据交换的地方，通常是磁盘、网络等。</li>
+<li>现代计算机系统中配置了大量的外围设备，即I&#x2F;O设备。通常进行如下分类：<ul>
+<li>字符设备，又叫做人机交互设备，例如，键盘和显示器为一体的字符终端、打印机、鼠标等。</li>
+<li>块设备，又叫外部存储器，用户通过这些设备实现程序和数据的长期保存，如磁盘、光盘等。</li>
+<li>网络通信设备。这类设备主要有网卡、调制解调器等，主要用于与远程设备的通信。</li>
+</ul>
+</li>
+</ul>
+<h3 id="同步与异步I-x2F-O"><a href="#同步与异步I-x2F-O" class="headerlink" title="同步与异步I&#x2F;O"></a>同步与异步I&#x2F;O</h3><p>由于CPU和内存的速度远远高于外设的速度，所以，在I&#x2F;O编程中，就存在速度严重不匹配的问题。比如要把100M的数据写入磁盘，CPU输出100M的数据只需要0.01秒，可是磁盘要接收这100M数据可能需要10秒，怎么办呢？有两种办法：</p>
+<ul>
+<li>同步I&#x2F;O：CPU等待，也就是程序暂停执行后续代码，等100M的数据在10秒后写入磁盘，再接着往下执行。</li>
+<li>异步I&#x2F;O：CPU不等待，后续代码可以立刻接着执行。<ul>
+<li>实现方式1：主动轮询异步调用的结果。</li>
+<li>实现方式2：被调用方通过callback来通知调用方调用结果。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>同步和异步是一种通信机制，涉及到调用方和被调用方，关注的是I&#x2F;O操作的执行过程及结果的返回方式，不同点在于双方在这两个方面的行为方式。</p>
+</blockquote>
+<h3 id="阻塞与非阻塞I-x2F-O"><a href="#阻塞与非阻塞I-x2F-O" class="headerlink" title="阻塞与非阻塞I&#x2F;O"></a>阻塞与非阻塞I&#x2F;O</h3><ul>
+<li>阻塞I&#x2F;O：调用结果返回之前，该执行线程会被挂起，不释放CPU执行权，线程不能做其它事情，只有等到调用结果返回了，才能接着往下执行</li>
+<li>非阻塞I&#x2F;O：在没有获取调用结果时，线程可以往下执行，而不是等待。<ul>
+<li>如果是同步的，会通过轮询的方式检查有没有调用结果返回；</li>
+<li>如果是异步的，会通知回调。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>阻塞和非阻塞是一种调用机制，只涉及到调用方，关注的是I&#x2F;O操作的执行状态，不同点在于请求I&#x2F;O操作后，针对I&#x2F;O操作的状态，调用方的行为方式。</p>
+</blockquote>
+<h3 id="举个🌰"><a href="#举个🌰" class="headerlink" title="举个🌰"></a>举个🌰</h3><p>故事：老张烧开水。<br>出场人物：老张，普通水壶，会响的水壶。</p>
+<ol>
+<li>老张把水壶放到火上，立等水开。<strong>（同步阻塞）</strong> </li>
+<li>老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。<strong>（同步非阻塞）</strong>     </li>
+<li>老张买了把会响笛的水壶。水开之后能发出嘀~~~~的噪音。老张把响水壶放火上，立等水开。<strong>（异步阻塞）</strong> </li>
+<li>老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。<strong>（异步非阻塞）</strong></li>
+</ol>
+<p>所谓同步异步，只是对于水壶而言。<br>普通水壶，同步；响水壶，异步。<br>虽然都能干活，但响水壶可以在自己完工之后，提示老张水开了。这是普通水壶所不能及的。同步只能让调用者去轮询自己（情况2中），造成老张效率的低下。 </p>
+<p>所谓阻塞非阻塞，仅仅对于老张而言。<br>立等的老张，阻塞；看电视的老张，非阻塞。<br>情况1和情况3中老张就是阻塞的，电视放什么他都不知道。虽然3中响水壶是异步的，可对于立等的老张没有太大的意义。所以一般异步是配合非阻塞使用的，这样才能发挥异步的效用。</p>
+<h2 id="Node-js与异步"><a href="#Node-js与异步" class="headerlink" title="Node.js与异步"></a>Node.js与异步</h2><h3 id="Node为什么要选择异步？"><a href="#Node为什么要选择异步？" class="headerlink" title="Node为什么要选择异步？"></a>Node为什么要选择异步？</h3><h4 id="1、前提条件：JavaScript是单线程的"><a href="#1、前提条件：JavaScript是单线程的" class="headerlink" title="1、前提条件：JavaScript是单线程的"></a>1、前提条件：JavaScript是单线程的</h4><p>JavaScript语言的一大特点就是单线程，也就是说，同一个时间只能做一件事。JavaScript的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript的主要用途是与用户互动，以及操作DOM。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript同时有两个线程，一个线程在某个DOM节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？<strong>所以，为了避免复杂性，从一诞生，JavaScript就是单线程，这已经成了这门语言的核心特征，将来也不会改变。</strong></p>
+<blockquote>
+<p>为了利用多核CPU的计算能力，HTML5提出Web Worker标准，允许JavaScript脚本创建多个线程，但是子线程完全受主线程控制，且不得操作DOM。所以，这个新标准并没有改变JavaScript单线程的本质。</p>
+</blockquote>
+<h4 id="2、从用户体验角度讲，异步I-x2F-O可以消除UI阻塞，快速响应资源"><a href="#2、从用户体验角度讲，异步I-x2F-O可以消除UI阻塞，快速响应资源" class="headerlink" title="2、从用户体验角度讲，异步I&#x2F;O可以消除UI阻塞，快速响应资源"></a>2、从用户体验角度讲，异步I&#x2F;O可以消除UI阻塞，快速响应资源</h4><ul>
+<li>JavaScript是单线程的，它与UI渲染共用一个线程。所以在JavaScript执行的时候，UI渲染将处于停顿的状态，用户体验较差。而异步请求可以在下载资源的时候，JavaScript和UI渲染都同时执行，消除UI阻塞，降低响应资源需要的时间开销。</li>
+<li>假如一个资源来自两个不同位置的数据的返回，第一个资源需要M毫秒的耗时，第二个资源需要N毫秒的耗时。<ul>
+<li>当采用同步的方式，总耗时为（M+N）毫秒。</li>
+<li>当采用异步的方式，总耗时为max（M，N）毫秒。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3、从资源分配角度讲，异步I-x2F-O可以让单线程远离阻塞，以更好地利用CPU"><a href="#3、从资源分配角度讲，异步I-x2F-O可以让单线程远离阻塞，以更好地利用CPU" class="headerlink" title="3、从资源分配角度讲，异步I&#x2F;O可以让单线程远离阻塞，以更好地利用CPU"></a>3、从资源分配角度讲，异步I&#x2F;O可以让单线程远离阻塞，以更好地利用CPU</h4><ul>
+<li>假设业务线上有一组互不相关的任务需要完成，现行的主流方法有以下两种：<ul>
+<li>单线程同步执行：会阻塞I&#x2F;O导致硬件资源和CPU得不到更优的使用。</li>
+<li>多线程并发执行：会出现死锁、状态同步等问题。</li>
+</ul>
+</li>
+<li>Node的解决方案<ul>
+<li>利用单线程远离多线程的死锁、状态同步等问题。</li>
+<li>利用异步I&#x2F;O，让单线程远离阻塞，更好的利CPU。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Node如何实现异步I-x2F-O？"><a href="#Node如何实现异步I-x2F-O？" class="headerlink" title="Node如何实现异步I&#x2F;O？"></a>Node如何实现异步I&#x2F;O？</h3><p><strong>事件循环、观察者、请求对象、I&#x2F;O线程池这四者共同构成了Node异步I&#x2F;O模型的基本要素。</strong><br><img src="/image/asynchronous/%E5%BC%82%E6%AD%A5%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="异步流程图"><br>整个实现过程大概更可以描述为：  </p>
+<ul>
+<li>发起异步请求之后将请求进行封装，封装为请求对象，对请求对象设置参数和回调函数并将请求对象放入线程池，线程池中检查是否有可用线程，当线程可用时执行请求对象的I&#x2F;O操作，并将执行完成的结果放入请求对象中，通知IOCP调用完成并获取完成的I&#x2F;O交给I&#x2F;O观察者。</li>
+<li>在libuv中创建主循环开始事件循环，主循环从I&#x2F;O观察者中取出可用的请求对象，在请求对象中取出回调函数和I&#x2F;O结果并调用回调函数。</li>
+</ul>
+<h4 id="名词解析"><a href="#名词解析" class="headerlink" title="名词解析"></a>名词解析</h4><ul>
+<li><p>观察者：事件循环判断是否有事件待执行，就是通过询问观察者，观察者不会主动通知进程，而是进程询问时才返回结果。 </p>
+<blockquote>
+<p>事件循环是生产者&#x2F;消费者模型。异步I&#x2F;O和网络请求是事件的生产者，这些事件被输送到观察者，事件循环是消费者，从观察者这里取出事件处理。观察者就相当于模型中的缓冲区，生产者不断产生事件放到缓冲区，而消费者从缓冲区里取出事件进行消费。</p>
+</blockquote>
+</li>
+<li><p>libuv：libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎。它是Node.js实现异步的核心。</p>
+</li>
+<li><p>请求对象：从JavaScript发起调用到内核执行完I&#x2F;O操作的过渡过程中，存在一种中间产物，叫做请求对象。从JavaScript传入的参数和当前方法都被封装在这个请求对象中，其中回调函数则被设置在这个对象的oncomplete_sym属性上。<br><img src="/image/asynchronous/%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1.png" alt="请求对象"><br>假设fs.open()，根据指定路径和参数打开文件。在JS发起调用后，JS调用Node的核心模块（lib&#x2F;fs.js），核心模块调用C++内建模块(node_file.cc)，內建模块通过libuv判断平台(是*nix还是win)并进行系统调用。在进行系统调用时，从JS层传入的方法和参数都被封装在一个请求对象FSReqWrap中，请求对象被放在线程池中等待执行。JS立即返回继续下面的操作。</p>
+</li>
+<li><p>I&#x2F;O线程池：在Node中，JS是在单线程中执行的，但是内部完成I&#x2F;O工作的另有线程池，使用一个主进程和多个I&#x2F;O线程来模拟异步I&#x2F;O。当主线程发起I&#x2F;O调用时，I&#x2F;O操作会被放在I&#x2F;O线程来执行，主线程继续执行下面的任务。I&#x2F;O操作不管是否阻塞，都不会影响JS执行线程的执行。在I&#x2F;O线程完成操作后会带着数据通知主线程发起回调。<br><img src="/image/asynchronous/%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="多线程"></p>
+</li>
+</ul>
+<p><strong>因此，Node.js 的单线程仅仅是指 JavaScript 运行在单线程中，而并非 Node.js 是单线程。</strong></p>
+<ul>
+<li><p>事件队列：Node.js 在主线程里维护了一个事件队列，当接到请求后，就将该请求作为一个事件放入这个队列中，然后继续接收其他请求。当主线程空闲时(没有请求接入时)，就开始循环事件队列，检查队列中是否有要处理的事件，这时要分两种情况：如果是非 I&#x2F;O 任务，就亲自处理，并通过回调函数返回到上层调用；如果是 I&#x2F;O 任务，就从 线程池 中拿出一个线程来处理这个事件，并指定回调函数，然后继续循环队列中的其他事件。</p>
+</li>
+<li><p>事件循环 (Event Loop)：在进程启动时，Node会创建一个类似于While(true)的循环，每执行一次循环体的过程称为Tick。每个Tick过程中观察者会查看是否有事件需要处理，如果有就取出事件及其相关的回调函数并执行。然后进入下一个Tick。如果没有事件处理，就退出进程。<br><img src="/image/asynchronous/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.png" alt="事件循环"></p>
+</li>
+<li><p>执行回调：I&#x2F;O执行结束后，会将结果通知IOCP（windows下,linux下epoll），并将线程归还线程池。使用事件循环的I&#x2F;O观察者，如果有已经执行完的I&#x2F;O，则将请求对象加入I&#x2F;O观察者队列中，事件循环再Tick过程中，检测到有I&#x2F;O观察者，则取出其中的请求对象，再取出请求对象中的回调函数执行。</p>
+</li>
+</ul>
+<h4 id="代码模拟"><a href="#代码模拟" class="headerlink" title="代码模拟"></a>代码模拟</h4><p>Node.js 实现异步的核心是事件，也就是说，它把每一个任务都当成 事件 来处理，然后通过 Event Loop 模拟了异步的效果，为了更具体、更清晰的理解和接受这个事实，下面我们用伪代码来描述一下其工作原理 。</p>
+<h5 id="【1】定义事件队列"><a href="#【1】定义事件队列" class="headerlink" title="【1】定义事件队列"></a>【1】定义事件队列</h5><p>既然是队列，那就是一个先进先出 (FIFO) 的数据结构，我们用JS数组来描述，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义事件队列</span></span><br><span class="line"><span class="comment"> * 入队：push()</span></span><br><span class="line"><span class="comment"> * 出队：shift()</span></span><br><span class="line"><span class="comment"> * 空队列：length == 0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">globalEventQueue</span>: []</span><br></pre></td></tr></table></figure>
+<p>我们利用数组来模拟队列结构：数组的第一个元素是队列的头部，数组的最后一个元素是队列的尾部，push() 就是在队列尾部插入一个元素，shift() 就是从队列头部弹出一个元素。这样就实现了一个简单的事件队列。</p>
+<h5 id="【2】定义接收请求入口"><a href="#【2】定义接收请求入口" class="headerlink" title="【2】定义接收请求入口"></a>【2】定义接收请求入口</h5><p>每一个请求都会被拦截并进入处理函数，如下所示： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 接收用户请求</span></span><br><span class="line"><span class="comment"> * 每一个请求都会进入到该函数</span></span><br><span class="line"><span class="comment"> * 传递参数request和response</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">processHttpRequest</span>:<span class="keyword">function</span>(<span class="params">request,response</span>)&#123;</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// 定义一个事件对象</span></span><br><span class="line">    <span class="keyword">var</span> event = <span class="title function_">createEvent</span>(&#123;</span><br><span class="line">        <span class="attr">params</span>:request.<span class="property">params</span>, <span class="comment">// 传递请求参数</span></span><br><span class="line">        <span class="attr">result</span>:<span class="literal">null</span>, <span class="comment">// 存放请求结果</span></span><br><span class="line">        <span class="attr">callback</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;&#125; <span class="comment">// 指定回调函数</span></span><br><span class="line">    &#125;);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 在队列的尾部添加该事件  </span></span><br><span class="line">    globalEventQueue.<span class="title function_">push</span>(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数就是把用户的请求包装成事件，放到队列里，然后继续接收其他请求。</p>
+<h5 id="【3】定义-Event-Loop"><a href="#【3】定义-Event-Loop" class="headerlink" title="【3】定义 Event Loop"></a>【3】定义 Event Loop</h5><p>当主线程处于空闲时就开始循环事件队列，所以我们还要定义一个函数来循环事件队列： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 事件循环主体，主线程择机执行</span></span><br><span class="line"><span class="comment"> * 循环遍历事件队列</span></span><br><span class="line"><span class="comment"> * 处理非I/O任务</span></span><br><span class="line"><span class="comment"> * 处理I/O任务</span></span><br><span class="line"><span class="comment"> * 执行回调，返回给上层</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">eventLoop</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="comment">// 如果队列不为空，就继续循环</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="variable language_">this</span>.<span class="property">globalEventQueue</span>.<span class="property">length</span> &gt; <span class="number">0</span>)&#123;</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 从队列的头部拿出一个事件</span></span><br><span class="line">        <span class="keyword">var</span> event = <span class="variable language_">this</span>.<span class="property">globalEventQueue</span>.<span class="title function_">shift</span>();</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 如果是耗时任务</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_">isIOTask</span>(event))&#123;</span><br><span class="line">            <span class="comment">// 从线程池里拿出一个线程</span></span><br><span class="line">            <span class="keyword">var</span> thread = <span class="title function_">getThreadFromThreadPool</span>();</span><br><span class="line">            <span class="comment">// 交给线程处理</span></span><br><span class="line">            thread.<span class="title function_">handleIOTask</span>(event)</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 非耗时任务处理后，直接返回结果</span></span><br><span class="line">            <span class="keyword">var</span> result = <span class="title function_">handleEvent</span>(event);</span><br><span class="line">            <span class="comment">// 最终通过回调函数返回给V8，再由V8返回给应用程序</span></span><br><span class="line">            event.<span class="property">callback</span>.<span class="title function_">call</span>(<span class="literal">null</span>,result);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主线程不停的检测事件队列，对于 I&#x2F;O 任务，就交给线程池来处理，非 I&#x2F;O 任务就自己处理并返回。</p>
+<h5 id="【4】处理-I-x2F-O-任务"><a href="#【4】处理-I-x2F-O-任务" class="headerlink" title="【4】处理 I&#x2F;O 任务"></a>【4】处理 I&#x2F;O 任务</h5><p>线程池接到任务以后，直接处理I&#x2F;O操作，比如读取数据库：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 处理I/O任务</span></span><br><span class="line"><span class="comment"> * 完成后将事件添加到队列尾部</span></span><br><span class="line"><span class="comment"> * 释放线程</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="attr">handleIOTask</span>:<span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="comment">//当前线程</span></span><br><span class="line">    <span class="keyword">var</span> curThread = <span class="variable language_">this</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 操作数据库</span></span><br><span class="line">    <span class="keyword">var</span> optDatabase = <span class="keyword">function</span>(<span class="params">params,callback</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="title function_">readDataFromDb</span>(params);</span><br><span class="line">        callback.<span class="title function_">call</span>(<span class="literal">null</span>,result)</span><br><span class="line">    &#125;;</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// 执行I/O任务</span></span><br><span class="line">    <span class="title function_">optDatabase</span>(event.<span class="property">params</span>,<span class="keyword">function</span>(<span class="params">result</span>)&#123;</span><br><span class="line">        <span class="comment">// 返回结果存入事件对象中</span></span><br><span class="line">        event.<span class="property">result</span> = result;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// I/O完成后，将不再是耗时任务</span></span><br><span class="line">        event.<span class="property">isIOTask</span> = <span class="literal">false</span>;</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 将该事件重新添加到队列的尾部</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">globalEventQueue</span>.<span class="title function_">push</span>(event);</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 释放当前线程</span></span><br><span class="line">        <span class="title function_">releaseThread</span>(curThread)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当 I&#x2F;O 任务完成以后就执行回调，把请求结果存入事件中，并将该事件重新放入队列中，等待循环，最后释放当前线程，当主线程再次循环到该事件时，就直接处理了。</p>
+<h4 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h4><p>Node.js通过事件驱动模型实现了高并发和异步 I&#x2F;O，然而也有 Node.js 不擅长做的事情：<br>上面提到，如果是 I&#x2F;O 任务，Node.js 就把任务交给线程池来异步处理，高效简单，因此 Node.js 适合处理I&#x2F;O密集型任务。<br>但不是所有的任务都是I&#x2F;O密集型任务，当碰到CPU密集型任务时，即只用CPU计算的操作，比如要对数据加解密、数据压缩和解压，这时Node.js就会亲自处理，一个一个的计算，前面的任务没有执行完，后面的任务就只能干等着。<br>在事件队列中，如果前面的CPU计算任务没有完成，后面的任务就会被阻塞，出现响应缓慢的情况，如果操作系统本身就是单核，那也就算了，但现在大部分服务器都是多CPU或多核的，而Node.js只有一个Event Loop，也就是只占用一个CPU内核，当Node.js被CPU密集型任务占用，导致其他任务被阻塞时，却还有CPU内核处于闲置状态，造成资源浪费。<br><strong>因此，Node.js 并不适合 CPU 密集型任务。</strong></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>Nodejs实际上只是应用程序层面JavaScript单线程执行，真正I&#x2F;O操作、网络请求、底层API调用都是多线程执行。</li>
+<li>事件循环是Node异步I&#x2F;O实现的核心，Node通过事件驱动的方式处理请求，使得其无须为每个请求创建额外的线程，省掉了创建和销毁线程的开销。同时也因为线程数较少，不受线程上下文切换的影响，维持了Node的高性能。</li>
+<li>Nodejs具备单线程执行应用程序、异步非阻塞I&#x2F;O的特点，因此适用于I&#x2F;O密集型场景，而并不擅长于CPU计算密集型场景。</li>
+</ul>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012925872">从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理</a><br><a target="_blank" rel="noopener" href="https://my.oschina.net/zhangjiawen/blog/1551020?from=timeline&isappinstalled=0">单线程NodeJS的异步I&#x2F;O</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/pengpengrose0406/article/details/46964595">[读书笔记]深入浅出NodeJS——Node中的异步I&#x2F;O</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/onepixel/p/7143769.html">Node.js 事件循环机制</a><br><a target="_blank" rel="noopener" href="https://juejin.im/post/5ab367acf265da23a049783e">JS&#x2F;NodeJS中的异步任务与事件环</a><br><a target="_blank" rel="noopener" href="https://github.com/zhaoluting/asynchronous/blob/master/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js.pdf">深入浅出node.js</a>   </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/node/" rel="tag"># node</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/sql-guide/" rel="prev" title="面向前端的数据库指南">
+                  <i class="fa fa-chevron-left"></i> 面向前端的数据库指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ability-slefTest/" rel="next" title="如何提高前端的自测能力">
+                  如何提高前端的自测能力 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

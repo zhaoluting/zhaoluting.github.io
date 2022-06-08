@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="一个小菜鸟的感悟与总结 ## 名词解释     &#x2F;&#x2F; 最常见的三种测试类型。单元测试主要由开发人员来做，功能测试与集成测试由测试人员来做。  单元测试：指对软件中的最小可测试单元进行检查和验证；功能测试：对产品的各功能进行验证，根据功能测试用例，逐项测试，检查产品是否达到用户要求的功能；集成测试：也叫组装测试或联合测试。在单元测试的基础上，将所有模块按照设计要求（如根据结构图〕组装成为子系统或系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何提高前端的自测能力">
+<meta property="og:url" content="https://zhaoluting.github.io/ability-slefTest/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="一个小菜鸟的感悟与总结 ## 名词解释     &#x2F;&#x2F; 最常见的三种测试类型。单元测试主要由开发人员来做，功能测试与集成测试由测试人员来做。  单元测试：指对软件中的最小可测试单元进行检查和验证；功能测试：对产品的各功能进行验证，根据功能测试用例，逐项测试，检查产品是否达到用户要求的功能；集成测试：也叫组装测试或联合测试。在单元测试的基础上，将所有模块按照设计要求（如根据结构图〕组装成为子系统或系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhaoluting.github.io/image/selfTest/list.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/selfTest/bugList.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/selfTest/featList.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/selfTest/code.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/selfTest/gitlab.png">
+<meta property="article:published_time" content="2018-06-27T08:53:46.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.783Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="ability">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhaoluting.github.io/image/selfTest/list.png">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/ability-slefTest/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/ability-slefTest/","path":"ability-slefTest/","title":"如何提高前端的自测能力"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>如何提高前端的自测能力 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E8%87%AA%E6%B5%8B%E4%B8%89%E4%B8%AA%E6%96%B9%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">前端自测三个方面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">推荐工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E6%97%B6%E7%A7%AF%E7%B4%AF%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="nav-number">3.</span> <span class="nav-text">平时积累的技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%EF%BC%88%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">问（很重要）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97"><span class="nav-number">3.2.</span> <span class="nav-text">列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99"><span class="nav-number">3.3.</span> <span class="nav-text">写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5"><span class="nav-number">3.4.</span> <span class="nav-text">查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6"><span class="nav-number">3.5.</span> <span class="nav-text">学</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6%E7%9A%84checklist"><span class="nav-number">4.</span> <span class="nav-text">几个常用组件的checklist</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95"><span class="nav-number">4.1.</span> <span class="nav-text">表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC"><span class="nav-number">4.2.</span> <span class="nav-text">文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC"><span class="nav-number">4.3.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-number">4.4.</span> <span class="nav-text">附件上传</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/ability-slefTest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何提高前端的自测能力
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-27 16:53:46" itemprop="dateCreated datePublished" datetime="2018-06-27T16:53:46+08:00">2018-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%83%BD%E5%8A%9B/" itemprop="url" rel="index"><span itemprop="name">能力</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="note info">一个小菜鸟的感悟与总结</div>
+## 名词解释  
+
+<mark class="label success"> // 最常见的三种测试类型。单元测试主要由开发人员来做，功能测试与集成测试由测试人员来做。</mark>
+
+<p><strong>单元测试</strong>：指对软件中的最小可测试单元进行检查和验证；<br><strong>功能测试</strong>：对产品的各功能进行验证，根据功能测试用例，逐项测试，检查产品是否达到用户要求的功能；<br><strong>集成测试</strong>：也叫组装测试或联合测试。在单元测试的基础上，将所有模块按照设计要求（如根据结构图〕组装成为子系统或系统，进行集成测试；</p>
+<span id="more"></span>
+
+<mark class="label success"> // 客户端主要是用黑盒测试，服务端主要用白盒测试，灰盒测试比较少用。</mark>
+
+<p><strong>黑盒测试</strong>：也称功能测试，把程序看作一个不能打开的黑盒子，在完全不考虑程序内部结构和内部特性的情况下，在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数据而产生正确的输出信息。<br><strong>白盒测试</strong>：也称结构测试或逻辑驱动测试，它是知道产品内部工作过程，可通过测试来检测产品内部动作是否按照规格说明书的规定正常进行，按照程序内部的结构测试程序，检验程序中的每条通路是否都有能按预定要求正确工作。<br><strong>灰盒测试</strong>：介于黑盒白盒二者之间，灰盒测试关注输出对于输入的正确性，同时也关注内部表现，但这种关注不象白盒那样详细、完整，只是通过一些表征性的现象、事件、标志来判断内部的运行状态。有时候输出是正确的，但内部其实已经错误了，这种情况非常多。</p>
+<h2 id="前端自测三个方面"><a href="#前端自测三个方面" class="headerlink" title="前端自测三个方面"></a>前端自测三个方面</h2><p>1、界面交互是否符合要求、逻辑<br>2、接口请求是否正确<br>3、数据展示是否准确</p>
+<h2 id="推荐工具"><a href="#推荐工具" class="headerlink" title="推荐工具"></a>推荐工具</h2><ul>
+<li><strong>公用记录型</strong>：JIRA（推荐）、wiki（没有测试人员时可以简单记在wiki上）</li>
+<li><strong>自用记录型</strong>：mac自带备忘录、有道云笔记、Excel、XMind</li>
+<li><strong>接口测试工具</strong>：swagger、postman</li>
+<li><strong>代码内部测试工具</strong>：eslint、karma 等等</li>
+</ul>
+<h2 id="平时积累的技巧"><a href="#平时积累的技巧" class="headerlink" title="平时积累的技巧"></a>平时积累的技巧</h2><h3 id="问（很重要）"><a href="#问（很重要）" class="headerlink" title="问（很重要）"></a>问（很重要）</h3><mark class="label success"> // 公司测试小哥说这点是最重要。</mark>
+<ul>
+<li>问清楚项目需求，对需求理解透彻；</li>
+<li>向经验丰富的开发、测试人员讨教经验；</li>
+<li>询问用户的使用体验及意见；</li>
+</ul>
+<h3 id="列"><a href="#列" class="headerlink" title="列"></a>列</h3><ul>
+<li>需求点要清楚得罗列出来，产品或者后端没有罗列就自己罗列。</li>
+<li>每做完一个需求就做个标记，每提一个bug也要列进去。</li>
+<li>优点是整个开发过程会很清晰，日后排期、更改需求也有参照，有据可循。</li>
+<li>缺点就是费时。</li>
+</ul>
+<blockquote>
+<p>例如下图，需求多时，花点时间理清思路，用markdown等工具列出来：</p>
+</blockquote>
+<p><img src="/image/selfTest/list.png" alt="罗列需求"></p>
+<blockquote>
+<p>又例如下图（优化与修复），有较多bug或优化点时，用wiki做一个表格，方便产品验收：</p>
+</blockquote>
+<p><img src="/image/selfTest/bugList.png" alt="罗列Bug">  </p>
+<h3 id="写"><a href="#写" class="headerlink" title="写"></a>写</h3><ul>
+<li>代码里多写备注，readme文件不能偷懒，不留坑也方便转手；</li>
+<li>commit 多打字，提交历史会很清晰；</li>
+<li>发布系统里不随便填写信息，需求列表会很清楚；<br><img src="/image/selfTest/featList.png" alt="需求列表"></li>
+</ul>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><ul>
+<li>每次提交代码前利用工具检查修改过的内容。（全局搜下有没有未去掉的debugger，搜“&lt;&lt;&lt;&lt;&lt;”看有没有冲突代码）;<br><img src="/image/selfTest/code.png" alt="代码">  </li>
+<li>发布前有时间就顺手检查下提交历史;<br><img src="/image/selfTest/gitlab.png" alt="代码"></li>
+</ul>
+<h3 id="学"><a href="#学" class="headerlink" title="学"></a>学</h3><ul>
+<li>多学习其他优秀系统的交互与设计，对比思考自己做的那些系统的不足；</li>
+<li>平时多学习交互规范、用户体验设计类的书籍，让自己更加专业；</li>
+</ul>
+<p><strong>论坛网站</strong>：<a target="_blank" rel="noopener" href="http://bbs.51testing.com/forum.php">51testing软件测试论坛</a><br><strong>学习文档</strong>：软件工程中的测试技术(第一部分).pdf、软件工程中的测试技术(第二部分).pdf<br><strong>测试相关的学习资料不是很多</strong>，主要还是靠平时实践的积累，理论的话看上面的《软件工程中的测试技术》就差不多了。</p>
+<h2 id="几个常用组件的checklist"><a href="#几个常用组件的checklist" class="headerlink" title="几个常用组件的checklist"></a>几个常用组件的checklist</h2><h3 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h3><ul>
+<li><strong>各种<mark class="label success">数据类型</mark>的输入情况:</strong> 全汉字输入、全英文输入、全字符输入、全数字输入、混搭输入、大小写处理、半&#x2F;全角输入;</li>
+<li><strong>数字需要关注<mark class="label success">边界值</mark>:</strong> 最大&#x2F;小值、正&#x2F;负数、小数点保留位;</li>
+<li>**不同的输入<mark class="label success">文本长度</mark>:**为空、文本溢出、文本未溢出;</li>
+<li>**输入框<mark class="label success">校验规则</mark>:**为空校验、数据类型校验、正则检测、多个数据之间大小校验;</li>
+<li>**保障<mark class="label success">数据准确性</mark>:**输入输出结果是否一致、数据是否进行处理;</li>
+<li>**<mark class="label success">隐藏部分</mark>的显示:**选择下拉框的文本显示溢出情况、日期时间选择框是否超出屏幕、选择下拉框数据量过大的情况;</li>
+<li>**<mark class="label success">操作按钮</mark>检查:**字段完整性检查、快键建检查、回车键检查、重复提交检查;</li>
+<li>**<mark class="label success">安全性</mark>检查:**恶意代码注入;</li>
+<li>**屏幕大小不同情况下的<mark class="label success">自适应</mark>:**浏览器置于桌面、浏览器全屏、浏览器投放至大显;</li>
+</ul>
+<h3 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h3><ul>
+<li><strong>各种<mark class="label success">数据类型</mark>的显示情况:</strong> 全汉字、全英文、全字符、全数字、混搭、大小写识别;</li>
+<li><strong>不同<mark class="label success">文本长度</mark>:</strong> 为空、短文本、超长文本、数字位数保留;</li>
+<li><strong>保障<mark class="label success">数据准确性</mark>:</strong> 显示结果是否正确、是否进行格式&#x2F;映射处理、映射为空时的情况;</li>
+<li>**<mark class="label success">脱敏情况</mark>:**身份证号、手机等数据是否脱敏完全;</li>
+<li>**屏幕大小不同情况下的<mark class="label success">自适应</mark>:**浏览器置于桌面、浏览器全屏、浏览器投放至大显;</li>
+</ul>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><ul>
+<li>**<mark class="label success">表格展示</mark>情况:**列表为空、列数过多、数据量过大、loading状态、是否错位;</li>
+<li>**单元格内不同<mark class="label success">文本长度</mark>:**为空、文本溢出、文本未溢出;</li>
+<li>**单元格内各种<mark class="label success">数据类型</mark>的显示情况:**全汉字、全英文、全字符、全数字、混搭;</li>
+<li><strong>保障<mark class="label success">数据准确性</mark></strong>:<ul>
+<li>单元格显示结果是否正确、是否进行格式&#x2F;映射处理、映射为空时的情况;</li>
+<li>整个表格数据分页是否准确、选中时结果是否一致、筛选排序结果是否正确;</li>
+</ul>
+</li>
+<li>**屏幕大小不同情况下的<mark class="label success">自适应</mark>:**浏览器置于桌面、浏览器全屏、浏览器投放至大显;</li>
+</ul>
+<h3 id="附件上传"><a href="#附件上传" class="headerlink" title="附件上传"></a>附件上传</h3><ul>
+<li>**<mark class="label success">附件显示情况</mark>:**不同尺寸文件预览的显示、不同文件格式预览的显示、文件预览失败&#x2F;不存在时的显示、文件预览加载过慢的情况;</li>
+<li>**<mark class="label success">附件准确性</mark>:**是否错位展示;</li>
+<li>**<mark class="label success">安全性</mark>检查:**上传时脚本后缀改为图片等格式（文件内容校验）;</li>
+<li>**屏幕大小不同情况下的<mark class="label success">自适应</mark>:**浏览器置于桌面、浏览器全屏、浏览器投放至大显;</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ability/" rel="tag"># ability</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/node-asynchronous/" rel="prev" title="node.js的异步IO机制">
+                  <i class="fa fa-chevron-left"></i> node.js的异步IO机制
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-eslint/" rel="next" title="常规eslint配置">
+                  常规eslint配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

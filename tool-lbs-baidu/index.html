@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="LBS（Location Based Services，围绕地理位置数据而展开的服务）现在是越来越火，用到这技术的项目也是越来越多，就稍微做了下小调研，并简单记录下。由于技术发展过快，本篇仅供参考，可能明年就不适用了，以各大官网为准。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js地图开发">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-lbs-baidu/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="LBS（Location Based Services，围绕地理位置数据而展开的服务）现在是越来越火，用到这技术的项目也是越来越多，就稍微做了下小调研，并简单记录下。由于技术发展过快，本篇仅供参考，可能明年就不适用了，以各大官网为准。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-17T09:50:18.000Z">
+<meta property="article:modified_time" content="2022-03-21T07:36:00.288Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-lbs-baidu/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-lbs-baidu/","path":"tool-lbs-baidu/","title":"js地图开发"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>js地图开发 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%AD%E9%97%A8LBS"><span class="nav-number">1.</span> <span class="nav-text">热门LBS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue%E5%BC%95%E5%85%A5%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BE"><span class="nav-number">2.</span> <span class="nav-text">vue引入百度地图</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-lbs-baidu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js地图开发
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-17 17:50:18" itemprop="dateCreated datePublished" datetime="2022-03-17T17:50:18+08:00">2022-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>LBS（Location Based Services，围绕地理位置数据而展开的服务）现在是越来越火，用到这技术的项目也是越来越多，就稍微做了下小调研，并简单记录下。由于技术发展过快，本篇仅供参考，可能明年就不适用了，以各大官网为准。</p>
+<span id="more"></span>
+
+<h2 id="热门LBS"><a href="#热门LBS" class="headerlink" title="热门LBS"></a>热门LBS</h2><p>互联网发展就是快，就这十年不到的功夫，搜狗地图被腾讯收购，高德地图被阿里收购，国内谷歌地图也被封，所以下面我只简单介绍几个目前比较稳定，不容易凉凉的热门地图API。简单总结下就是，重性能用高德、重功能用百度、面向海外用谷歌、政府特殊项目用天地图。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lbs.amap.com/">高德地图</a>：阿里系，对开发者很友好，性能也好，更注重导航能力，在国内商业地图里是算最精细的一款。有官方vue版本。</li>
+<li><a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/">百度地图</a>：虽然在很多方面比不上高德，但POI（某个地理位置周边的信息）是强项，更注重生活，业务功能也更加丰富。无官方vue版本。</li>
+<li><a target="_blank" rel="noopener" href="https://lbs.qq.com/">腾讯地图</a>：🤔emmmm，对比高德百度没太大优势，但也还行，腾讯背书，比较稳。无官方vue版本。</li>
+<li><a target="_blank" rel="noopener" href="https://www.tianditu.gov.cn/">天地图</a>：国家队选手！国家测绘地理信息局的产品，主要为政府服务，国内数据资源的完整性、权威性、准确性是其他商业地图无法企及的，缺点就是性能差和颜值低。无官方vue版本。</li>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/maps/">谷歌地图</a>：虽然非常优秀，但国内的数据比较滞后，并且很容易受国际局势影响，适合国外人用。无官方vue版本。</li>
+</ul>
+<h2 id="vue引入百度地图"><a href="#vue引入百度地图" class="headerlink" title="vue引入百度地图"></a>vue引入百度地图</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> fileTool = &#123;</span><br><span class="line">  <span class="comment">// 异步加载百度地图</span></span><br><span class="line">  <span class="attr">loadBMap</span>: <span class="keyword">function</span> (<span class="params">ak</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;BMap is defined:&#x27;</span>, <span class="title class_">BMapGL</span> === <span class="literal">undefined</span> || <span class="title class_">BMapGL</span>)</span><br><span class="line">        <span class="title function_">resolve</span>(<span class="title class_">BMapGL</span>)</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">initBMapGL</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">          <span class="title function_">resolve</span>(<span class="title class_">BMapGL</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> <span class="title class_">BMapUrl</span> = <span class="string">`http://api.map.baidu.com/api?v=1.0&amp;type=webgl&amp;ak=<span class="subst">$&#123;ak&#125;</span>&amp;callback=initBMapGL`</span>;</span><br><span class="line">        fileTool.<span class="title function_">loadScript</span>(<span class="title class_">BMapUrl</span>, <span class="literal">null</span>, reject)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 异步加载百度地图及BMapGLLib</span></span><br><span class="line">  <span class="attr">loadBMapGLLib</span>: <span class="keyword">function</span> (<span class="params">ak</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">      fileTool.<span class="title function_">loadBMap</span>(ak).<span class="title function_">then</span>(<span class="function"><span class="params">BMapGL</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> loaded = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          loaded = (<span class="title class_">BMapGLLib</span> &amp;&amp; <span class="title class_">BMapGLLib</span>.<span class="property">DrawingManager</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">          loaded = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!loaded) &#123;</span><br><span class="line">          <span class="keyword">const</span> <span class="title class_">GLLibFile</span> = &#123;</span><br><span class="line">            <span class="attr">js</span>: <span class="string">&#x27;https://mapopen.bj.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.js&#x27;</span>,</span><br><span class="line">            <span class="attr">css</span>: <span class="string">&#x27;https://mapopen.bj.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.css&#x27;</span>,</span><br><span class="line">          &#125;</span><br><span class="line">          fileTool.<span class="title function_">loadCSS</span>(<span class="title class_">GLLibFile</span>.<span class="property">css</span>);</span><br><span class="line">          fileTool.<span class="title function_">loadScript</span>(<span class="title class_">GLLibFile</span>.<span class="property">js</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">resolve</span>(&#123;<span class="title class_">BMapGL</span>, <span class="title class_">BMapGLLib</span>&#125;)</span><br><span class="line">          &#125;, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">resolve</span>(&#123;<span class="title class_">BMapGL</span>&#125;)</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 加载js文件</span></span><br><span class="line">  <span class="attr">loadScript</span>: <span class="keyword">function</span> (<span class="params">src, callback, reject</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> script = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">    script.<span class="property">type</span> = <span class="string">&#x27;text/javascript&#x27;</span>;</span><br><span class="line">    script.<span class="property">src</span> = src;</span><br><span class="line">    <span class="keyword">if</span> (script.<span class="property">addEventListener</span>) &#123;</span><br><span class="line">      script.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        callback &amp;&amp; <span class="title function_">callback</span>();</span><br><span class="line">      &#125;, <span class="literal">false</span>);</span><br><span class="line">      script.<span class="title function_">addEventListener</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        reject &amp;&amp; <span class="title function_">reject</span>();</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (script.<span class="property">attachEvent</span>) &#123;</span><br><span class="line">      script.<span class="title function_">attachEvent</span>(<span class="string">&#x27;onreadystatechange&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> target = <span class="variable language_">window</span>.<span class="property">event</span>.<span class="property">srcElement</span>;</span><br><span class="line">        <span class="keyword">if</span> (target.<span class="property">readyState</span> == <span class="string">&#x27;loaded&#x27;</span>) &#123;</span><br><span class="line">          callback &amp;&amp; <span class="title function_">callback</span>();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;head&#x27;</span>)[<span class="number">0</span>].<span class="title function_">appendChild</span>(script);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 动态加载外部CSS文件</span></span><br><span class="line">  <span class="attr">loadCSS</span>: <span class="keyword">function</span> (<span class="params">url</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> link = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;link&#x27;</span>);</span><br><span class="line">    link.<span class="property">rel</span> = <span class="string">&#x27;stylesheet&#x27;</span>;</span><br><span class="line">    link.<span class="property">type</span> = <span class="string">&#x27;text/css&#x27;</span>;</span><br><span class="line">    link.<span class="property">url</span> = url;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;head&#x27;</span>)[<span class="number">0</span>].<span class="title function_">appendChild</span>(link);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;service-location&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;baiduMapContainer&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">import</span> &#123; fileTool &#125; <span class="keyword">from</span> <span class="string">&quot;@/js/utils&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">components</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">BMapObj</span>: <span class="literal">null</span>,</span></span><br><span class="line"><span class="language-javascript">      &#125;;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 创建地图</span></span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">initMap</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        fileTool.<span class="title function_">loadBMapGLLib</span>().<span class="title function_">then</span>(<span class="function"><span class="params">BMapGL</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="comment">// 创建地图实例 </span></span></span><br><span class="line"><span class="language-javascript">          <span class="variable language_">this</span>.<span class="property">BMapObj</span> = <span class="keyword">new</span> <span class="title class_">BMapGL</span>.<span class="title class_">Map</span>(<span class="string">&quot;baiduMapContainer&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">          <span class="comment">// 初始化地图，设置中心点坐标和地图级别</span></span></span><br><span class="line"><span class="language-javascript">          <span class="variable language_">this</span>.<span class="property">BMapObj</span>.<span class="title function_">centerAndZoom</span>(<span class="keyword">new</span> <span class="title class_">BMapGL</span>.<span class="title class_">Point</span>(<span class="number">116.404</span>, <span class="number">39.915</span>), <span class="number">19</span>);</span></span><br><span class="line"><span class="language-javascript">          <span class="comment">//开启鼠标滚轮缩放</span></span></span><br><span class="line"><span class="language-javascript">          <span class="variable language_">this</span>.<span class="property">BMapObj</span>.<span class="title function_">enableScrollWheelZoom</span>(<span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript">          <span class="comment">// 添加比例尺控件</span></span></span><br><span class="line"><span class="language-javascript">          <span class="variable language_">this</span>.<span class="property">BMapObj</span>.<span class="title function_">addControl</span>(<span class="keyword">new</span> <span class="title class_">BMapGL</span>.<span class="title class_">ScaleControl</span>()); </span></span><br><span class="line"><span class="language-javascript">          <span class="comment">// 添加缩放控件</span></span></span><br><span class="line"><span class="language-javascript">          <span class="variable language_">this</span>.<span class="property">BMapObj</span>.<span class="title function_">addControl</span>(<span class="keyword">new</span> <span class="title class_">BMapGL</span>.<span class="title class_">ZoomControl</span>());</span></span><br><span class="line"><span class="language-javascript">          <span class="comment">// 添加城市列表控件</span></span></span><br><span class="line"><span class="language-javascript">          <span class="variable language_">this</span>.<span class="property">BMapObj</span>.<span class="title function_">addControl</span>(<span class="keyword">new</span> <span class="title class_">BMapGL</span>.<span class="title class_">CityListControl</span>());</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">      &#125;,</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">created</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">this</span>.<span class="title function_">initMap</span>()</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.service-location</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="language-css">  <span class="selector-id">#baiduMapContainer</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">height</span>: <span class="built_in">calc</span>(<span class="number">100vh</span> - <span class="number">125px</span>);</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-git-memo/" rel="prev" title="git备忘录">
+                  <i class="fa fa-chevron-left"></i> git备忘录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-file-preview/" rel="next" title="vue文件预览">
+                  vue文件预览 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

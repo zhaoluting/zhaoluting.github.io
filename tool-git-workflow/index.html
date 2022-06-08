@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="上篇《git tag使用指南》简单介绍了下如何利用tag来做简易的git版本控制，但我在查资料的时候发现了很多有意思的内容，我版本控制只用过git，三大工作流虽然都用过，但没去深究过，知之甚少啊。本来以为git应该一家独大了，和几位朋友聊了下发现还有很多很多公司在用svn，甚至还有在用vss的，我着实井底之蛙了。本🐸目前还是用git为主，其他工具学不动了，所以本篇还是以git为主展开。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="版本控制漫谈">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-git-workflow/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="上篇《git tag使用指南》简单介绍了下如何利用tag来做简易的git版本控制，但我在查资料的时候发现了很多有意思的内容，我版本控制只用过git，三大工作流虽然都用过，但没去深究过，知之甚少啊。本来以为git应该一家独大了，和几位朋友聊了下发现还有很多很多公司在用svn，甚至还有在用vss的，我着实井底之蛙了。本🐸目前还是用git为主，其他工具学不动了，所以本篇还是以git为主展开。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-git-workflow/git-flow.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-git-workflow/github-flow.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-git-workflow/gitlab-flow1.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-git-workflow/gitlab-flow2.png">
+<meta property="article:published_time" content="2022-02-14T09:25:25.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.819Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhaoluting.github.io/image/tool-git-workflow/git-flow.png">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-git-workflow/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-git-workflow/","path":"tool-git-workflow/","title":"版本控制漫谈"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>版本控制漫谈 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">常见版本控制系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E4%B8%89%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">git三大工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-flow"><span class="nav-number">2.1.</span> <span class="nav-text">Git flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub-flow"><span class="nav-number">2.2.</span> <span class="nav-text">GitHub flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitLab-flow"><span class="nav-number">2.3.</span> <span class="nav-text">GitLab flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96flow"><span class="nav-number">2.4.</span> <span class="nav-text">其他flow</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">3.1.</span> <span class="nav-text">一些小技巧</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-git-workflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          版本控制漫谈
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-14 17:25:25" itemprop="dateCreated datePublished" datetime="2022-02-14T17:25:25+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>上篇<a href="/tool-git-tag/">《git tag使用指南》</a>简单介绍了下如何利用tag来做简易的git版本控制，但我在查资料的时候发现了很多有意思的内容，我版本控制只用过git，三大工作流虽然都用过，但没去深究过，知之甚少啊。本来以为git应该一家独大了，和几位朋友聊了下发现还有很多很多公司在用svn，甚至还有在用vss的，我着实井底之蛙了。本🐸目前还是用git为主，其他工具学不动了，所以本篇还是以git为主展开。</p>
+<span id="more"></span>
+
+<h2 id="常见版本控制系统"><a href="#常见版本控制系统" class="headerlink" title="常见版本控制系统"></a>常见版本控制系统</h2><ul>
+<li><strong>本地版本控制</strong>：大多都是采用某种简单的数据库来记录文件的历次更新差异，其中最流行的一种叫做 RCS，在硬盘上保存补丁集（补丁是指文件修订前后的变化）。</li>
+<li><strong>集中式版本控制</strong>（Centralized Version Control Systems，CVCS）：必须联网使用、单一的集中管理服务器、学习成本低。<ul>
+<li>CVS（Concurrent Versions System，1986）采用Copy-Modify-Merge（修改－冲突－合并）并发工作模式。它的网络化首次允许多个开发人员检出并同时处理相同的文件。</li>
+<li>VSS（Visual Source Safe，1994）微软出品，主要采用Lock-Modify-Unlock（锁定－编辑－解锁）独占工作模式，一个文件一个时间点上只有一个人有权利修改并提交，版本号对应的是单个文件。</li>
+<li>SVN（Subversion，2000）开源免费，采用了分支管理系统，设计目标就是取代CVS，采用Copy-Modify-Merge并发工作模式。</li>
+</ul>
+</li>
+<li><strong>分布式版本控制</strong>（Distributed Version Control System，DVCS）：支持离线、分布式、完整备份、轻量、学习成本较高。<ul>
+<li>Mercurial（HG，2005）是目前次于Git的分布式VCS，随着2019年BitBucket宣布停止对Mercurial的支持，代表着Mercurial逐渐没落。</li>
+<li>Git（2005）是目前最主流的分布式开源版本控制系统，设计初衷完全是为了解决开发Linux内核所产生的实际问题。</li>
+</ul>
+</li>
+</ul>
+<p>目前最多被使用的还是Git和SVN，一直有很多人在争论哪个更好，此处借用一个<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/871/why-is-git-better-than-subversion">高赞回答</a>：<strong>Git is not better than Subversion. But is also not worse. It’s different.</strong><br>Git非常适合开源社区，但并不适合所有企业。就像Google、Facebooke、华为、网易等这类大公司都因为Git的局限性而没有选择Git，比较典型的就是Google自研了非常🐂的单一代码仓库、主干开发模式的版本管理系统Piper。<a target="_blank" rel="noopener" href="https://svnbucket.com/posts/svn-vs-git-difference/">主要是因为Git不适合超大型项目和没有文件级权限控制</a>。所以，根据实际情况选择适合的工具才是最明智的。</p>
+<p>谈到Google的Piper想插一嘴，monorepo是现在很火的一种代码管理模式，也是在微前端领域经常被提到的词汇，指的是在一个项目仓库 (repo) 中管理多个模块&#x2F;包 (package)。Babel、Vue、React、Npm7等等许多开源项目也都采用了monorepo模式，Yarn和Npm也都支持使用Workspaces字段来管理monorepo。如果公司内部有大型项目的话，不妨尝试一下。有兴趣的可以参考<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mV6gvPy-N3NZPEYONV4A0A">《All in one：项目级 monorepo 策略最佳实践》</a>这篇文章。</p>
+<h2 id="git三大工作流"><a href="#git三大工作流" class="headerlink" title="git三大工作流"></a>git三大工作流</h2><p>鉴于Git的灵活性，出现了各种各样的工作流。<a target="_blank" rel="noopener" href="https://www.atlassian.com/git/tutorials/comparing-workflows#centralized-workflow">常见工作流</a>可大致分为集中式、功能分支、Forking三种，业界的三大知名工作流（Git flow、GitHub flow、GitLab flow）均属于功能分支工作流类型。</p>
+<ul>
+<li><strong>集中式工作流</strong>（Centralized Workflow）：类似svn，是只使用一个分支（master）的开发方式，缺点是不同开发的提交混杂在一起，难以定位问题。</li>
+<li><strong>功能分支工作流</strong>（Feature Branch Workflow）：核心理念是所有功能开发都应该在专用分支而不是主分支中进行。通常是一个主干master分支 + 多个feature分支。</li>
+<li><strong>Forking工作流</strong>（Forking Workflow）：以Github为代表的一种代码协作方式，开发者通过Fork源仓库进行编写代码，完成后发起pull request，源仓库作者可以选择是否接受该PR。</li>
+</ul>
+<h3 id="Git-flow"><a href="#Git-flow" class="headerlink" title="Git flow"></a>Git flow</h3><p><a target="_blank" rel="noopener" href="https://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html">Git flow</a>是最早诞生、并得到广泛采用的一种工作流程。从2010年作者Vincent Driessen发表<a target="_blank" rel="noopener" href="https://nvie.com/posts/a-successful-git-branching-model/">《A successful Git branching model》</a>开始，Git flow被大量团队视为规范，同时也饱受争议。2020年Vincent Driessen再次发声，称在持续交付的情况下更推荐使用GitHub flow这类简单工作流。虽然Git flow已跌落神坛，但还是很值得借鉴的。</p>
+<p>Git flow相当严格，清晰可控，各方面都考虑的很周全，但也比较复杂，实施起来如果不依赖自动化工具，单纯靠项目成员自觉遵守的难度比较大。它基于版本发布，目标是一段时间以后产出一个新版本，但是现在web项目大多都是持续发布，这时master和develop差别不大，就没必要维护两个长期分支，这也是被众多团队诟病的地方。</p>
+<ul>
+<li><strong>主分支（master）</strong>：长期分支，一般用于管理对外发布版本，每个tag都对应一个发布版本。</li>
+<li><strong>开发分支（develop）</strong>：长期分支，一般用于作为日常开发汇总，即开发版的代码。</li>
+<li>**功能分支（feature&#x2F;*）**：短期分支，一般用于一个新功能的开发。从develop分支分出，开发完成后，再并入develop，最后删除该分支。</li>
+<li>**预发布分支（release&#x2F;*）**：短期分支，发布正式版本之前用于测试的预发布版本。从develop拉出，预发布结束后，合并进develop和master，最后在master打个tag，并删除该预发布分支。</li>
+<li>**修补分支（fixbug&#x2F;*）**：短期分支，从master拉出，修补结束后，合并进develop和master，最后在master打个tag，删除该修补分支。</li>
+<li>**辅助分支（support&#x2F;*）**：长期分支，一般用于特殊功能支持的分支，不合并到主分支。属于实验性分支，所以一般不会提到，利用这个分支可以使工作流同时支持多版本。</li>
+</ul>
+<img src="../image/tool-git-workflow/git-flow.png" width="70%">
+
+
+<h3 id="GitHub-flow"><a href="#GitHub-flow" class="headerlink" title="GitHub flow"></a>GitHub flow</h3><p><a target="_blank" rel="noopener" href="https://docs.github.com/cn/get-started/quickstart/github-flow">GitHub flow</a>是GitHub<a target="_blank" rel="noopener" href="http://scottchacon.com/2011/08/31/github-flow.html">在2011年发布的工作流模型</a>，是Git flow的简化版，专门配合”持续发布”。GitHub flow只有一个长期分支，就是master，因此用起来非常简单。<br>GitHub flow的最大优点就是简单，适合小团队、需求少和持续发布的项目，但是它不适用于以下场景：版本延迟发布（例如应用审核）、不同环境的部署（例如测试环境，预发环境，正式环境）、不同版本发布与修复。</p>
+<img src="../image/tool-git-workflow/github-flow.png">
+
+<ul>
+<li>第一步：根据需求，从master拉出新分支，不区分功能分支或补丁分支。</li>
+<li>第二步：新分支开发完成或需要讨论的时候，就向master发起一个pull request（简称PR）。</li>
+<li>第三步：PR既是通知又是对话机制，可以一起评审和讨论代码，过程中还可以不断提交代码。</li>
+<li>第四步：PR被接受，合并进master，部署到生产环境后，删除本次需求拉出的分支（也可先部署再合并）。</li>
+</ul>
+<h3 id="GitLab-flow"><a href="#GitLab-flow" class="headerlink" title="GitLab flow"></a>GitLab flow</h3><p><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/topics/gitlab_flow.html">GitLab flow</a>是Gitlab在2014年创建的工作流，吸取了Git flow与GitHub flow两者的优点，既有适应不同开发环境的弹性，又有单一主分支的简单和便利。GitLab flow分为持续发布与版本发布两种情况，以适应不同的发布类型。</p>
+<ul>
+<li><strong>持续发布</strong>：<ul>
+<li>为不同的环境建立不同的分支：开发环境master、预发环境pre-production、生产环境production。</li>
+<li>上游优先原则（upsteam first）：只存在一个主分支master，是所有其他分支的”上游”，代码合并的顺序要按环境依次推送，确保代码被充分测试过，才会从上游分支合并到下游分支。master &#x3D;&gt; pre-production &#x3D;&gt; production。</li>
+</ul>
+</li>
+<li><strong>版本发布</strong>：每个稳定版本都从master拉出一个分支，比如2-3-stable、2-4-stable等等。只有修补bug，才允许将代码合并到这些分支，并且此时要更新小版本号。</li>
+</ul>
+<div><img src="../image/tool-git-workflow/gitlab-flow1.png" width="52%" style="margin: 0 1%;display:inline-block!important;"><img src="../image/tool-git-workflow/gitlab-flow2.png" width="44%" style="margin: 0 1%;display:inline-block!important;"></div>
+
+<h3 id="其他flow"><a href="#其他flow" class="headerlink" title="其他flow"></a>其他flow</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://trunkbaseddevelopment.com/">Trunk-based development</a>：是持续集成思想所崇尚的工作方式，由单个主干分支和多个发布分支组成，没有显性的特性分支，每个发布分支在特定版本的提交点上从主干创建，用来进行上线部署和Hotfix。</li>
+<li><a target="_blank" rel="noopener" href="https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow">OneFlow</a>：Git flow简化版，只有一个长期主分支master。它的一个变体是双主分支，即develop和master。</li>
+<li>AoneFlow：阿里研发效能事业部基于TrunkBased和GitFlow提出的新思路。只使用三种分支类型：主干分支、特性分支、发布分支。从主干创建特性分支，通过合并特性分支形成发布分支，发布到线上正式环境后，合并相应的发布分支到主干，在主干添加标签，同时删除该发布分支关联的特性分支。</li>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E5%88%86%E5%B8%83%E5%BC%8F-Git-%E5%88%86%E5%B8%83%E5%BC%8F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">Dictator and Lieutenant Workflow</a>：多仓库工作流程的变种，一般适用于拥有数百位协作开发者的超大型项目，例如Linux内核。项目总负责人（即主管）可以把大量分散的集成工作委托给不同的小组负责人分别处理，然后在不同时刻将大块的代码子集统筹起来，用于之后的整合。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SVN还是Git？Git flow有害？Monorepo还是Multirepo？网上很多程序员围绕这几个话题吵架吵得很凶，就像有人大喊了一句“PHP是世界上最好的语言”一样。引用下Vincent Driessen说的：“To conclude, always remember that panaceas don’t exist. Consider your own context. Don’t be hating. Decide for yourself.”<br>上文介绍的一些工作流已经基本上能覆盖到所有的开发场景，但这些工作流只作为指导原则，而不是具体规则。可以根据项目情况选用其中一套成熟的工作流，同时对于一些实际问题做一些调整，以提高工作效率为根本目的，做出一套最适合的工作流。</p>
+<ul>
+<li>集中式工作流适用于从SVN迁移到Git或较小规模的团队。</li>
+<li>Fork工作流适用于公共开源项目。</li>
+<li>Git flow适用于大团队多版本并存迭代的开发流程。</li>
+<li>GitHub flow适用于中小型团队持续集成的开发流程。</li>
+<li>GitLab flow适用范围则介于上面二者之间，支持持续发布与版本发布两种情况。</li>
+</ul>
+<h3 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h3><ul>
+<li><strong>善用工具和插件</strong>：像Sourcetree和Git Tower这类可视化工具都有集成git flow，vscode也能搜到各类flow的插件，还有git-flow-avh这类的命令工具，如果公司有发布平台能自动管理流程的话那是更加不错了。</li>
+<li><strong>保护长期分支</strong>：比较重要的项目建议将长期分支保护起来，只允许负责人修改和审批，开发人员必须通过Pull Request（Gitlab里面叫Merge Request）来将新代码合并至长期分支。</li>
+<li><strong>短期分支存在时间不能过长</strong>：多人协作的项目，如果短期分支的需求开发周期较长，建议分割成多个分支定期合并，防止后期产生冲突，被合并后也要及时更新tag并删除，保持分支区域的整洁。</li>
+<li><strong>学好英语🥲</strong>：查资料全是英文，<a target="_blank" rel="noopener" href="https://githubflow.github.io/">《The best way to use Git and GitHub》</a>、<a target="_blank" rel="noopener" href="https://about.gitlab.com/topics/version-control/what-are-gitlab-flow-best-practices/">《What are GitLab Flow best practices?》</a>这类优秀的最佳实践文章值得一看。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-git-tag/" rel="prev" title="git tag使用指南">
+                  <i class="fa fa-chevron-left"></i> git tag使用指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-git-hooks/" rel="next" title="githooks">
+                  githooks <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

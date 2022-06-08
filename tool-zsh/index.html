@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="了解mac terminal（终端）123system_profiler    #显示Mac的硬件和软件信息sw_vers            #显示OSX系统版本uname -av          #显示OS X Darwin内核版本 简单来说：    unix是最早的出来的多任务、多用户系统，是对源代码实行知识产权保护的传统商业软件，是收费的。  linux是一个牛人为了让人们用到免费的类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac terminal入门篇">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-zsh/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="了解mac terminal（终端）123system_profiler    #显示Mac的硬件和软件信息sw_vers            #显示OSX系统版本uname -av          #显示OS X Darwin内核版本 简单来说：    unix是最早的出来的多任务、多用户系统，是对源代码实行知识产权保护的传统商业软件，是收费的。  linux是一个牛人为了让人们用到免费的类">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-01-25T13:36:26.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.835Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-zsh/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-zsh/","path":"tool-zsh/","title":"Mac terminal入门篇"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mac terminal入门篇 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3mac-terminal%EF%BC%88%E7%BB%88%E7%AB%AF%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">了解mac terminal（终端）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF"><span class="nav-number">2.</span> <span class="nav-text">快速打开终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%BA%A7Shell%E2%80%93zsh"><span class="nav-number">3.</span> <span class="nav-text">终级Shell–zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">使用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">4.1.</span> <span class="nav-text">快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%A9%E5%86%99"><span class="nav-number">4.2.</span> <span class="nav-text">缩写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">4.3.</span> <span class="nav-text">常用的通配符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-number">4.4.</span> <span class="nav-text">处理特殊字符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">列出文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E7%9B%AE%E5%BD%95"><span class="nav-number">5.2.</span> <span class="nav-text">转换目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%88%96%E7%A8%8B%E5%BA%8F"><span class="nav-number">5.3.</span> <span class="nav-text">打开文件目录或程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9B%AE%E5%BD%95"><span class="nav-number">5.4.</span> <span class="nav-text">建立新目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="nav-number">5.5.</span> <span class="nav-text">新建文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%96%87%E4%BB%B6"><span class="nav-number">5.6.</span> <span class="nav-text">拷贝文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-number">5.7.</span> <span class="nav-text">删除文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="nav-number">5.8.</span> <span class="nav-text">移动文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91"><span class="nav-number">5.9.</span> <span class="nav-text">文本编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nano"><span class="nav-number">5.9.1.</span> <span class="nav-text">nano</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vi"><span class="nav-number">5.9.2.</span> <span class="nav-text">vi</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%B9%B6%E8%BE%93%E5%87%BA%E5%88%B0-Terminal-%E7%AA%97%E5%8F%A3"><span class="nav-number">5.10.</span> <span class="nav-text">读取文件并输出到 Terminal 窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E7%9A%84%E8%AF%A6%E7%BB%86%E5%B8%AE%E5%8A%A9"><span class="nav-number">5.11.</span> <span class="nav-text">查看命令的详细帮助</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E6%9F%90%E4%B8%AA%E5%91%BD%E4%BB%A4%E7%9A%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">5.12.</span> <span class="nav-text">定位某个命令的文件路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.13.</span> <span class="nav-text">根据文件的内容输出文件类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-URL-%E8%AF%AD%E6%B3%95%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8B%E5%B7%A5%E4%BD%9C%E7%9A%84%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%B7%A5%E5%85%B7"><span class="nav-number">5.14.</span> <span class="nav-text">利用 URL 语法在命令行下工作的文件传输工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">5.15.</span> <span class="nav-text">运行脚本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%8E%8B%E5%92%8C%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4"><span class="nav-number">5.16.</span> <span class="nav-text">常用解压和压缩命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#say"><span class="nav-number">5.17.</span> <span class="nav-text">say</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%A5%E5%8E%86%EF%BC%8C%E6%88%96%E8%80%85%E6%8C%87%E5%AE%9A%E6%97%A5%E6%9C%9F%E7%9A%84%E6%97%A5%E5%8E%86"><span class="nav-number">5.18.</span> <span class="nav-text">显示当前日历，或者指定日期的日历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sudo"><span class="nav-number">5.19.</span> <span class="nav-text">sudo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%A9%E8%9B%8B%E6%97%B6%E5%88%BB"><span class="nav-number">6.</span> <span class="nav-text">彩蛋时刻</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-zsh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mac terminal入门篇
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-01-25 21:36:26" itemprop="dateCreated datePublished" datetime="2018-01-25T21:36:26+08:00">2018-01-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="了解mac-terminal（终端）"><a href="#了解mac-terminal（终端）" class="headerlink" title="了解mac terminal（终端）"></a>了解mac terminal（终端）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">system_profiler    <span class="comment">#显示Mac的硬件和软件信息</span></span><br><span class="line">sw_vers            <span class="comment">#显示OSX系统版本</span></span><br><span class="line"><span class="built_in">uname</span> -av          <span class="comment">#显示OS X Darwin内核版本</span></span><br></pre></td></tr></table></figure>
+<p>简单来说：  </p>
+<ul>
+<li>unix是最早的出来的多任务、多用户系统，是对源代码实行知识产权保护的传统商业软件，是收费的。 </li>
+<li>linux是一个牛人为了让人们用到免费的类unix系统，开发出了linux的内核，是开放源代码的自由软件。</li>
+<li>mac os x是由Unix的一个分支(BSD)发展过来的，核心叫darwin(达尔文)。</li>
+</ul>
+<p>在unix 内核的操作系统中,包括衍生出来的分支linux、OS X等，所有文件都挂在跟目录 &#x2F; 下面，没有Windows下的盘符概念。</p>
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>路径</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>根目录</td>
+<td>&#x2F;mach_kernel</td>
+<td>内核就在这</td>
+</tr>
+<tr>
+<td>驱动所在</td>
+<td>&#x2F;Systme&#x2F;Library&#x2F;Extensions</td>
+<td></td>
+</tr>
+<tr>
+<td>用户文件夹(home folder)</td>
+<td>&#x2F;User&#x2F;用户名</td>
+<td>简写：~</td>
+</tr>
+<tr>
+<td>桌面</td>
+<td>&#x2F;User&#x2F;用户名&#x2F;Desktop</td>
+<td></td>
+</tr>
+<tr>
+<td>当前目录</td>
+<td>.</td>
+<td></td>
+</tr>
+<tr>
+<td>父目录</td>
+<td>..</td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意：在 Unix系统中是区别大小写字符的，并且对于文件名，必须包括扩展名。</p>
+</blockquote>
+<h2 id="快速打开终端"><a href="#快速打开终端" class="headerlink" title="快速打开终端"></a>快速打开终端</h2><ol>
+<li>spotlight方法：首先用快捷键打开spotlight（command+空格），输入ter，自动显示出终端全称，按enter即可打开终端。  </li>
+<li>Finder打开：Finder——应用程序——实用工具——终端  </li>
+<li>快捷键完成当前文件夹打开终端：打开“系统偏好设置”——键盘——快捷键——服务，找到“新建位于文件夹位置的终端窗口”打钩。之后，只要在文件夹上 右键——服务——“新建位于文件夹位置的终端窗口” 即可。</li>
+</ol>
+<h2 id="终级Shell–zsh"><a href="#终级Shell–zsh" class="headerlink" title="终级Shell–zsh"></a>终级Shell–zsh</h2><p>shell 是我们和系统内核指令打交道的一座桥梁,我们通过键盘输入一种自己容易记忆识别的符号标识(shell 命令)，然后 shell 解析这种命令再反馈给内核去执行一系列操作。</p>
+<p><strong>可以通过以下命令查看安装了哪些shell（OS X 系统预装了zsh）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/shells</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看系统默认的shell</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$SHELL</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>将默认shell改成zsh</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>zsh是shell的一种，由于配置过于复杂，以至于很多人并不常用他。所以大多数Linux产品默认使用的都是bash shell。直到一个开源项目的出现<a target="_blank" rel="noopener" href="http://ohmyz.sh/">oh my zsh</a>，github来管理zsh的配置和支持更多插件，使得zsh配置变得更容易，使用起来更加强大。以至于他有了个外号—<strong>终极shell</strong>。</p>
+</blockquote>
+<p><strong>安装oh my zsh</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置文件路径：</strong> ~&#x2F;.zshrc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">大部分配置都可以在配置文件中进行设置，这里大概翻译一下。</span><br><span class="line"></span><br><span class="line"><span class="comment"># ZSH的环境变量</span></span><br><span class="line"><span class="built_in">export</span> ZSH=/Users/dawang/.oh-my-zsh</span><br><span class="line"><span class="comment"># 主题设置</span></span><br><span class="line"><span class="comment"># 主题列表在 ~/.oh-my-zsh/themes/</span></span><br><span class="line"><span class="comment"># [主题列表](https://github.com/robbyrussell/oh-my-zsh/wiki/themes)</span></span><br><span class="line"><span class="comment"># 如果设置为 &quot;random&quot;, 每次开启都会是不同的主题</span></span><br><span class="line">ZSH_THEME=<span class="string">&quot;robbyrussell&quot;</span></span><br><span class="line"><span class="comment"># 如果想要大小写敏感，可以取消注释下面的一行</span></span><br><span class="line"><span class="comment"># CASE_SENSITIVE=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># 如果想要连接符不敏感，可以取消注释下面的一行。_ 和 - 将可以互换</span></span><br><span class="line"><span class="comment"># HYPHEN_INSENSITIVE=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># 如果不想要自动更新，可以取消注释下面的一行</span></span><br><span class="line"><span class="comment"># DISABLE_AUTO_UPDATE=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># 自动更新的时间间隔，单位是天，这里设置 30 天更新一次</span></span><br><span class="line"><span class="built_in">export</span> UPDATE_ZSH_DAYS=30</span><br><span class="line"><span class="comment"># 如果不想要 ls 命令输出带颜色，可以取消注释下面的一行</span></span><br><span class="line"><span class="comment"># DISABLE_LS_COLORS=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># 是否禁止更改终端标题,不要禁止,不然所有终端tab只显示zsh了,而不随着目录的改变而改变显示</span></span><br><span class="line"><span class="comment"># DISABLE_AUTO_TITLE=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># 自动纠正命令,不启用,不怎么好用</span></span><br><span class="line"><span class="comment"># ENABLE_CORRECTION=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># 按tab键补全命令的时候,如果没什么可补全的就会出现三个红点</span></span><br><span class="line"><span class="comment"># COMPLETION_WAITING_DOTS=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># Uncomment the following line if you want to disable marking untracked files</span></span><br><span class="line"><span class="comment"># under VCS as dirty. This makes repository status check for large repositories</span></span><br><span class="line"><span class="comment"># much, much faster.</span></span><br><span class="line"><span class="comment"># 不要在意这些细节，不需要改动</span></span><br><span class="line"><span class="comment"># DISABLE_UNTRACKED_FILES_DIRTY=&quot;true&quot;</span></span><br><span class="line"><span class="comment"># 历史命令日期显示格式</span></span><br><span class="line"><span class="comment"># 有三种方式: &quot;mm/dd/yyyy&quot;|&quot;dd.mm.yyyy&quot;|&quot;yyyy-mm-dd&quot;</span></span><br><span class="line"><span class="comment"># HIST_STAMPS=&quot;yyyy-mm-dd&quot;</span></span><br><span class="line"><span class="comment"># Would you like to use another custom folder than $ZSH/custom?</span></span><br><span class="line"><span class="comment"># ZSH_CUSTOM=/path/to/new-custom-folder</span></span><br><span class="line"><span class="comment"># Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)</span></span><br><span class="line"><span class="comment"># Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/</span></span><br><span class="line"><span class="comment"># Example format: plugins=(rails git textmate ruby lighthouse)</span></span><br><span class="line"><span class="comment"># 插件设置，如果添加太多启动速度会比较慢</span></span><br><span class="line">plugins=(git autojump)</span><br><span class="line">[[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] &amp;&amp; . ~/.autojump/etc/profile.d/autojump.zsh</span><br><span class="line"><span class="comment"># 剩下部分比较不常改动 </span></span><br><span class="line"><span class="comment"># User configuration</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin&quot;</span></span><br><span class="line"><span class="comment"># export MANPATH=&quot;/usr/local/man:$MANPATH&quot;</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$ZSH</span>/oh-my-zsh.sh</span><br><span class="line"><span class="comment"># You may need to manually set your language environment</span></span><br><span class="line"><span class="comment"># export LANG=en_US.UTF-8</span></span><br><span class="line"><span class="comment"># Preferred editor for local and remote sessions</span></span><br><span class="line"><span class="comment"># if [[ -n $SSH_CONNECTION ]]; then</span></span><br><span class="line"><span class="comment">#   export EDITOR=&#x27;vim&#x27;</span></span><br><span class="line"><span class="comment"># else</span></span><br><span class="line"><span class="comment">#   export EDITOR=&#x27;mvim&#x27;</span></span><br><span class="line"><span class="comment"># fi</span></span><br><span class="line"><span class="comment"># Compilation flags</span></span><br><span class="line"><span class="comment"># export ARCHFLAGS=&quot;-arch x86_64&quot;</span></span><br><span class="line"><span class="comment"># ssh</span></span><br><span class="line"><span class="comment"># export SSH_KEY_PATH=&quot;~/.ssh/dsa_id&quot;</span></span><br><span class="line"><span class="comment"># Set personal aliases, overriding those provided by oh-my-zsh libs,</span></span><br><span class="line"><span class="comment"># plugins, and themes. Aliases can be placed here, though oh-my-zsh</span></span><br><span class="line"><span class="comment"># users are encouraged to define aliases within the ZSH_CUSTOM folder.</span></span><br><span class="line"><span class="comment"># For a full list of active aliases, run `alias`.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Example aliases</span></span><br><span class="line"><span class="comment"># alias zshconfig=&quot;mate ~/.zshrc&quot;</span></span><br><span class="line"><span class="comment"># alias ohmyzsh=&quot;mate ~/.oh-my-zsh&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><ol>
+<li>插件相关的文件在~&#x2F;.oh-my-zsh&#x2F;plugins目录下，默认提供了100多种。插件也是在.zshrc里配置，找到plugins关键字，系统默认加载git与autojump，可以在后面追加启用插件。</li>
+</ol>
+<ul>
+<li><p>git：当你处于一个 git 受控的目录下时，Shell 会明确显示 「git」和 branch。另外对git 很多命令进行了简化，例如 gco&#x3D;’git checkout’、gst&#x3D;’git status’、g&#x3D;’git’等等，熟练使用可以大大减少 git 的命令长度，命令内容可以参考~&#x2F;.oh-my-zsh&#x2F;plugins&#x2F;git&#x2F;git.plugin.zsh</p>
+</li>
+<li><p>安装了autojump之后，zsh 会自动记录你访问过的目录，通过 j + 目录名 可以直接进行目录跳转，而且目录名支持模糊匹配和自动补全。</p>
+</li>
+</ul>
+<ol start="2">
+<li><p>配置文件底部可以设置 alias（通用别名），还能针对文件类型设置对应的打开程序。</p>
+</li>
+<li><p>连按两次Tab会列出所有的补全列表并直接开始选择，补全项可以使用 ctrl+n&#x2F;p&#x2F;f&#x2F;b 或 方向键上下左右切换。</p>
+</li>
+<li><p>在zsh中只需要键入 ls -<tab> 就会列出所有的选项和帮助说明。  </p>
+</li>
+<li><p>命令参数补全。键入 kill <tab> 就会列出所有的进程名和对应的进程号。</p>
+</li>
+<li><p>更智能的历史命令。在用或者方向上键查找历史命令时，zsh支持限制查找。比如，输入ls,然后再按方向上键，则只会查找用过的ls命令。</p>
+</li>
+<li><p>多个终端会话共享历史记录。</p>
+</li>
+<li><p>目录浏览和跳转：输入 d，即可列出你在这个会话里访问的目录列表，输入列表前的序号，即可直接跳转。</p>
+</li>
+<li><p>在当前目录下输入 .. 或 … ，或直接输入当前目录名都可以跳转，你甚至不再需要输入 cd 命令了。在你知道路径的情况下，比如 &#x2F;usr&#x2F;local&#x2F;bin 你可以输入 cd &#x2F;u&#x2F;l&#x2F;b 然后按进行补全快速输入。</p>
+</li>
+<li><p>通配符搜索：例如“ls -l **&#x2F;*.sh”，可以递归显示当前目录下的 shell 文件，文件少时可以代替 find。使用 **&#x2F; 来递归搜索。</p>
+</li>
+<li><p>如何在命令里面打回车： \ 后面接回车</p>
+</li>
+<li><p>一句话执行两个命令： xxx; yyy</p>
+</li>
+<li><p>一句话执行两个命令： xxx&amp;&amp; yyy</p>
+</li>
+</ol>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><ul>
+<li>光标左移：Ctrl + B</li>
+<li>光标右移：Ctrl + F</li>
+<li>光标至行首：Ctrl + A</li>
+<li>光标至行尾：Ctrl + E</li>
+<li>删除至行首：Ctrl + U</li>
+<li>删除至行尾：Ctrl + K</li>
+<li>删除至单词开始：Ctrl + W</li>
+<li>清屏：Ctrl + L</li>
+<li>插入最近删除：Ctrl + Y</li>
+<li>历史命令：↑ 或 ↓箭头，或 ⌃ + P、Ctrl + N</li>
+<li>搜索历史命令：Ctrl + R</li>
+<li>中止执行：Ctrl + C</li>
+<li>按住 ⌘，单击路径可以在 Finder 中打开</li>
+</ul>
+<h3 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>全写</th>
+<th>缩写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创建目录</td>
+<td>make directory</td>
+<td>mkdir</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>remove</td>
+<td>rm</td>
+</tr>
+<tr>
+<td>移动&#x2F;重命名</td>
+<td>move</td>
+<td>mv</td>
+</tr>
+<tr>
+<td>复制</td>
+<td>copy</td>
+<td>cp</td>
+</tr>
+<tr>
+<td>罗列</td>
+<td>list</td>
+<td>ls</td>
+</tr>
+<tr>
+<td>链接</td>
+<td>link</td>
+<td>ln *</td>
+</tr>
+</tbody></table>
+<h3 id="常用的通配符"><a href="#常用的通配符" class="headerlink" title="常用的通配符"></a>常用的通配符</h3><ul>
+<li>星号（＊，Asterisk）——代表任何长度的任何字符。例如*.tiff代表所有格式为tiff的文件。</li>
+<li>问号（?，Question mark）——代表任何单个字符。例如b?ok匹配 book 但是不匹配 brook。</li>
+<li>方括号（[]，Square brackets）——定义一定范围的字符，例如[Dd]ocument匹配 Document 以及 document；doc[1-9]匹配doc1, doc2, …, doc9。</li>
+</ul>
+<h3 id="处理特殊字符"><a href="#处理特殊字符" class="headerlink" title="处理特殊字符"></a>处理特殊字符</h3><ul>
+<li><p>如果目录中有特殊字符（空格，括号，引号，[]，!，$，&amp;，*，;，|，\），那么直接输入空格会造成系统识别困难，必须使用特殊的语法来表示这些字符。例如上例中，空格前添加反斜杠“\”（back slash）即可：cd Punlic&#x2F;Drop\ Box&#x2F;。除了反斜杠，也可以用引号的方法：cd “Public&#x2F;Drop Box”。</p>
+</li>
+<li><p>如果不想手动输入，也可以把文件从 Finder 拖到 Terminal 窗口来创建绝对路径，这会方便一些，因为上面提到的所有特殊字符在拖动后都会自动变成系统可识别的表示方法。</p>
+</li>
+<li><p>更有效率的解决方案是使用 Tab Complete 功能。连按两次Tab进行选择。Tab complete 同样会处理那些特殊字符。</p>
+</li>
+</ul>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><h3 id="列出文件"><a href="#列出文件" class="headerlink" title="列出文件"></a>列出文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> 参数 目录名        </span><br></pre></td></tr></table></figure>
+<p>以下为常用参数，可组合使用。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>显示所有档案及目录（ls内定将档案名或目录名称为“.”的视为影藏，不会列出）。</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>显示除影藏文件“.”和“..”以外的所有文件列表。</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>仅显示目录名，而不显示目录下的内容列表。显示符号链接文件本身，而不显示其所指向的目录列表。</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>以长格式显示目录下的内容列表。输出的信息从左到右依次包括文件名，文件类型、权限模式、硬连接数、所有者、组、文件大小和文件的最后修改时间等。</td>
+</tr>
+<tr>
+<td>-R</td>
+<td>递归处理，将指定目录下的所有文件及子目录一并处理； –full-time：列出完整的日期与时间； –color[&#x3D;WHEN]：使用不同的颜色高亮显示不同类型的。</td>
+</tr>
+</tbody></table>
+<h3 id="转换目录"><a href="#转换目录" class="headerlink" title="转换目录"></a>转换目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span>     <span class="comment">#含义是“print working directory”，会显示当前目录的绝对路径。</span></span><br><span class="line"><span class="built_in">cd</span> 路径  <span class="comment">#改变当前目录到你指定的目录。不指定则会返回 home folder</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="打开文件目录或程序"><a href="#打开文件目录或程序" class="headerlink" title="打开文件目录或程序"></a>打开文件目录或程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">open /Applications/Safari.app/  <span class="comment">#打开应用</span></span><br><span class="line">open .  <span class="comment">#打开当前目录。</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="建立新目录"><a href="#建立新目录" class="headerlink" title="建立新目录"></a>建立新目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> 目录名</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p</td>
+<td>递归创建目录，如果文件不存在，则逐层创建目录。</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示目录创建的信息。</td>
+</tr>
+</tbody></table>
+<h3 id="新建文件"><a href="#新建文件" class="headerlink" title="新建文件"></a>新建文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> 文件名   <span class="comment">#主要功能与时间戳有关，用来更新文件的访问和修改时间。如果文件不存在，会创建相应的空文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> 参数 源文件 目标文件</span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> file /usr/men/tmp/file1  <span class="comment">#将文件file复制到目录/usr/men/tmp下，并改名为file1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> -r /usr/men /usr/zh      <span class="comment">#将目录/usr/men下的所有文件及其子目录复制到目录/usr/zh中</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> -i /usr/men m*.c /usr/zh <span class="comment">#交互式地将目录/usr/men中的以m打头的所有.c文件复制到目录/usr/zh中（覆盖之前询问用户）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span>  foo.txt        <span class="comment">#删除一般文件  </span></span><br><span class="line"><span class="built_in">rm</span>  -r  foofolder  <span class="comment">#删除目录</span></span><br><span class="line"><span class="built_in">rm</span>  -r  *          <span class="comment">#删除当前目录下的所有文件及目录</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r</td>
+<td>删除目录时必需参数；</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>删除前逐一询问确认；</td>
+</tr>
+<tr>
+<td>－rf</td>
+<td>表示递归和强制，千万要小心使用，如果执行了 rm -rf &#x2F; 就全没了</td>
+</tr>
+</tbody></table>
+<h3 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> file1 file2      <span class="comment">#（若目标是文件名，则相当于文件改名）将文件 file1 改名为 file2。</span></span><br><span class="line"><span class="built_in">mv</span> file1 file2 /tmp <span class="comment">#将文件 file1 和文件 file2 移动到目录 /tmp 下</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+</table>
+<ul>
+<li>i  | 在覆盖已存在文件时作提示，若回答 y 则覆盖，其他则中止</li>
+<li>f  |覆盖前不作任何提示</li>
+</ul>
+<h3 id="文本编辑"><a href="#文本编辑" class="headerlink" title="文本编辑"></a>文本编辑</h3><table>
+<thead>
+<tr>
+<th>编辑器</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>vi</td>
+<td>老式的简单文本编辑器</td>
+</tr>
+<tr>
+<td>vim</td>
+<td>复杂的文本编辑器，相当于vi的升级版</td>
+</tr>
+<tr>
+<td>nano</td>
+<td>小巧自由的舒适型编辑器</td>
+</tr>
+</tbody></table>
+<h4 id="nano"><a href="#nano" class="headerlink" title="nano"></a><a target="_blank" rel="noopener" href="http://man.linuxde.net/nano">nano</a></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano 路径+文件名 <span class="comment">#若文件存在将打开这个文件；不存在则会创建新文件并打开。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>复制一整行：Alt+6</li>
+<li>剪贴一整行：Ctrl+K</li>
+<li>粘贴：Ctrl+U</li>
+<li>搜索: Ctrl+W，然后输入你要搜索的关键字，回车确定，定位到第一个匹配的文本，接着可用Alt+W来定位到下一个匹配的文本。</li>
+<li>翻页到上一页：Ctrl+Y</li>
+<li>翻页到下一页：Ctrl+V</li>
+<li>保存：Ctrl+O 保存所做的修改</li>
+<li>退出：Ctrl+X。如果你修改了文件，下面会询问你是否需要保存修改。输入Y确认保存，输入N不保存，按Ctrl+C取消返回。如果输入了Y，下一步会让你输入想要保存的文件名。如果不需要修改文件名直接回车就行；若想要保存成别的名字（也就是另存为）则输入新名称然后确 定。这个时候也可用Ctrl+C来取消返回。</li>
+</ul>
+<h4 id="vi"><a href="#vi" class="headerlink" title="vi"></a><a target="_blank" rel="noopener" href="http://man.linuxde.net/vi">vi</a></h4><blockquote>
+<p>vi命令是UNIX操作系统和类UNIX操作系统中最通用的全屏幕纯文本编辑器。Linux中的vi编辑器叫vim，它是vi的增强版（vi Improved），与vi编辑器完全兼容，而且实现了很多增强功能。</p>
+</blockquote>
+<p>vi编辑器提供了丰富的内置命令，有些内置命令使用键盘组合键即可完成，有些内置命令则需要以冒号“：”开头输入。常用内置命令如下：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+u</td>
+<td>向文件首翻半屏；</td>
+</tr>
+<tr>
+<td>Ctrl+d</td>
+<td>向文件尾翻半屏；</td>
+</tr>
+<tr>
+<td>Ctrl+f</td>
+<td>向文件尾翻一屏；</td>
+</tr>
+<tr>
+<td>Ctrl+b</td>
+<td>向文件首翻一屏；</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>从编辑模式切换到命令模式；</td>
+</tr>
+<tr>
+<td>ZZ</td>
+<td>命令模式下保存当前文件所做的修改后退出vi；</td>
+</tr>
+<tr>
+<td>:行号</td>
+<td>光标跳转到指定行的行首；</td>
+</tr>
+<tr>
+<td>:wq</td>
+<td>在命令模式下，执行存盘退出操作；</td>
+</tr>
+<tr>
+<td>:w</td>
+<td>在命令模式下，执行存盘操作；</td>
+</tr>
+<tr>
+<td>:w!</td>
+<td>在命令模式下，执行强制存盘操作；</td>
+</tr>
+<tr>
+<td>:q</td>
+<td>在命令模式下，执行退出vi操作；</td>
+</tr>
+<tr>
+<td>:q!</td>
+<td>在命令模式下，执行强制退出vi操作；</td>
+</tr>
+<tr>
+<td>:set number</td>
+<td>在命令模式下用于在最左端显示行号；</td>
+</tr>
+<tr>
+<td>:set nonumber</td>
+<td>在命令模式下用于在最左端不显示行号；</td>
+</tr>
+</tbody></table>
+<h3 id="读取文件并输出到-Terminal-窗口"><a href="#读取文件并输出到-Terminal-窗口" class="headerlink" title="读取文件并输出到 Terminal 窗口"></a>读取文件并输出到 Terminal 窗口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> foo.txt                        <span class="comment">#显示文件全部内容</span></span><br><span class="line"><span class="built_in">cat</span> &gt; filename                     <span class="comment">#创建文件并进入编辑模式</span></span><br><span class="line"><span class="built_in">cat</span> foo.txt bar.txt &gt; foobar.txt   <span class="comment">#合并文件内容</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看命令的详细帮助"><a href="#查看命令的详细帮助" class="headerlink" title="查看命令的详细帮助"></a>查看命令的详细帮助</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man 命令名</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空格键</td>
+<td>向文件尾部翻一屏</td>
+</tr>
+<tr>
+<td>b</td>
+<td>向文件首部翻一屏</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>后跟一个字符串和[Enter]来查找字符串</td>
+</tr>
+<tr>
+<td>n</td>
+<td>发现本次查找的下一个匹配</td>
+</tr>
+<tr>
+<td>N</td>
+<td>发现本次查找的上一个匹配</td>
+</tr>
+<tr>
+<td>q</td>
+<td>退出</td>
+</tr>
+</tbody></table>
+<h3 id="定位某个命令的文件路径"><a href="#定位某个命令的文件路径" class="headerlink" title="定位某个命令的文件路径"></a>定位某个命令的文件路径</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> 命令</span><br></pre></td></tr></table></figure>
+<p>这个命令会定位某个命令的文件路径。换言之，它会告诉你你执行某个具体命令的时候，在使用哪个文件。</p>
+<h3 id="根据文件的内容输出文件类型"><a href="#根据文件的内容输出文件类型" class="headerlink" title="根据文件的内容输出文件类型"></a>根据文件的内容输出文件类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file 文件路径</span><br></pre></td></tr></table></figure>
+<p>如果一个文件缺失了扩展名，那么这个命令可能会非常有用。</p>
+<h3 id="利用-URL-语法在命令行下工作的文件传输工具"><a href="#利用-URL-语法在命令行下工作的文件传输工具" class="headerlink" title="利用 URL 语法在命令行下工作的文件传输工具"></a>利用 URL 语法在命令行下工作的文件传输工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl www.baidu.com              <span class="comment">#查看网站源码</span></span><br><span class="line">curl -o 文件名 www.sina.com      <span class="comment">#下载</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="运行脚本命令"><a href="#运行脚本命令" class="headerlink" title="运行脚本命令"></a>运行脚本命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh 脚本文件名</span><br></pre></td></tr></table></figure>
+<p>例: 所有需要的操作存成一个脚本，以后只要运行一次这个脚本就可以了。</p>
+<ol>
+<li>终端中运行nano &#x2F;clean；</li>
+<li>把下列代码粘贴到 nano 中；<br>rm -rf &#x2F;System&#x2F;Library&#x2F;Extensions.kextcache<br>rm -rf &#x2F;System&#x2F;Library&#x2F;Extensions.mkext<br>chown -R root:wheel &#x2F;System&#x2F;Library&#x2F;Extensions<br>chmod -R 755 &#x2F;System&#x2F;Library&#x2F;Extensions<br>diskutil repairpermissions &#x2F;<br>kextcache -k &#x2F;System&#x2F;Library&#x2F;Extensions&#x2F;  </li>
+<li>Ctrl ＋O 存盘，Ctrl＋X 退出；  </li>
+<li>以后只要在终端中运行一次 sh &#x2F;clean即可；</li>
+</ol>
+<h3 id="常用解压和压缩命令"><a href="#常用解压和压缩命令" class="headerlink" title="常用解压和压缩命令"></a>常用解压和压缩命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .tar（注：tar是打包，不是压缩）</span></span><br><span class="line">tar xvf FileName.tar             <span class="comment">#解压</span></span><br><span class="line">tar cvf FileName.tar DirName     <span class="comment">#打包</span></span><br><span class="line">tar tvf FileName.tar             <span class="comment">#查看包内容</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># .zip</span></span><br><span class="line">unzip FileName.zip               <span class="comment">#解压</span></span><br><span class="line">zip FileName.zip DirName         <span class="comment">#打包</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="say"><a href="#say" class="headerlink" title="say"></a>say</h3><p>say 是一个文本转语音（TTS）的有趣工具，引擎和OS X使用的一样也是VoiceOver。可以用于在脚本中播放警告或提示。例如你可以设置Automator或Hazel脚本处理文件，并在任务完成时用  say 命令语音提示。 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 -f 选项朗读特定文本文件，-o 选项将朗读结果存为音频文件而不是播放</span></span><br><span class="line">say -f mynovel.txt -o myaudiobook.aiff </span><br></pre></td></tr></table></figure>
+
+<h3 id="显示当前日历，或者指定日期的日历"><a href="#显示当前日历，或者指定日期的日历" class="headerlink" title="显示当前日历，或者指定日期的日历"></a>显示当前日历，或者指定日期的日历</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cal      <span class="comment">#输出当前月日历</span></span><br><span class="line">cal 2018 <span class="comment">#输出2018年日历</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h3><p>通过安全的方式使用特殊的权限运行程序（通常为系统的超级用户）<br>默认情况下，任何管理员账户都可以使用sudo来获取 root 权限，甚至当 root 账户在图形界面被禁用的情况下，sudo依然有效。这个命令是很多情况下我们不得不使用 Terminal 的原因，——同样也是给每个用户管理员身份的危险所在。不过，你可以调整sudo的配置文件，来限制它的使用。</p>
+<h2 id="彩蛋时刻"><a href="#彩蛋时刻" class="headerlink" title="彩蛋时刻"></a>彩蛋时刻</h2><ul>
+<li><p>telnet towel.blinkenlights.nl ：星球大战电影  </p>
+</li>
+<li><p>输入emacs，按空格键，再按“esc＋x”键，左下角会出现“M-x”，输入游戏代码，如tetris（俄罗斯方块）、gomoku（五子棋）就能玩玩游戏，open &#x2F;usr&#x2F;share&#x2F;emacs&#x2F;*&#x2F;lisp&#x2F;play 可查看游戏列表。</p>
+</li>
+</ul>
+<blockquote>
+<p>ps: mac自带神的编辑器-Emacs,选择emacs就有来生的，因为一生刚够入门。</p>
+</blockquote>
+<p>参考网址：<br><a target="_blank" rel="noopener" href="http://man.linuxde.net/">Linux命令大全</a><br><a target="_blank" rel="noopener" href="http://www.cnblogs.com/peida/tag/linux%E5%91%BD%E4%BB%A4/">每天一个linux命令</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-swagger/" rel="prev" title="swagger文档规范">
+                  <i class="fa fa-chevron-left"></i> swagger文档规范
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/sql-guide/" rel="next" title="面向前端的数据库指南">
+                  面向前端的数据库指南 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

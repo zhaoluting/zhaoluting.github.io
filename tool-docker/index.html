@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="现公司技术栈为Laravel + vue，前后端未分离，开发人员都需要使用docker。公司电脑大家都一样，安装起来还是挺顺利的，但最近由于疫情开始远程办公，自己装docker是着实费了老大的劲儿，发现自己对docker真的是一窍不通，那就趁现在有空学习下吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker安装">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-docker/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="现公司技术栈为Laravel + vue，前后端未分离，开发人员都需要使用docker。公司电脑大家都一样，安装起来还是挺顺利的，但最近由于疫情开始远程办公，自己装docker是着实费了老大的劲儿，发现自己对docker真的是一窍不通，那就趁现在有空学习下吧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-16T06:53:28.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.811Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-docker/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-docker/","path":"tool-docker/","title":"docker安装"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>docker安装 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          docker安装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-16 14:53:28" itemprop="dateCreated datePublished" datetime="2020-02-16T14:53:28+08:00">2020-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>现公司技术栈为<a target="_blank" rel="noopener" href="https://learnku.com/docs/laravel/6.x">Laravel</a> + vue，前后端未分离，开发人员都需要使用docker。公司电脑大家都一样，安装起来还是挺顺利的，但最近由于疫情开始远程办公，自己装docker是着实费了老大的劲儿，发现自己对docker真的是一窍不通，那就趁现在有空学习下吧。</p>
+<span id="more"></span>
+
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>参考文章：<a target="_blank" rel="noopener" href="https://github.com/yeasy/docker_practice">Docker — 从入门到实践</a>、<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">Docker 入门教程-阮一峰</a></p>
+<h2 id="安装教程"><a href="#安装教程" class="headerlink" title="安装教程"></a>安装教程</h2><ul>
+<li><p>进入<a target="_blank" rel="noopener" href="https://hub.docker.com/?overlay=onboarding">docker官网</a>下载安装 docker（<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html"><strong>入门教程</strong></a>）</p>
+</li>
+<li><p>安装前提（mac可忽略）：</p>
+<ul>
+<li>系统用户名必须为英文，且安装路径也不允许有中文</li>
+<li>windows中Docker目前仅有win10专业版&#x2F;企业版的安装包，其他版本系统需安装Docker Toolbox，建议升级系统不要折腾了（修改产品密钥即可升级）</li>
+<li>在“启用或关闭Windows功能”中开启Hyper-V</li>
+<li>在任务管理器 → 性能 → 选择CPU → 右侧“虚拟化”属性查看是否开启cpu虚拟化，若未开启，进入dios启用配置</li>
+</ul>
+</li>
+<li><p>安装完成后设置docker的shared dives（勾选项目所在磁盘）和 memory（调大一些）</p>
+</li>
+<li><p>克隆local-dev-env（与代码父级文件夹平级）</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">目录样例：</span><br><span class="line">- workspace</span><br><span class="line">    - local-dev-env</span><br><span class="line">    - my-project</span><br><span class="line">        - docker-test</span><br><span class="line">        - 其他项目...</span><br></pre></td></tr></table></figure></li>
+<li><p>增加local-dev-env\dpcker-compose.yml中的配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每个项目都需要添加services配置项</span></span><br><span class="line"><span class="attr">docker-test:</span> <span class="comment"># 根据项目修改容器名称</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">registry.cn-hangzhou.aliyuncs.com/zlt/nginx-php-fpm-alpine</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">WEBROOT:</span> <span class="string">&#x27;/var/www/html/public&#x27;</span></span><br><span class="line">    <span class="attr">ERRORS:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">RUN_SCRIPTS:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">ENABLE_XDEBUG:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">XDEBUG_CONFIG:</span> <span class="string">&quot;remote_host=192.168.1.138&quot;</span></span><br><span class="line">    <span class="attr">XDEBUG_PORT:</span> <span class="number">9001</span></span><br><span class="line">    <span class="attr">PUID:</span> <span class="number">1000</span></span><br><span class="line">    <span class="attr">PGID:</span> <span class="number">1000</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">D:/workspace/my-project/docker-test:/var/www/html</span> <span class="comment"># 修改为本地项目地址</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;8001:80&quot;</span> <span class="comment"># 根据本机修改端口号</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>拉取镜像</strong>：</p>
+<ul>
+<li>第一次运行项目需要先拉取镜像，拉取镜像需要先登录docke镜像库：启动docker后，进入local-dev-env文件夹运行<code>docker login registry.cn-hangzhou.aliyuncs.com</code>，如果碰到windows版本问题（ 非TTY device）需要在命令前加上winpty</li>
+<li>登录完之后执行：<code>docker-compose up -d</code>，会先拉取镜像并启动容器，镜像只需拉取一次，此后再执行不会再拉取镜像，直接启动容器。</li>
+<li>如果拉取镜像频繁超时，将docker设置中的”registry-mirrors”字段更改为<code>[&quot;http://hub-mirror.c.163.com&quot;]</code>(修改了docker镜像源)，重启即可生效，也可梯子翻墙，命令行默认不走代理，记得设置<code>http_proxy</code></li>
+</ul>
+</li>
+<li><p><strong>项目安装PHP依赖</strong>：</p>
+<ul>
+<li>进入local-dev-env文件夹下运行<code>docker-compose exec XXX bash</code>，进入到对应项目的容器中，再安装php依赖：<code>composer install</code></li>
+<li>如果进入容器时出现<code>Interactive mode is not yet supported on Windows</code>错误，可先运行<code>docker ps</code>获取容器名，再运行<code>docker exec -it &lt;containername&gt; sh</code>即可（<a target="_blank" rel="noopener" href="https://github.com/wodby/docker4drupal/issues/41"><strong>参考</strong></a>）</li>
+<li>如果composer install拉取依赖频繁超时，可尝试以下方法之一：<ul>
+<li>进入容器后执行<code>composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/</code>，将composer镜像设为<a target="_blank" rel="noopener" href="https://developer.aliyun.com/composer"><strong>阿里源</strong></a>；</li>
+<li>梯子翻墙，命令行默认不走代理，记得设置<code>http_proxy</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>进入项目目录运行<code>yarn</code>或<code>npm install</code>安装依赖，若因网络问题导致node-sass安装失败，先删除依赖，再使用梯子或国内镜像cnpm重新安装</p>
+</li>
+<li><p>复制项目中的.env.example为.env</p>
+</li>
+<li><p>之后只需先进入local-dev-env在后台启动并运行所有的容器：<code>docker-compose up -d</code>，再进入项目<code>npm run watch</code>启动项目</p>
+</li>
+<li><p>最后，感谢同事的帮助~</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/life-experience-home/" rel="prev" title="备忘录-安家篇">
+                  <i class="fa fa-chevron-left"></i> 备忘录-安家篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/summary-standard/" rel="next" title="规范汇总">
+                  规范汇总 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

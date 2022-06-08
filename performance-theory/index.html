@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="Fast is better than slow.   – Ten things we know to be true">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能优化专题-理论篇">
+<meta property="og:url" content="https://zhaoluting.github.io/performance-theory/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="Fast is better than slow.   – Ten things we know to be true">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/RAIL.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/render.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/tool-fps.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/tool-frames.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/tool-cpu.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/tool-main.png">
+<meta property="article:published_time" content="2018-07-22T14:19:41.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.805Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="performance">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhaoluting.github.io/image/performance-theory/RAIL.png">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/performance-theory/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/performance-theory/","path":"performance-theory/","title":"性能优化专题-理论篇"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>性能优化专题-理论篇 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%A0%87%E5%87%86-RAIL%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">优化标准-RAIL模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.1.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E4%B8%8E%E7%94%A8%E6%88%B7%E5%8F%8D%E5%BA%94"><span class="nav-number">1.2.</span> <span class="nav-text">延迟与用户反应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAIL%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">RAIL模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.1.</span> <span class="nav-text">response响应 – 在100ms内响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">Animation动画 – 在10ms内生成一帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">IDLE 空闲 – 利用空闲的时间完成推迟的工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-3"><span class="nav-number">1.3.4.</span> <span class="nav-text">LOAD 加载 – 在1000ms内呈现内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">相关原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">浏览器渲染进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">浏览器的渲染进程是多线程的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#-4"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">GUI渲染线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-5"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">JS引擎线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-6"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">事件触发线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-7"><span class="nav-number">2.1.1.4.</span> <span class="nav-text">定时触发器线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-8"><span class="nav-number">2.1.1.5.</span> <span class="nav-text">异步http请求线程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.2.</span> <span class="nav-text">浏览器渲染流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">性能检测工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-%E2%80%93-Network"><span class="nav-number">3.1.</span> <span class="nav-text">Chrome Devtools – Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80"><span class="nav-number">3.1.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Table-%E8%AF%B7%E6%B1%82%E5%88%97%E8%A1%A8"><span class="nav-number">3.1.2.</span> <span class="nav-text">Request Table 请求列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary-%E6%80%BB%E8%A7%88"><span class="nav-number">3.1.3.</span> <span class="nav-text">Summary 总览</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-%E2%80%93-Performance"><span class="nav-number">3.2.</span> <span class="nav-text">Chrome Devtools –  Performance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E7%BB%93%E6%9E%9C-%E2%80%93-%E5%88%86%E6%9E%90%E6%AF%8F%E4%B8%80%E7%A7%92%E7%9A%84%E5%B8%A7"><span class="nav-number">3.2.2.</span> <span class="nav-text">分析结果 – 分析每一秒的帧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-%E2%80%93-Audits"><span class="nav-number">3.3.</span> <span class="nav-text">Chrome Devtools –  Audits</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E7%BB%93%E6%9E%9C-%E7%BB%BC%E5%90%88%E5%88%86%E6%9E%90"><span class="nav-number">3.3.2.</span> <span class="nav-text">分析结果 - 综合分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90"><span class="nav-number">3.4.</span> <span class="nav-text">其他检测工具推荐</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/performance-theory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          性能优化专题-理论篇
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-22 22:19:41" itemprop="dateCreated datePublished" datetime="2018-07-22T22:19:41+08:00">2018-07-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote class="blockquote-center">
+<p><strong>Fast is better than slow.</strong>   – <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/162454cf2241">Ten things we know to be true</a></p>
+
+</blockquote>
+
+<span id="more"></span>
+
+<h1 id="优化标准-RAIL模型"><a href="#优化标准-RAIL模型" class="headerlink" title="优化标准-RAIL模型"></a>优化标准-RAIL模型</h1><h2 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h2><ul>
+<li>以用户为中心；最终目标不是让您的网站在任何特定设备上都能运行很快，而是使用户满意。</li>
+<li>立即响应用户；在 100 毫秒以内确认用户输入。</li>
+<li>设置动画或滚动时，在 10 毫秒以内生成帧。</li>
+<li>最大程度增加主线程的空闲时间。</li>
+<li>持续吸引用户；在 1000 毫秒以内呈现交互内容。</li>
+</ul>
+<p>要根据 RAIL 指标评估您的网站，请使用 <a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/">Chrome DevTools performance</a> 工具记录用户操作。然后根据这些关键 RAIL 指标检查记录时间。</p>
+<h2 id="延迟与用户反应"><a href="#延迟与用户反应" class="headerlink" title="延迟与用户反应"></a>延迟与用户反应</h2><p>让用户成为您的性能工作的中心。用户花在网站上的大多数时间不是等待加载，而是在使用时等待响应。了解用户如何评价性能延迟：</p>
+<style>
+table th:first-of-type {
+    width: 150px;
+}
+</style>
+
+<table>
+<thead>
+<tr>
+<th>延迟时间</th>
+<th>用户体验</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0 ~ 16 ms</td>
+<td>用户可以感知每秒渲染 60 帧的平滑动画转场，也就是每帧 16 毫秒。<br/>留给应用大约 10 毫秒的时间来生成一帧。</td>
+</tr>
+<tr>
+<td>0 ~ 100 ms</td>
+<td>在此时间窗口内响应用户操作，他们会觉得可以立即获得结果。时间再长，操作与反应之间的连接就会中断。</td>
+</tr>
+<tr>
+<td>100 ~ 300 ms</td>
+<td>轻微可觉察的延迟。</td>
+</tr>
+<tr>
+<td>300 ~ 1000 ms</td>
+<td>延迟感觉像是任务自然和持续发展的一部分(用户觉得这是正常流，但不会觉得快)。</td>
+</tr>
+<tr>
+<td>1000+ ms (&gt;1s)</td>
+<td>用户的注意力将离开他们正在执行的任务。</td>
+</tr>
+<tr>
+<td>10,000+ ms (&gt;10s)</td>
+<td>用户感到失望，可能会放弃任务；之后他们或许不会再回来。</td>
+</tr>
+</tbody></table>
+<p>Google团队提出了RAIL模型作为优化的目标。 Google把交互的过程分成4个独立的模块，称为 RAIL。RAIL 是一种以用户为中心的性能模型。每个网络应用均具有与其生命周期有关的四个不同方面，且这些方面以不同的方式影响着性能：response （响应）、 animation（动画）、idle（浏览器空置状态）和 load（加载）。<br><img src="/image/performance-theory/RAIL.png" alt="RAIL"></p>
+<h2 id="RAIL模型"><a href="#RAIL模型" class="headerlink" title="RAIL模型"></a>RAIL模型</h2><h3 id=""><a href="#" class="headerlink" title=""></a><mark class="label info">response响应 – 在100ms内响应</mark></h3><p>在用户注意到滞后之前您有 100 毫秒的时间可以响应用户输入。这适用于大多数输入，不管他们是在点击按钮、切换表单控件还是启动动画。但不适用于触摸拖动或滚动。</p>
+<p><strong>要得到响应式的回应，我们需要：</strong></p>
+<ul>
+<li>输入延迟时间（从按下到绘制）小于 100 毫秒。</li>
+<li>如果最终结果需要花长时间才能得到，就要给一个“加载”的标识来告诉用户“还在处理中”。</li>
+</ul>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a><mark class="label info">Animation动画 – 在10ms内生成一帧</mark></h3><p>在数学上来说，人眼感受到的帧数为60帧&#x2F;s，则会认为是流畅的动画（1s&#x2F;60 &#x3D; 1000ms&#x2F;60 &#x3D; 16ms&#x2F;帧）；也就是说加上每一帧的预算是16ms，减去浏览器绘制帧的时间，留给我们的大约只有10ms&#x2F;帧。 如果超过这个时间，用户眼中动画的流畅度就会降低。动画包含了以下概念:</p>
+<ul>
+<li>视觉动画 ：这个包括了动画的开始和退出，状态改变时的动画，还有加载标识。 </li>
+<li>滚动 ：当用户开始滚动页面，页面出现猛动的情况。 </li>
+<li>拖拽 ：当我们需要对用户的拖拽交互在100毫秒以内做出响应时，比如平移地图或者缩放屏幕时，我们需要依赖动画。</li>
+</ul>
+<p><strong>要合理地生成动画，我们需要：</strong></p>
+<ul>
+<li>每个帧的工作（从 JS 到绘制）完成时间小于 16 毫秒。</li>
+</ul>
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a><mark class="label info">IDLE 空闲 – 利用空闲的时间完成推迟的工作</mark></h3><p><strong>要合理地应用浏览器空闲时间，我们需要：</strong></p>
+<ul>
+<li>尽可能减少预加载数据，以便您的应用快速加载。不是需要立刻传达给用户的，所以可以在浏览器空闲的时候再处理这些任务。</li>
+<li>推迟的工作应分成每个耗时约 50 毫秒的多个块，因为应用应在 100 毫秒内给出响应。</li>
+<li>如果用户开始交互，优先级最高的事项是响应用户。</li>
+</ul>
+<h3 id="-3"><a href="#-3" class="headerlink" title=""></a><mark class="label info">LOAD 加载 – 在1000ms内呈现内容</mark></h3><p><strong>页面加载时间是最常见的性能话题。 要尽快将页面加载出来，我们需要：</strong></p>
+<ul>
+<li>把最需要传达的、对用户来说最有意义的内容在 1000ms 内渲染出来。</li>
+<li>要持续响应用户，绝对不允许出现在滚动页面、轻触或者看动画的时候卡顿。</li>
+<li>优先考虑关键渲染路径，将所有不需要在加载时处理的任务延迟到浏览器空闲时再处理（或根据需求拦加载）。</li>
+</ul>
+<hr>
+<h1 id="相关原理"><a href="#相关原理" class="headerlink" title="相关原理"></a>相关原理</h1><h2 id="浏览器渲染进程"><a href="#浏览器渲染进程" class="headerlink" title="浏览器渲染进程"></a>浏览器渲染进程</h2><p>要想知道网页会卡顿在哪个阶段、哪些阶段可以进行性能优化，那么必须要对浏览器的渲染流程有个大体的了解。废话不多说，直接进入正题。</p>
+<h3 id="浏览器的渲染进程是多线程的"><a href="#浏览器的渲染进程是多线程的" class="headerlink" title="浏览器的渲染进程是多线程的"></a>浏览器的渲染进程是多线程的</h3><h4 id="-4"><a href="#-4" class="headerlink" title=""></a><mark class="label info">GUI渲染线程</mark></h4><ul>
+<li>负责渲染浏览器界面，解析HTML，CSS，构建DOM树和RenderObject树，布局和绘制等。</li>
+<li>当界面需要重绘（Repaint）或由于某种操作引发回流(reflow)时，该线程就会执行。</li>
+<li>注意，<strong>GUI渲染线程与JS引擎线程是互斥的</strong>，当JS引擎执行时GUI线程会被挂起（相当于被冻结了），GUI更新会被保存在一个队列中 <strong>等到JS引擎空闲时</strong>立即被执行。</li>
+</ul>
+<h4 id="-5"><a href="#-5" class="headerlink" title=""></a><mark class="label info">JS引擎线程</mark></h4><ul>
+<li>也称为JS内核，负责处理Javascript脚本程序，例如V8引擎。</li>
+<li>JS引擎线程负责解析Javascript脚本，运行代码。</li>
+<li>JS引擎一直等待着任务队列中任务的到来，然后加以处理，一个Tab页（renderer进程）中无论什么时候都只有一个JS线程在运行JS程序。</li>
+<li>同样注意，<strong>GUI渲染线程与JS引擎线程是互斥的</strong>，所以如果JS执行的时间过长，这样就会造成页面的渲染不连贯，导致页面渲染加载阻塞。</li>
+</ul>
+<h4 id="-6"><a href="#-6" class="headerlink" title=""></a><mark class="label info">事件触发线程</mark></h4><ul>
+<li>归属于浏览器而不是JS引擎，用来控制事件循环（可以理解，JS引擎自己都忙不过来，需要浏览器另开线程协助）。</li>
+<li>当JS引擎执行代码块如setTimeOut时（也可来自浏览器内核的其他线程,如鼠标点击、AJAX异步请求等），会将对应任务添加到事件线程中。</li>
+<li>当对应的事件符合触发条件被触发时，该线程会把事件添加到待处理队列的队尾，等待JS引擎的处理。</li>
+<li>注意，由于JS的单线程关系，所以这些待处理队列中的事件都得排队等待JS引擎处理（当JS引擎空闲时才会去执行）。</li>
+</ul>
+<h4 id="-7"><a href="#-7" class="headerlink" title=""></a><mark class="label info">定时触发器线程</mark></h4><ul>
+<li>传说中的setInterval与setTimeout所在线程。</li>
+<li>浏览器定时计数器并不是由JavaScript引擎计数的,（因为JavaScript引擎是单线程的, 如果处于阻塞线程状态就会影响记计时的准确）。</li>
+<li>因此通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待JS引擎空闲后执行）。</li>
+<li>注意，W3C在HTML标准中规定，规定要求setTimeout中低于4ms的时间间隔算为4ms。</li>
+</ul>
+<h4 id="-8"><a href="#-8" class="headerlink" title=""></a><mark class="label info">异步http请求线程</mark></h4><ul>
+<li>在XMLHttpRequest在连接后是通过浏览器新开一个线程请求。</li>
+<li>将检测到状态变更时，如果设置有回调函数，异步线程就 <strong>产生状态变更事件</strong>，将这个回调再放入事件队列中。再由JavaScript引擎执行。</li>
+</ul>
+<h3 id="浏览器渲染流程"><a href="#浏览器渲染流程" class="headerlink" title="浏览器渲染流程"></a>浏览器渲染流程</h3><ul>
+<li>浏览器输入url，浏览器主进程接管，开一个下载线程。</li>
+<li>然后进行http请求（略去DNS查询，IP寻址等等操作）。</li>
+<li>接着等待响应，获取内容。</li>
+<li>随后将内容通过RendererHost接口转交给Renderer进程，接着浏览器渲染流程开始。</li>
+</ul>
+<p><img src="/image/performance-theory/render.png" alt="render"></p>
+<ol>
+<li>处理 HTML 标记并构建 DOM 树、处理 CSS 标记并构建 CSSOM 树 。</li>
+<li>结合DOM树和CSSDOM树形成render树， 也就是渲染树。</li>
+<li>布局render树（Layout&#x2F;reflow），负责各元素尺寸、位置的计算。</li>
+<li>绘制render树（paint），绘制页面像素信息。</li>
+<li>浏览器会将各层的信息发送给GPU，GPU会将各层合成（composite），显示在屏幕上。</li>
+</ol>
+<p><strong>_优化关键渲染路径_就是指最大限度缩短执行上述第 1 步至第 5 步耗费的总时间</strong></p>
+<hr>
+<h1 id="性能检测工具"><a href="#性能检测工具" class="headerlink" title="性能检测工具"></a>性能检测工具</h1><h2 id="Chrome-Devtools-–-Network"><a href="#Chrome-Devtools-–-Network" class="headerlink" title="Chrome Devtools – Network"></a>Chrome Devtools – Network</h2><blockquote>
+<p>使用网络面板可以了解请求和下载的资源文件并优化网页加载性能。</p>
+</blockquote>
+<h3 id="打开"><a href="#打开" class="headerlink" title="打开"></a>打开</h3><p>打开Chrome Devtools，选择Network标签。</p>
+<h3 id="Request-Table-请求列表"><a href="#Request-Table-请求列表" class="headerlink" title="Request Table 请求列表"></a>Request Table 请求列表</h3><p>该视窗列出了所有的资源请求，默认按时间顺序排序，点击某个资源，可以查看更详细的信息：</p>
+<ul>
+<li>Headers：请求头信息和响应头信息。</li>
+<li>Preview：预览结果。</li>
+<li>Response：从服务器返回的响应结果。</li>
+<li>Cookies：请求和响应的Cookie。</li>
+<li>Timing：查看资源请求的生命周期。<ul>
+<li>Queueing：浏览器会在以下情况对请求进行排队：有更高优先级的请求；在这个域下，已经有6个TCP连接了，达到Chrome最大限制数量。此条规则仅适用 在HTTP&#x2F;1.0和HTTP&#x2F;1.1。</li>
+<li>Stalled：发送请求之前等待的时间。它可能因为进入队列的任意原因而被阻塞。这个时间包括代理协商的时间。</li>
+<li>Proxy negotiation：浏览器与代理服务器协商消耗的时间。</li>
+<li>DNS Lookup：浏览器对请求的IP地址进行DNS查找所消耗的时间。</li>
+<li>Initial conncection：发起连接所消耗的时间。</li>
+<li>Request sent：请求发送消耗的时间。</li>
+<li>Waiting (TTFB)：浏览器等待响应的时间，TTFB表示 Time To First Byte。</li>
+<li>Content Download：资源下载所消耗的时间。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Summary-总览"><a href="#Summary-总览" class="headerlink" title="Summary 总览"></a>Summary 总览</h3><p>面板底部汇总了请求数量，传输数据大小，加载时间等信息,从左往右依次显示为：</p>
+<ul>
+<li>X requests：请求总个数。</li>
+<li>X transferred：所有请求的大小。</li>
+<li>Finish：加载完毕时间， 是页面上所有 http 请求发送到响应完成的时间。</li>
+<li>DOMContentLoaded： DOM树构建完成时间。它在两个地方都有体现：概览视窗的蓝色竖线，总览视窗的触发时间。</li>
+<li>Load：所有资源加载完成的时间。它在三个地方有体现：概览视窗的红色竖线，请求列表视窗的红色竖线，总览视窗的触发时间。</li>
+</ul>
+<blockquote>
+<p>结合DOM文档加载的加载步骤，DOMContentLoaded事件&#x2F;Load事件触发时机如下：<br>1、解析HTML结构。<br>2、加载外部脚本和样式表文件。<br>3、解析并执行脚本代码。        &#x2F;&#x2F; 部分脚本会阻塞页面的加载<br>4、DOM树构建完成。            &#x2F;&#x2F;DOMContentLoaded 事件<br>5、加载图片等外部文件。<br>6、页面加载完毕。             &#x2F;&#x2F;load 事件</p>
+</blockquote>
+<h2 id="Chrome-Devtools-–-Performance"><a href="#Chrome-Devtools-–-Performance" class="headerlink" title="Chrome Devtools –  Performance"></a>Chrome Devtools –  Performance</h2><blockquote>
+<p>使用性能面板可以通过记录和查看网站生命周期内发生的各种事件来提高页面的运行时性能。</p>
+</blockquote>
+<h3 id="打开-1"><a href="#打开-1" class="headerlink" title="打开"></a>打开</h3><ol>
+<li>打开<a target="_blank" rel="noopener" href="https://googlechrome.github.io/devtools-samples/jank/">指定网页</a>， 打开Chrome Devtools，然后选择Performance标签。</li>
+<li>点击【record】开始录制，或点击reload按钮录制页面载入过程。</li>
+<li>稍等片刻就会出现检测结果。</li>
+</ol>
+<h3 id="分析结果-–-分析每一秒的帧"><a href="#分析结果-–-分析每一秒的帧" class="headerlink" title="分析结果 – 分析每一秒的帧"></a>分析结果 – 分析每一秒的帧</h3><p>FPS（frames per second）是用来分析动画的一个主要性能指标。能保持在60的FPS的话，那么用户体验就是不错的。</p>
+<ol>
+<li>观察FPS图表，如果你发现了一个红色的长条，那么就说明这些帧存在严重问题，有可能导致非常差的用户体验。一般来说，绿色的长条越高，说明FPS越高，用户体验越好。<br><img src="/image/performance-theory/tool-fps.png" alt="FPS"></li>
+<li>在Frames图表中，把鼠标移动到绿色条状图上，Devtools会展示这个帧的FPS。<br><img src="/image/performance-theory/tool-frames.png" alt="Frames"></li>
+<li>勾选顶部的screenShots就可以看到各个时间点的界面截图，可以用来分析动画的各个细节。</li>
+<li>另外一个好用的小工具就是实时FPS面板，它可以实时展示页面的FPS指标。<ul>
+<li>打开more tools 里面 Randering面板，勾选 FPSmeter，FPS实时面板就出现在页面的右上方了。</li>
+</ul>
+</li>
+<li>就在FPS图表下方，你会看到CPU图表。<ul>
+<li>在CPU图表中的各种颜色与Summary面板里的颜色是相互对应的，Summary面板就在Performance面板的下方。</li>
+<li>CPU图表中的各种颜色代表着在这个时间段内，CPU在各种处理上所花费的时间。</li>
+<li>如果你看到了某个处理占用了大量的时间，那么这可能就是一个可以找到性能瓶颈的线索。详细看<a href="/tool-devTool/">Chrome调试指南</a>。<br><img src="/image/performance-theory/tool-cpu.png" alt="CPU"></li>
+</ul>
+</li>
+<li>展开Main图表，Devtools展示了主线程运行状况。<ul>
+<li>X轴代表着时间。每个长条代表着一个event,长条越长就代表这个event花费的时间越长。</li>
+<li>Y轴代表了调用栈。在栈里，上面的event调用了下面的event。<br><img src="/image/performance-theory/tool-main.png" alt="Main"></li>
+</ul>
+</li>
+</ol>
+<h2 id="Chrome-Devtools-–-Audits"><a href="#Chrome-Devtools-–-Audits" class="headerlink" title="Chrome Devtools –  Audits"></a>Chrome Devtools –  Audits</h2><blockquote>
+<p>Audit标签使用了Google开源的一个自动化测试工具 – Lighthouse。可对当前网页进行网络利用情况、网页性能方面的诊断，并给出一些优化建议。</p>
+</blockquote>
+<h3 id="打开-2"><a href="#打开-2" class="headerlink" title="打开"></a>打开</h3><p>注意：这个工具需要翻墙，不然会卡在“lighthouse is warming up”。</p>
+<ol>
+<li>打开Chrome Devtools，然后选择Audits标签。</li>
+<li>点击【Perform an audit…】，一般只检查【Performance】和【Best practices】即可，接着点击 Run audit 。</li>
+<li>只需要等待一会儿，我们就完成了性能检查并且能把它当成衡量指标来提升网站的性能。</li>
+</ol>
+<h3 id="分析结果-综合分析"><a href="#分析结果-综合分析" class="headerlink" title="分析结果 - 综合分析"></a>分析结果 - 综合分析</h3><ul>
+<li><mark class="label info">Metrics 指标</mark> —— Metrics下列举了基本的性能指标，并且给出页面加载时间的概览。
+<ul>
+<li><strong>First meaningful paint</strong> —— 首次有效绘制：代表用户看到初始内容所需的时间。请尽量让它的值小于1秒。</li>
+<li><strong>First interactive</strong> —— 首次互动：代表可交互元素从展示到响应所需的时间，即cpu有空闲能力来处理用户交互操作的时间。</li>
+<li><strong>Consistently Interactive</strong> —— 持续互动：页面中的大多数网络资源完成加载并且CPU在很长一段时间都很空闲的所需的时间。</li>
+<li><strong>Perceptual Speed Index</strong> —— 速度指标：页面加载性能指标，页面展示可见部分所需时间的平均值。以毫秒为单位并且取决于窗口的大小，应尽量减少到1250毫秒以内。</li>
+<li><strong>Estimated Input Latency</strong> —— 预计输入延迟时间： 应用有 100 毫秒的时间响应用户输入。如果超过此时间，用户就会认为应用反应迟缓。</li>
+</ul>
+</li>
+<li><mark class="label info">Opportunities 可优化项</mark> —— 这项里面的内容指的是LightHouse发现的一些可以直接优化的点，你可以对应这些点来进行优化。</li>
+<li><mark class="label info">Diagnostics 手动诊断项目</mark> —— 这些项目表示LightHouse并不能替你决定当前是好是坏，但是把详情列出来，由你手动排查每个项目的情况。</li>
+<li><mark class="label info">Passed Audits 通过的审查项目</mark> —— 这里列出的都是你做的好的地方，比如：减少阻塞渲染的脚本、图片懒加载、样式脚本压缩等等。</li>
+<li><mark class="label info">Best Practice 最佳实践</mark> —— 本项指标是指LightHouse用业界公认的几项最佳实践来评估站点。</li>
+</ul>
+<h2 id="其他检测工具推荐"><a href="#其他检测工具推荐" class="headerlink" title="其他检测工具推荐"></a>其他检测工具推荐</h2><p>性能检测方面，Chrome DevTools已经很强大了，完全够用，除了我们常用的network、performance、auditing，More tools里面的Rendering、JavaScript Profiler、performance monitor等工具也很强大，所以，我就稍微介绍下其他工具：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/strick/p/6677836.html">WebPageTest</a>，很强大，也很复杂，有兴趣的可以去研究下；</li>
+<li><a target="_blank" rel="noopener" href="https://tools.pingdom.com/">tools.pingdom.com</a> 可在线检测，兼具了Audits与Network标签对应的功能。</li>
+</ul>
+<hr>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/performance/rail">RAIL</a><br><a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/">关键渲染路径</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012925872">从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理</a><br><a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/">chrome-devtools官方文档</a><br><a target="_blank" rel="noopener" href="https://www.breakyizhan.com/chromeconsole/1249.html">Chrome 谷歌浏览器的开发者工具-Break驿站</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/performance/" rel="tag"># performance</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-eslint/" rel="prev" title="常规eslint配置">
+                  <i class="fa fa-chevron-left"></i> 常规eslint配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/node-puppeteerWX/" rel="next" title="puppeteer实战-微信文章爬取调研">
+                  puppeteer实战-微信文章爬取调研 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

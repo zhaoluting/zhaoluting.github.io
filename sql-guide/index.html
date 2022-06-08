@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="数据库概览一般一个数据库系统（Database System）可分为数据库（Database）与数据管理系统（Database Management System，DBMS）两个部分。数据库就是按照数据结构来组织、存储和管理数据的仓库，管理这个数据库的软件就称之为数据库管理系统。也可以更形象地类比成中药铺子。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向前端的数据库指南">
+<meta property="og:url" content="https://zhaoluting.github.io/sql-guide/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="数据库概览一般一个数据库系统（Database System）可分为数据库（Database）与数据管理系统（Database Management System，DBMS）两个部分。数据库就是按照数据结构来组织、存储和管理数据的仓库，管理这个数据库的软件就称之为数据库管理系统。也可以更形象地类比成中药铺子。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-08T05:25:10.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.806Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="sql">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/sql-guide/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/sql-guide/","path":"sql-guide/","title":"面向前端的数据库指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>面向前端的数据库指南 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">数据库概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E4%B8%8E%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">关系型与非关系型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.1.1.</span> <span class="nav-text">关系型数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.1.2.</span> <span class="nav-text">非关系型数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93-V-S-%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.1.3.</span> <span class="nav-text">关系型数据库  V.S.  非关系型数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.2.</span> <span class="nav-text">主流数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.2.1.</span> <span class="nav-text">三大关系型数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E5%A4%A7%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.2.2.</span> <span class="nav-text">两大非关系型数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL"><span class="nav-number">2.</span> <span class="nav-text">MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">重要概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%94%AE-primary-key"><span class="nav-number">2.1.1.</span> <span class="nav-text">主键(primary key)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%EF%BC%88foreign-key%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">外键（foreign key）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%EF%BC%88constraints%EF%BC%89"><span class="nav-number">2.1.3.</span> <span class="nav-text">约束（constraints）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95-index"><span class="nav-number">2.1.4.</span> <span class="nav-text">索引(index)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B-proceduer"><span class="nav-number">2.1.5.</span> <span class="nav-text">存储过程(proceduer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8-trigger"><span class="nav-number">2.1.6.</span> <span class="nav-text">触发器(trigger)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1-transaction"><span class="nav-number">2.1.7.</span> <span class="nav-text">事务(transaction)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81-lock"><span class="nav-number">2.1.8.</span> <span class="nav-text">锁(lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F%E5%92%8C%E5%8F%8D%E8%8C%83%E5%BC%8F"><span class="nav-number">2.1.9.</span> <span class="nav-text">MySQL三大范式和反范式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%89%E8%AE%AE%E7%82%B9"><span class="nav-number">2.4.</span> <span class="nav-text">争议点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A5%E4%B8%8D%E8%AF%A5%E6%91%92%E5%BC%83%E5%A4%96%E9%94%AE"><span class="nav-number">2.4.1.</span> <span class="nav-text">该不该摒弃外键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9F%9B%E7%9B%BE%E7%84%A6%E7%82%B9"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">矛盾焦点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%B9%E8%A7%82%E7%82%B9"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">正方观点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E6%96%B9%E8%A7%82%E7%82%B9"><span class="nav-number">2.4.1.3.</span> <span class="nav-text">反方观点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">2.4.1.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E9%87%8D%E7%82%B9"><span class="nav-number">2.5.</span> <span class="nav-text">学习重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E4%B9%A6%E7%B1%8D"><span class="nav-number">2.6.</span> <span class="nav-text">推荐书籍</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/sql-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向前端的数据库指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-08 13:25:10" itemprop="dateCreated datePublished" datetime="2018-03-08T13:25:10+08:00">2018-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="数据库概览"><a href="#数据库概览" class="headerlink" title="数据库概览"></a>数据库概览</h1><p>一般一个数据库系统（Database System）可分为数据库（Database）与数据管理系统（Database Management System，DBMS）两个部分。数据库就是按照数据结构来组织、存储和管理数据的仓库，管理这个数据库的软件就称之为数据库管理系统。<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21091495/answer/17197897">也可以更形象地类比成中药铺子。</a></p>
+<span id="more"></span>
+
+<h2 id="关系型与非关系型"><a href="#关系型与非关系型" class="headerlink" title="关系型与非关系型"></a>关系型与非关系型</h2><h3 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h3><ol>
+<li>以行和列的形式存储数据，结构稳定，具有逻辑性，易于理解，但不易修改。</li>
+<li>查询能力强，可以操作很复杂的查询。</li>
+<li>一致性高。由于并发高，在数据同步的时候一般采用锁来保证数据的可靠性。</li>
+<li>事务支持使得对于安全性能很高的数据访问要求得以实现。</li>
+</ol>
+<h3 id="非关系型数据库"><a href="#非关系型数据库" class="headerlink" title="非关系型数据库"></a>非关系型数据库</h3><ol>
+<li>非关系型数据库主要使用key-value的方式存储数据，即是“no relational”，由于数据间没有关联性，相对来说层级扁平。而且不需要经过SQL层的解析，所以性能非常高。</li>
+<li>可扩展性同样也是因为基于键值对，数据之间没有耦合性，所以非常容易水平扩展。</li>
+<li>数据结构灵活，每个数据都可以有不同的结构。</li>
+<li>由于降低了一致性的要求，所以查询速度更快。</li>
+<li>不适用于复杂SQL操作。</li>
+<li>不支持事务。</li>
+</ol>
+<h3 id="关系型数据库-V-S-非关系型数据库"><a href="#关系型数据库-V-S-非关系型数据库" class="headerlink" title="关系型数据库  V.S.  非关系型数据库"></a>关系型数据库  V.S.  非关系型数据库</h3><p>关系型数据库的最大特点就是事务的一致性：传统的关系型数据库读写操作都是事务的，具有ACID的特点，这个特性使得关系型数据库可以用于几乎所有对一致性有要求的系统中，如典型的银行系统。相反地，关系型数据库为了维护一致性所付出的巨大代价就是其读写性能比较差，而像微博、facebook这类SNS的应用，对并发读写能力要求极高；另外，其固定的表结构，因此，其扩展性极差。</p>
+<p>于是，非关系型数据库应运而生，由于不可能用一种数据结构化存储应付所有的新的需求，因此，非关系型数据库严格上不是一种数据库，应该是一种数据结构化存储方法的集合。必须强调的是，数据的持久存储，尤其是海量数据的持久存储，还是需要一种关系数据库这员老将。</p>
+<h2 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h2><p><a target="_blank" rel="noopener" href="https://db-engines.com/en/ranking">数据库排行榜</a>中商业Oracle、微软SQLServer、免费MySQL，三者是目前市场占有率最高（依安装量而非收入）的关系数据库，而且很有代表性。</p>
+<h3 id="三大关系型数据库"><a href="#三大关系型数据库" class="headerlink" title="三大关系型数据库"></a>三大关系型数据库</h3><ol>
+<li>Oracle<br>Oracle主要应用在传统行业的数据化业务中，比如：银行、金融这样的对可用性、健壮性、安全性、实时性要求极高的业务；零售、物流这样对海量数据存储分析要求很高的业务。而且由于Oracle对复杂计算、统计分析的强大支持，在互联网数据分析、数据挖掘方面的应用也越来越多。</li>
+<li>MySQL<br>MySQL基本是生于互联网，长于互联网。其应用实例也大都集中于互联网方向，MySQL的高并发存取能力并不比大型数据库差，同时价格便宜，安装使用简便快捷，深受广大互联网公司的喜爱。最大的一个特色，就是自由选择存储引擎。每个表都是一个文件，都可以选择合适的存储引擎。常见的引擎有 InnoDB、 MyISAM、 NDBCluster等。并且由于MySQL的开源特性，针对一些对数据库有特别要求的应用，可以通过修改代码来实现定向优化，例如SNS、LBS等互联网业务。</li>
+<li>MS SQLServer<br>windows生态系统的产品，好处坏处都很分明。好处就是，高度集成化，微软也提供了整套的软件方案，基本上一套win系统装下来就齐活了。因此，不那么缺钱，但很缺IT人才的中小企业，会偏爱 MS SQL Server。例如，自建ERP系统、商业智能、垂直领域零售商、餐饮、事业单位等等。</li>
+</ol>
+<h3 id="两大非关系型数据库"><a href="#两大非关系型数据库" class="headerlink" title="两大非关系型数据库"></a>两大非关系型数据库</h3><p>NoSQL主要有以下几类：临时性键值存储（memcached、Redis）、永久性键值存储（ROMA、Redis）、面向文档的数据库（MongoDB、CouchDB）、面向列的数据库（Cassandra、HBase）。最热门的是MongoDB 和 Redis。下面从以下几个维度对redis、mongoDB进行对比：</p>
+<ol>
+<li><p>性能<br>性能都比较高，总体来讲，TPS方面redis优于mongodb；</p>
+</li>
+<li><p>可操作性<br>redis数据丰富，较少的网络IO次数；<br>mongodb支持丰富的数据表达、索引，类似关系型数据库MySQL，支持的查询语言非常丰富。<br>总体来讲，MongoDB优于Redis。</p>
+</li>
+<li><p>内存空间的大小和数据量的大小<br>redis在2.0版本后增加了自己的VM特性，突破物理内存的限制，可以对key value设置过期时间（类似memcache）；<br>mongoDB适合大数据量存储，依赖系统虚拟内存管理，采用镜像文件存储；内存占有率比较高，官方建议独立部署在64位系统。<br>不同的应用角度看，各有优势。</p>
+</li>
+<li><p>可用性<br>redis依赖客户端来实现分布式读写，主从复制时，每次从节点重新连接主节点都要依赖整个快照,无增量复制；不支持自动sharding,需要依赖程序设定一致hash机制。<br>mongoDB支持master-slave,replicaset（内部采用paxos选举算法，自动故障恢复）,auto sharding机制，对客户端屏蔽了故障转移和切分机制。<br>总体来讲，MongoDB优于Redis；单点问题上，MongoDB应用简单，相对用户透明，Redis比较复杂，需要客户端主动解决。</p>
+</li>
+<li><p>可靠性(持久化)<br>redis依赖快照进行持久化，aof增强了可靠性的同时，对性能有所影响;<br>MongoDB从1.8版本开始采用binlog方式（MySQL同样采用该方式）支持持久化的可靠性。<br>对于数据持久化和数据恢复，MongoDB优于Redis</p>
+</li>
+<li><p>数据一致性（事务支持）<br>redis事务支持比较弱，只能保证事务中的每个操作连续执行;<br>mongoDB不支持事务。<br>此方面，Redis优于MongoDB。</p>
+</li>
+<li><p>数据分析<br>mongoDB内置了数据分析的功能，Redis不支持</p>
+</li>
+<li><p>应用场景<br>redis：数据量较小的更性能操作和运算上;<br>MongoDB:主要解决海量数据的访问效率问题。</p>
+</li>
+</ol>
+<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><p>组内推荐使用MySQL，所以接下来介绍下MySQL。</p>
+<h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><h3 id="主键-primary-key"><a href="#主键-primary-key" class="headerlink" title="主键(primary key)"></a>主键(primary key)</h3><p>能够唯一标识表中某一行的属性或属性组。一个表只能有一个主键，但可以有多个候选索引。主键常常与外键构成参照完整性约束，防止出现数据不一致。主键可以保证记录的唯一和主键域非空,数据库管理系统对于主键自动生成唯一索引，所以主键也是一个特殊的索引。</p>
+<h3 id="外键（foreign-key）"><a href="#外键（foreign-key）" class="headerlink" title="外键（foreign key）"></a>外键（foreign key）</h3><p>是用于建立和加强两个表数据之间的链接的一列或多列。外键约束主要用来维护两个表之间数据的一致性。简言之，表的外键就是另一表的主键，外键将两表联系起来。一般情况下，要删除一张表中的主键必须首先要确保其它表中的没有相同外键（即该表中的主键没有一个外键和它相关联）。</p>
+<h3 id="约束（constraints）"><a href="#约束（constraints）" class="headerlink" title="约束（constraints）"></a>约束（constraints）</h3><p>SQL 约束用于规定表中的数据规则。如果存在违反约束的数据行为，行为会被约束终止。约束可以在创建表时规定（通过 CREATE TABLE 语句），或者在表创建之后规定（通过 ALTER TABLE 语句）。<br>常用SQL约束：</p>
+<ul>
+<li>NOT NULL - 非空约束，指定某列不为空。</li>
+<li>UNIQUE - 保证某列的每行必须有唯一的值。</li>
+<li>PRIMARY KEY - NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。</li>
+<li>FOREIGN KEY - 保证一个表中的数据匹配另一个表中的值的参照完整性。</li>
+<li>CHECK - 保证列中的值符合指定的条件。</li>
+<li>DEFAULT - 规定没有给列赋值时的默认值。</li>
+</ul>
+<h3 id="索引-index"><a href="#索引-index" class="headerlink" title="索引(index)"></a>索引(index)</h3><p>是用来快速地寻找那些具有特定值的记录。主要是为了检索的方便，是为了加快访问速度， 按一定的规则创建的，一般起到排序作用。所谓唯一性索引，这种索引和前面的“普通索引”基本相同，但有一个区别：索引列的所有值都只能出现一次，即必须唯一。</p>
+<h3 id="存储过程-proceduer"><a href="#存储过程-proceduer" class="headerlink" title="存储过程(proceduer)"></a>存储过程(proceduer)</h3><p>存储过程是保存在数据库上的一段可执行代码。与java中的函数类似。通过一系列的SQL语句，根据传入的参数（也可以没有），通过简单的调用，完成比单个SQL语句更复杂的功能，存储在数据库服务器端，只需要编译过一次之后再次使用都不需要再进行编译。主要对存储的过程进行控制。</p>
+<h3 id="触发器-trigger"><a href="#触发器-trigger" class="headerlink" title="触发器(trigger)"></a>触发器(trigger)</h3><p>触发器是一个特殊的存储过程，不同的是存储过程要用CALL来调用，而触发器不需要使用CALL也不需要手工启动，只要当一个预定义的事件发生的时候，就会被MYSQL自动调用。触发器可以让你在执行INSERT,UPDATE或者DELETE的时候，执行一些特定的操作，可以在MYSQL中指定实在SQL语句执行前触发还是执行后触发。</p>
+<h3 id="事务-transaction"><a href="#事务-transaction" class="headerlink" title="事务(transaction)"></a>事务(transaction)</h3><p>特点：</p>
+<ul>
+<li>原子性(atomicity)：组成事务处理的语句形成了一个逻辑单元，不能只执行其中的一部分。</li>
+<li>一致性(consistency)：在事务处理执行前后，数据库是一致的(数据库数据完整性约束)。</li>
+<li>隔离性(isolcation)：一个事务处理对另一个事务处理的影响。</li>
+<li>持续性(durability)：事务处理的效果能够被永久保存下来 。</li>
+</ul>
+<p>过程：</p>
+<ul>
+<li>Start transaction：开始一个事务。  </li>
+<li>Commit：提交所做的修改。  </li>
+<li>Rollback：回滚所做的修改。如果在操作时出错，应该从新开始一个事务。</li>
+</ul>
+<p>总结：事务从Start transaction到Commit或者Rollback结束，这中间的语句是一个整体，如果执行Rollback，那么这些动作都会回滚。如果执行Commit那么这些动作全部执行成功。</p>
+<h3 id="锁-lock"><a href="#锁-lock" class="headerlink" title="锁(lock)"></a>锁(lock)</h3><p>InnoDB主要实现了两种类型的行锁：共享锁和排它锁。InnoDB行锁是通过给索引项加锁实现的，如果没有索引，InnoDB会通过隐藏的聚簇索引来对记录加锁。对于insert、update、delete，InnoDB会自动给涉及的数据加排他锁（X）；对于一般的Select语句，InnoDB不会加任何锁。 </p>
+<ul>
+<li>共享锁（S）：允许一个事务去读一行，阻止其他事务获得相同的数据集的排他锁（我读的时候，你可以读，但是不能写）。</li>
+<li>排他锁（X）：允许获得排他锁的事务更新数据，但是组织其他事务获得相同数据集的共享锁和排他锁（我写的时候，你不能读也不能写）。</li>
+</ul>
+<p><strong>何时在InnoDB中使用表锁：</strong><br>InnoDB在绝大部分情况会使用行级锁，因为事务和行锁往往是我们选择InnoDB的原因，但是在如下情况我们也考虑使用表级锁：</p>
+<ul>
+<li>当事务需要更新大部分数据时，表又比较大，如果使用默认的行锁，不仅效率低，而且还容易造成其他事务长时间等待和锁冲突。</li>
+<li>事务比较复杂，很可能引起死锁导致回滚。</li>
+</ul>
+<p><strong>避免死锁</strong><br>在InnoDB中，锁是逐步获得的，就造成了死锁的可能。当两个事务都需要获得对方持有的锁才能够继续完成事务，导致双方都在等待，就会产生死锁。有多种方法可以避免死锁，这里只介绍常见的三种：</p>
+<ul>
+<li>如果不同程序会并发存取多个表，尽量约定以相同的顺序访问表，可以大大降低死锁机会；</li>
+<li>在同一个事务中，尽可能做到一次锁定所需要的所有资源，减少死锁产生概率；</li>
+<li>对于非常容易产生死锁的业务部分，可以尝试使用升级锁定颗粒度，通过表级锁定来减少死锁产生的概率；</li>
+</ul>
+<h3 id="MySQL三大范式和反范式"><a href="#MySQL三大范式和反范式" class="headerlink" title="MySQL三大范式和反范式"></a>MySQL三大范式和反范式</h3><p>设计关系数据库时，遵从不同的规范要求，设计出合理的关系型数据库，这些不同的规范要求被称为不同的范式，各种范式呈递次规范，越高的范式数据库冗余越小。但是有些时候一昧的追求范式减少冗余，反而会降低数据读写的效率，这个时候就要反范式，利用空间来换时间。</p>
+<ul>
+<li>第一范式：确保每列的原子性。</li>
+<li>第二范式：确保表中的每列都和主键相关。</li>
+<li>第三范式：确保每列都和主键列直接相关,而不是间接相关。</li>
+<li>反三范式：没有冗余的数据库未必是最好的数据库，有时为了提高运行效率，就必须降低范式标准，适当保留冗余数据。具体做法是： 在概念数据模型设计时遵守第三范式，降低范式标准的工作放到物理数据模型设计时考虑。降低范式就是增加字段，减少了查询时的关联，提高查询效率，因为在数据库的操作中查询的比例要远远大于DML的比例。但是反范式化一定要适度，并且在原本已满足三范式的基础上再做调整的。</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li>首先安装MySQL，可参照此教程&#x3D;&gt;<a target="_blank" rel="noopener" href="http://blog.csdn.net/catstarxcode/article/details/78940385">Mac安装MySQL</a>。（注：一定要记住临时密码并重置）；</li>
+<li>安装可视化工具：sequel pro或者Navicat都可以（我用<a target="_blank" rel="noopener" href="https://sequelpro.com/">sequel pro</a>举例）；</li>
+<li>然后打开 sequel pro就可以在里面进行与数据库的连接，连接时输入的信息有：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host –在本机上面就输入本机的IP地址（127.0.0.1），   </span><br><span class="line">username – 默认是 root   </span><br><span class="line">password – 就是数据库的密码   </span><br><span class="line">database – 可以不填   </span><br><span class="line">port – 端口号 默认是 3306</span><br></pre></td></tr></table></figure></li>
+<li>连接后就可以进行各种操作啦（附上简单<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006255923">教程</a>）</li>
+</ol>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>基本会增删改查即可（<a target="_blank" rel="noopener" href="http://www.runoob.com/sql/sql-tutorial.html">SQL语法学习地址</a>）</p>
+<ul>
+<li>SELECT - 从数据库中提取数据</li>
+<li>UPDATE - 更新数据库中的数据</li>
+<li>DELETE - 从数据库中删除数据</li>
+<li>INSERT INTO - 向数据库中插入新数据</li>
+<li>CREATE DATABASE - 创建新数据库</li>
+<li>ALTER DATABASE - 修改数据库</li>
+<li>CREATE TABLE - 创建新表</li>
+<li>ALTER TABLE - 变更（改变）数据库表</li>
+<li>DROP TABLE - 删除表</li>
+<li>CREATE INDEX - 创建索引（搜索键）</li>
+<li>DROP INDEX - 删除索引</li>
+</ul>
+<h2 id="争议点"><a href="#争议点" class="headerlink" title="争议点"></a>争议点</h2><h3 id="该不该摒弃外键"><a href="#该不该摒弃外键" class="headerlink" title="该不该摒弃外键"></a>该不该摒弃外键</h3><h4 id="矛盾焦点"><a href="#矛盾焦点" class="headerlink" title="矛盾焦点"></a>矛盾焦点</h4><p>数据库设计是否需要外键。这里有两个问题：一个是如何保证数据库数据的完整性和一致性；二是第一条对性能的影响。</p>
+<h4 id="正方观点"><a href="#正方观点" class="headerlink" title="正方观点"></a>正方观点</h4><ol>
+<li>由数据库自身保证数据一致性，完整性，更可靠，因为程序很难100％保证数据的完整性，而用外键即使在数据库服务器当机或者出现其他问题的时候，也能够最大限度的保证数据的一致性和完整性。</li>
+<li>有主外键的数据库设计可以增加ER图的可读性，这点在数据库设计时非常重要。</li>
+<li>外键在一定程度上说明的业务逻辑，会使设计周到具体全面。</li>
+</ol>
+<h4 id="反方观点"><a href="#反方观点" class="headerlink" title="反方观点"></a>反方观点</h4><ol>
+<li>数据库需要维护外键的内部管理；</li>
+<li>外键等于把数据的一致性事务实现，全部交给数据库服务器完成，可控性就会降低。你自己写代码控制的话，相当于许多数据逻辑自己控制，虽然麻烦，但是出了问题有利于自己查找并针对性解决。</li>
+<li>有了外键，当做一些涉及外键字段的增，删，更新操作之后，需要触发相关操作去检查，进行完整性检查是一个耗费时间和资源的过程。在并发小的情况下，这种开销应该没什么区别，但是在高并发的情况下，数据库的外键对性能的影响肯定是很高的；</li>
+<li>外键还会因为需要请求对其他表内部加锁而容易出现死锁情况；</li>
+<li>可以用事务或应用程序保证数据的完整性。</li>
+</ol>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>外键是否采用看业务应用场景，以及开发成本的，大致列下什么时候适合，什么时候不适合使用：</p>
+<ol>
+<li><p>互联网行业应用不推荐使用外键：<br>用户量大，并发度高，为此数据库服务器很容易成为性能瓶颈，尤其受IO能力限制，且不能轻易地水平扩展；若是把数据一致性的控制放到事务中，也即让应用服务器承担此部分的压力，而引用服务器一般都是可以做到轻松地水平的伸缩；</p>
+</li>
+<li><p>传统行业建议使用外键：<br>软件应用的人数有限，换句话说是可控的；数据库服务器的数据量也一般不会超大，且活跃数据有限。综合上述2句话描述，也即数据库服务器的性能不是问题，所以不用过多考虑性能的问题；另外，使用外键可以降低开发成本，借助数据库产品自身的触发器可以实现表与关联表之间的数据一致性和更新；最后一点，使用外键的方式，还可以做到开发人员和数据库设计人员的分工，可以为程序员承担更多的工作量；</p>
+</li>
+<li><p>需要注意的是：MySQL允许使用外键，但是为了完整性检验的目的，在除了InnoDB表类型之外的所有表类型中都忽略了这个功能。如果需要更好的性能，并且不需要完整性检查，可以选择使用MyISAM表类型，如果想要在MySQL中根据参照完整性来建立表并且希望在此基础上保持良好的性能，最好选择表结构为innoDB类型。</p>
+</li>
+</ol>
+<h2 id="学习重点"><a href="#学习重点" class="headerlink" title="学习重点"></a>学习重点</h2><ul>
+<li>熟练运用增删改查命令</li>
+<li>用事务来代替外键来保证完整性</li>
+<li>用索引提高查询速度</li>
+<li>熟练运用锁来优化数据库</li>
+</ul>
+<h2 id="推荐书籍"><a href="#推荐书籍" class="headerlink" title="推荐书籍"></a>推荐书籍</h2><p>《MySQL必知必会》（适合入门）<br>《高性能MySQL》<br>《MySQL技术内幕-innorDB搜索引擎》</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"># sql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-zsh/" rel="prev" title="Mac terminal入门篇">
+                  <i class="fa fa-chevron-left"></i> Mac terminal入门篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/node-asynchronous/" rel="next" title="node.js的异步IO机制">
+                  node.js的异步IO机制 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

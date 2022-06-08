@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="如果一个频繁迭代的项目单纯靠分支来做版本控制，一个需求一个分支，那么分支就会越来越多，分不清主次，尤其情况比较复杂的项目，各种版本分支就会交杂在一起，分支图就是一团乱麻。 我比较推荐使用git中的tag来做版本控制，这也是主流的版本控制方式，很多WorkFlow模型、GitHub的release功能等等都是基于tag。功能发布完打上tag，再删除无用分支，分支图也会更加清晰，日后的回溯和复查会更加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git tag使用指南">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-git-tag/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="如果一个频繁迭代的项目单纯靠分支来做版本控制，一个需求一个分支，那么分支就会越来越多，分不清主次，尤其情况比较复杂的项目，各种版本分支就会交杂在一起，分支图就是一团乱麻。 我比较推荐使用git中的tag来做版本控制，这也是主流的版本控制方式，很多WorkFlow模型、GitHub的release功能等等都是基于tag。功能发布完打上tag，再删除无用分支，分支图也会更加清晰，日后的回溯和复查会更加">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-07T08:42:06.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.818Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-git-tag/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-git-tag/","path":"tool-git-tag/","title":"git tag使用指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>git tag使用指南 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-tag%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">git tag命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">常用选项</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-git-tag/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git tag使用指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-07 16:42:06" itemprop="dateCreated datePublished" datetime="2022-02-07T16:42:06+08:00">2022-02-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>如果一个频繁迭代的项目单纯靠分支来做版本控制，一个需求一个分支，那么分支就会越来越多，分不清主次，尤其情况比较复杂的项目，各种版本分支就会交杂在一起，分支图就是一团乱麻。</p>
+<p>我比较推荐使用git中的tag来做版本控制，这也是主流的版本控制方式，很多WorkFlow模型、GitHub的release功能等等都是基于tag。功能发布完打上tag，再删除无用分支，分支图也会更加清晰，日后的回溯和复查会更加便利。</p>
+<span id="more"></span>
+
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>tag顾名思义就是标签，git可以为仓库历史中的某一个commit打上tag标记，相当于一个快照，一般作为发布节点使用。tag经常和branch一起出现，tag可以被打在branch上的任意一个节点，甚至还能给tag打tag。</p>
+<p>Git支持轻量和附注两种标签：</p>
+<ul>
+<li>轻量标签（lightweight）：只是某个特定提交的引用，没有保存任何其他信息，不是一个对象。</li>
+<li>附注标签（annotated）：存储在Git数据库中的一个完整对象，包含姓名、邮箱、日期、标签信息，可以使用GPG签名并验证。并且具有自己的hash ID，其他标签能直接指向此标签。</li>
+<li>建议使用附注标签。通常附注标签意味着发布，轻量标签意味着私有或临时，因此一些git命令（如<code>git describe</code>）会默认忽略轻量标签。</li>
+</ul>
+<p>tag命名一般遵循GitHub语义化版本命名规范（Semantic Versioning）：<strong>主版本号.次版本号.修订号</strong></p>
+<ul>
+<li>主版本号：当做了不兼容的 API 修改</li>
+<li>次版本号：当做了向下兼容的功能性新增</li>
+<li>修订号：当做了向下兼容的问题修正</li>
+</ul>
+<p>可以使用以下几种方式来应用tag：</p>
+<ul>
+<li>采用git-flow、gitlab-flow这类模型来做版本控制，它们的版本控制也是基于tag，有很多辅助工具，如扩展集<a target="_blank" rel="noopener" href="https://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html">git-flow-avh</a>，可视化工具<a target="_blank" rel="noopener" href="https://www.sourcetreeapp.com/">Sourcetree</a>和<a target="_blank" rel="noopener" href="https://www.git-tower.com/">Git Tower</a>也内置git-flow，都能帮我们自动完成打tag的工作。</li>
+<li>如果有自动化部署工具，就可以在合并至线上分支后时加入自动打tag的命令。</li>
+<li>当然也可以选择自己来打tag，依个人喜好借助可视化工具或者直接使用命令行。</li>
+</ul>
+<h2 id="git-tag命令"><a href="#git-tag命令" class="headerlink" title="git tag命令"></a>git tag命令</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><strong>查看</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出已有的标签</span></span><br><span class="line">git tag</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出筛选过的标签</span></span><br><span class="line">git tag -l <span class="string">&quot;v1.0*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看远程所有标签</span></span><br><span class="line">git ls-remote --tags origin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地所有标签，会输出与ls-remote相同格式的列表，便于与远程对比</span></span><br><span class="line">git show-ref --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看标签信息和与之对应的提交信息</span></span><br><span class="line">git show v1.0.0</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建附注标签</span></span><br><span class="line">git tag -a v1.0.0 -m <span class="string">&quot;附注信息&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建轻量标签</span></span><br><span class="line">git tag v1.0.1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对过去的提交打标签，在命令末尾指定提交的校验和（或部分校验和）</span></span><br><span class="line"><span class="comment"># git tag -a &lt;tagName&gt; &lt;commitId&gt;</span></span><br><span class="line">git tag -a v1.1.0 9fceb02</span><br></pre></td></tr></table></figure>
+
+<p><strong>同步</strong><br>默认情况下，<code>git push</code>不会将本地标签同步到远程，需要手动推送。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推送标签到远程</span></span><br><span class="line">git push origin v1.0.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送所有不在远程的标签</span></span><br><span class="line">git push origin --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拉取远程标签</span></span><br><span class="line">git fetch --tags</span><br></pre></td></tr></table></figure>
+
+<p><strong>切换</strong><br>需要注意的副作用：当本地代码切至某个标签后，会处于“分离头指针”状态，如果有新提交，新提交将不属于任何分支且无法访问（除非通过hash ID），标签也不会发生变化。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换至某个标签所指向的文件版本</span></span><br><span class="line">git checkout v1.0.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 基于某个标签创建新分支</span></span><br><span class="line"><span class="comment"># git checkout -b &lt;branchName&gt; &lt;tagName&gt;</span></span><br><span class="line">git checkout -b version2 v1.0.0</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改</strong><br>修改tag比较复杂，尤其涉及到已推送到远程的附注标签。如果还不能熟练使用tag，建议直接采用<strong>删除旧标签、新建正确标签</strong>的方式。照着网上乱七八糟的教程来反而容易出现各种奇奇怪的问题，比如破坏附注标签的签名、误建了指向另一标签的标签等等。</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-tag#_on_re_tagging">On Re-tagging</a>、<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/7813194/how-do-i-edit-an-existing-tag-message-in-git">how-do-i-edit-an-existing-tag-message-in-git</a>、<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/49283734/why-isnt-my-tag-listed-when-i-checkout-with-git-gui">why-isnt-my-tag-listed-when-i-checkout-with-git-gui</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改本地已存在、还未推送到远程的tag注释</span></span><br><span class="line">git tag v1.0.0 -f -m <span class="string">&quot;new message&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重命名本地和远程的轻量标签</span></span><br><span class="line">git tag &lt;newTagName&gt; &lt;oldTagName&gt;</span><br><span class="line">git tag -d &lt;oldTagName&gt;</span><br><span class="line">git push origin :refs/tags/&lt;oldTagName&gt;</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除本地标签</span></span><br><span class="line">git tag -d v1.0.1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程标签</span></span><br><span class="line">git push origin -d v1.0.1</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h3><p>可查阅<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE">Git-Basics-Tagging</a>、<a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-tag">git-tag</a>，或使用<code>git tag --help</code>命令。</p>
+<ul>
+<li><code>-a</code>、<code>--annotate</code>：创建一个未签名、带注释的标记对象。</li>
+<li><code>-l</code>、<code>--list</code>：列出标签。</li>
+<li><code>-i</code>、<code>--ignore-case</code>：排序和过滤标签时不区分大小写。</li>
+<li><code>-m &lt;msg&gt;</code>、<code>--message=&lt;msg&gt;</code>：设置标签信息，如果存在多个<code>-m</code>选项，它们将作为单独的段落连接起来。</li>
+<li><code>-d</code>、<code>--delete</code>：删除指定标签。</li>
+<li><code>-f</code>、<code>--force</code>：使用指定名称替换现有标签（而不是失败）。</li>
+<li><code>-F &lt;file&gt;</code>、<code>--file=&lt;file&gt;</code>：从指定文件中获取标签消息。</li>
+<li><code>-n&lt;num&gt;</code>：指定使用<code>-l</code>时打印多少行。</li>
+<li><code>--sort=&lt;key&gt;</code>：根据关键字排序。</li>
+<li><code>--contains &lt;commit&gt;</code>：只列出包含指定提交的标签（如果未指定，则为HEAD）。</li>
+<li><code>--no-contains &lt;commit&gt;</code>：只列出不包含指定提交的标签（如果未指定，则为HEAD）。</li>
+<li><code>-s</code>、<code>--sign</code>：使用默认邮箱地址密钥创建一个GPG签名标签。</li>
+<li><code>-u &lt;keyid&gt;</code>、<code>--local-user=&lt;keyid&gt;</code>：使用指定密钥创建GPG签名标签。</li>
+<li><code>-v</code>、<code>--verify</code>：验证指定标签的GPG签名。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-sftp/" rel="prev" title="SFTP入门">
+                  <i class="fa fa-chevron-left"></i> SFTP入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-git-workflow/" rel="next" title="版本控制漫谈">
+                  版本控制漫谈 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

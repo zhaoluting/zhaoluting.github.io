@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="查看项目的laravel版本号： 12docker-compose exec XXX bash # 进入容器中php artisan --version        # 查看版本号 参考资料：Laravel 5.6 中文文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel5.6 - 前端速览">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-laravel/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="查看项目的laravel版本号： 12docker-compose exec XXX bash # 进入容器中php artisan --version        # 查看版本号 参考资料：Laravel 5.6 中文文档">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-23T05:54:18.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.823Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-laravel/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-laravel/","path":"tool-laravel/","title":"Laravel5.6 - 前端速览"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Laravel5.6 - 前端速览 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">文件目录说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Laravel%E8%AF%B7%E6%B1%82%E5%91%A8%E6%9C%9F"><span class="nav-number">1.2.</span> <span class="nav-text">Laravel请求周期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">2.</span> <span class="nav-text">前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-number">2.2.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Laravel-Mix%E7%BC%96%E8%BE%91%E8%B5%84%E6%BA%90"><span class="nav-number">2.3.</span> <span class="nav-text">Laravel Mix编辑资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%9B%BD%E9%99%85%E5%8C%96"><span class="nav-number">2.4.</span> <span class="nav-text">多语言国际化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blade%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E"><span class="nav-number">3.</span> <span class="nav-text">Blade模板引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%BB%A7%E6%89%BF"><span class="nav-number">3.1.</span> <span class="nav-text">模板继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Components-amp-Slots"><span class="nav-number">3.2.</span> <span class="nav-text">Components &amp; Slots</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE"><span class="nav-number">3.3.</span> <span class="nav-text">显示数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-number">3.4.</span> <span class="nav-text">流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E5%AD%90%E8%A7%86%E5%9B%BE"><span class="nav-number">3.5.</span> <span class="nav-text">引入子视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E9%9B%86%E5%90%88%E6%B8%B2%E6%9F%93%E8%A7%86%E5%9B%BE"><span class="nav-number">3.6.</span> <span class="nav-text">为集合渲染视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%85%A5"><span class="nav-number">3.7.</span> <span class="nav-text">服务注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%93%E5%B1%95Blade"><span class="nav-number">3.8.</span> <span class="nav-text">拓展Blade</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-laravel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Laravel5.6 - 前端速览
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-23 13:54:18" itemprop="dateCreated datePublished" datetime="2020-03-23T13:54:18+08:00">2020-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>查看项目的laravel版本号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-compose <span class="built_in">exec</span> XXX bash <span class="comment"># 进入容器中</span></span><br><span class="line">php artisan --version        <span class="comment"># 查看版本号</span></span><br></pre></td></tr></table></figure>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://learnku.com/docs/laravel/5.6">Laravel 5.6 中文文档</a></p>
+<span id="more"></span>
+
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="文件目录说明"><a href="#文件目录说明" class="headerlink" title="文件目录说明"></a>文件目录说明</h3><ul>
+<li><strong>app</strong>：应用程序的核心代码<ul>
+<li><strong>Broadcasting</strong>：应用程序的所有广播频道类，可以通过<code>make:channel</code>命令生成目录</li>
+<li><strong>Console</strong>：所有自定义的Artisan命令，可以通过<code>make:command</code>命令生成目录</li>
+<li><strong>Events</strong>：所有自定义的事件类，用来提醒应用其他部分发生了特定的操作，可以通过 <code>make:event</code>命令生成目录</li>
+<li><strong>Exceptions</strong>：应用的异常处理器，如果想自定义记录或者渲染异常的方式，可以修改此目录下的Handler类</li>
+<li><strong>Http</strong>：进入应用的请求处理逻辑，包括控制器、中间件和表单请求</li>
+<li><strong>Jobs</strong>：应用中的队列任务，应用任务可以被推送到队列或者在当前请求的生命周期内同步运行，可以通过<code>make:job</code>命令生成目录</li>
+<li><strong>Listeners</strong>：事件监听器，用于接收事件实例并执行响应该事件被触发的逻辑，可以通过<code>make:listener</code>命令生成目录</li>
+<li><strong>Mail</strong>：应用所有的邮件发送类，邮件对象允许将构建邮件的逻辑封装在可以使用<code>Mail::send</code>方法的地方，可以通过<code>make:mail</code>命令生成目录</li>
+<li><strong>Notifications</strong>：应用发送的所有「事务性」通知，可以通过各种驱动（例如邮件、Slack、短信）发送通知或是存储在数据库中。</li>
+<li><strong>Policies</strong>：应用的授权策略类，用来决定一个用户是否有权限去操作指定资源，可以通过<code>make:policy</code>命令生成目录</li>
+<li><strong>Providers</strong>：应用的所有服务提供器，通过在服务容器中绑定服务、注册事件以及执行其他任务来为即将到来的请求做准备来启动应用</li>
+<li><strong>Rules</strong>：应用自定义验证规则对象，意在将复杂的验证逻辑封装在一个简单的对象中，可以通过<code>make:rule</code>命令生成目录</li>
+</ul>
+</li>
+<li><strong>Bootstrap</strong>：引导框架并配置自动加载的文件，包括框架生成的用来提升性能文件的cache目录</li>
+<li><strong>config</strong>：应用程序所有的配置文件</li>
+<li><strong>database</strong>：数据填充和迁移文件</li>
+<li><strong>public</strong>：入口文件index.php及一些资源文件（如图片、JavaScript 和 CSS）</li>
+<li><strong>resource</strong>：视图和未编译的资源文件（如 LESS、SASS 或 JavaScript）<ul>
+<li><strong>assets&#x2F;js&#x2F;app.js</strong>：引导和配置 Vue，Axios，jQuery 以及其他的 JavaScript 依赖</li>
+<li><strong>assets&#x2F;sass&#x2F;app.scss</strong>：引入包含SASS变量的文件，并加载 Bootstrap</li>
+<li><strong>lang</strong>：为支持国际化所需要的不同语言的文件夹</li>
+</ul>
+</li>
+<li><strong>router</strong>：应用的所有路由定义<ul>
+<li><strong>web.php</strong>：包含RouteServiceProvider放置在web中间件组中的路由，提供会话状态、CSRF防护和cookie加密</li>
+<li><strong>api.php</strong>：包含RouteServiceProvider放置在api中间件组中的路由，它提供了频率限制</li>
+<li><strong>console.php</strong>：定义所有基于闭包的控制台命令的文件</li>
+<li><strong>channels.php</strong>：注册应用支持的所有事件广播渠道的文件</li>
+</ul>
+</li>
+<li><strong>storage</strong>：编译的Blade模板、基于文件的会话和文件缓存以及框架生成的其他文件<ul>
+<li><strong>app</strong>：应用生成的任何文件<ul>
+<li><strong>public</strong>：存储用户生成的文件，比如需要公开访问的用户头像</li>
+</ul>
+</li>
+<li><strong>framework</strong>：框架生成的文件和缓存</li>
+<li><strong>logs</strong>：应用日志文件</li>
+</ul>
+</li>
+<li><strong>tests</strong>：Laravel内置的<a target="_blank" rel="noopener" href="https://phpunit.de/">PHPUnit</a>自动化测试文件</li>
+<li><strong>vendor</strong>：Composer依赖包</li>
+<li><strong>.env</strong>：本地的环境配置文件，不同服务器配置不同，不能提交到git，若没有可从根目录复制<code>.env.example</code>并修改</li>
+<li><strong>package.json</strong>：指定 JavaScript 依赖</li>
+<li><strong>composer.json</strong>：指定 PHP 依赖</li>
+<li><strong>webpack.mix.js</strong>：文件是所有资源编译的入口点，Mix任务可以一起被链式调用，以精确定义资源的编译方式</li>
+</ul>
+<h3 id="Laravel请求周期"><a href="#Laravel请求周期" class="headerlink" title="Laravel请求周期"></a>Laravel请求周期</h3><ul>
+<li><strong>开始</strong><ul>
+<li><code>public/index.php</code>文件是所有对Laravel应用程序的请求的入口点,所有的请求都是经由Web服务器（Apache&#x2F;Nginx）通过配置引导到这个文件。</li>
+<li><code>index.php</code>文件不包含太多的代码，却是加载框架的起点，该文件加载Composer生成定义的自动加载器，然后从<code>bootstrap/app.php</code>脚本中检索Laravel应用程序的实例。</li>
+</ul>
+</li>
+<li><strong>HTTP &#x2F; 控制内核</strong><ul>
+<li>根据进入应用程序的请求类型来将传入的请求发送到HTTP内核或控制台内核，这两个内核是用来作为所有请求都要通过的中心位置。</li>
+<li>位于app&#x2F;Http&#x2F;Kernel.php中的HTTP内核定义了在执行请求之前运行的bootstrappers数组，这个数组负责在实际处理请求之前完成配置错误处理、配置日志记录、检测应用环境以及执行其他需要完成的任务</li>
+<li>HTTP内核还定义了所有请求被应用程序处理之前必须经过的HTTP中间件的列表，这些中间件处理HTTP会话的读写、确定应用程序是否处于维护模式、验证CSRF令牌等</li>
+</ul>
+</li>
+<li><strong>服务提供器</strong><ul>
+<li>最重要的内核引导操作之一是加载应用程序的服务提供器</li>
+<li>所有服务提供器都在config&#x2F;app.php配置文件的providers数组中配置</li>
+<li>服务提供器负责引导所有框架的各种组件，如数据库、队列、验证和路由组件，框架提供的每个功能都由服务提供器来引导并配置</li>
+</ul>
+</li>
+<li><strong>分配请求</strong><ul>
+<li>一旦引导了应用程序且注册所有服务提供器，Request请求就会被转交给路由器来进行调度，路由器将请求发送到路由或控制器或任何运行于路由的特定中间件</li>
+</ul>
+</li>
+<li><strong>聚焦服务提供器</strong><ul>
+<li>创建应用程序实例、注册服务提供器，并将请求交给被引导的应用程序</li>
+</ul>
+</li>
+</ul>
+<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li><strong>Laravel预置</strong>：<a target="_blank" rel="noopener" href="https://getbootstrap.com/">Bootstrap</a> + <a target="_blank" rel="noopener" href="https://cn.vuejs.org/">Vue</a> + <a target="_blank" rel="noopener" href="https://www.npmjs.com/">NPM</a></li>
+<li><strong>移除前端脚手架</strong>：<code>php artisan preset none</code></li>
+<li><strong>编译</strong>：<ul>
+<li><code>npm run watch</code>和<code>npm run dev</code>会处理<code>webpack.mix.js</code>中的指令，编译<code>resources/assets/sass/app.scss</code>和<code>resources/assets/js/app.js</code>文件，编译后的文件放在public目录下</li>
+<li><code>npm run watch</code>会监控资源文件并实时更改，<code>npm run dev</code>不会主动更新</li>
+<li>在某些环境中，文件更改时Webpack不会更新，请考虑使用<code>npm run watch-poll</code>命令</li>
+</ul>
+</li>
+<li><strong>使用react</strong>：<code>php artisan preset react</code>命令将移除 Vue 脚手架并替换为 React 脚手架，组件实例也会相应替换</li>
+</ul>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图包含应用程序的 HTML，并且将控制器 &#x2F; 应用程序逻辑与演示逻辑分开。视图文件存放于 resources&#x2F;views 目录下。一个简单的视图如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 此视图文件位置：resources/views/greeting.blade.php --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;&#123; $name &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在 routes&#x2F;web.php 文件中定义 web 界面的视图路由，view 函数的第一个参数对应着 resources&#x2F;views 目录中视图文件的名称，第二个参数可以使用数组将数据传递到视图：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;greeting&#x27;</span>, [<span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;James&#x27;</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>视图文件也可以嵌套在 resources&#x2F;views 目录的子目录中。「点」符号可以用来引用嵌套视图。例如，如果你的视图存储在 resources&#x2F;views&#x2F;admin&#x2F;profile.blade.php，则可以这样引用它：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;admin.profile&#x27;</span>, <span class="variable">$data</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Laravel-Mix编辑资源"><a href="#Laravel-Mix编辑资源" class="headerlink" title="Laravel Mix编辑资源"></a>Laravel Mix编辑资源</h3><p>Laravel Mix用于使用几个常见的CSS和JavaScript预处理器为应用定义 Webpack构建步骤，可以通过简单链式调用来定义资源的编译。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">let mix = <span class="keyword">require</span>(<span class="string">&#x27;laravel-mix&#x27;</span>);</span><br><span class="line"></span><br><span class="line">mix.<span class="title function_ invoke__">js</span>(<span class="string">&#x27;resources/assets/js/app.js&#x27;</span>, <span class="string">&#x27;public/js&#x27;</span>)</span><br><span class="line">    .<span class="title function_ invoke__">less</span>(<span class="string">&#x27;resources/assets/less/app.less&#x27;</span>, <span class="string">&#x27;public/css&#x27;</span>)</span><br><span class="line">    .<span class="title function_ invoke__">extract</span>([<span class="string">&#x27;vue&#x27;</span>, <span class="string">&#x27;vue-router&#x27;</span>, <span class="string">&#x27;vuex&#x27;</span>, <span class="string">&#x27;axios&#x27;</span>]) <span class="comment">// 提取依赖库，数组中的依赖或模块将会被提取到vendor.js文件中</span></span><br><span class="line">    .<span class="title function_ invoke__">version</span>(); <span class="comment">// 自动为所有编译文件名附加唯一哈希值，实现缓存清除功能</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">// BrowserSync会自动监控文件修改并将修改注入浏览器而无需手动刷新，可通过调用mix.browserSync()方法启用</span></span><br><span class="line">mix.<span class="title function_ invoke__">browserSync</span>(&#123;</span><br><span class="line">    <span class="comment">// proxy: &#x27;http://192.168.31.233:8109&#x27;</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!mix.<span class="title function_ invoke__">inProduction</span>()) &#123;</span><br><span class="line">    mix.<span class="title function_ invoke__">sourceMaps</span>();  <span class="comment">// 本地调试时开启资源映射</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>加载js文件时使用<code>mix</code>函数能自动确定被哈希的文件名称，且务必按照以下文件顺序加载，以防JavaScript报错</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;&#123;&#123; mix(&#x27;/js/manifest.js&#x27;) &#125;&#125;&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;&#123;&#123; mix(&#x27;/js/vendor.js&#x27;) &#125;&#125;&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;&#123;&#123; mix(&#x27;/js/app.js&#x27;)  &#125;&#125;&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果需要修改插件配置项，可以将一个对象作为第三个参数传入</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mix.<span class="title function_ invoke__">less</span>(<span class="string">&#x27;resources/assets/less/app.less&#x27;</span>, <span class="string">&#x27;public/css&#x27;</span>, &#123;</span><br><span class="line">    strictMath: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果想合并压缩任意数量的JavaScript或css文件，可以使用scripts或styles方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mix.<span class="title function_ invoke__">styles</span>([</span><br><span class="line">    <span class="string">&#x27;public/css/vendor/normalize.css&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;public/css/vendor/videojs.css&#x27;</span></span><br><span class="line">    ], <span class="string">&#x27;public/css/all.css&#x27;</span>)</span><br><span class="line">    .<span class="title function_ invoke__">scripts</span>([</span><br><span class="line">        <span class="string">&#x27;public/js/admin.js&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;public/js/dashboard.js&#x27;</span></span><br><span class="line">    ], <span class="string">&#x27;public/js/all.js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>copy</code>和<code>copyDirectory</code>方法将文件和目录复制到新位置</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mix.<span class="title function_ invoke__">copy</span>(<span class="string">&#x27;node_modules/foo/bar.css&#x27;</span>, <span class="string">&#x27;public/css/bar.css&#x27;</span>);</span><br><span class="line">mix.<span class="title function_ invoke__">copyDirectory</span>(<span class="string">&#x27;assets/img&#x27;</span>, <span class="string">&#x27;public/img&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，Mix会自动显示是否编译成功的操作系统通知，但某些场景下（如生产环境）可能希望禁止通知，可通过<code>disableNotifications</code>方法停用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mix.<span class="title function_ invoke__">disableNotifications</span>();</span><br></pre></td></tr></table></figure>
+
+<p>如果使用的是react，Mix会自动安装React必要的Babel插件，只需替换<code>mix.js()</code>为<code>mix.react()</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mix.<span class="title function_ invoke__">react</span>(<span class="string">&#x27;resources/assets/js/app.jsx&#x27;</span>, <span class="string">&#x27;public/js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Mix提供了一个webpackConfig方法来合并任何Webpack配置以覆盖默认配置。</p>
+<blockquote>
+<p>如果想完全自定义Webpack配置，可将node_modules&#x2F;laravel-mix&#x2F;setup&#x2F;webpack.config.js文件复制到项目根目录，在package.json文件中将所有<code>--config</code>的值指向新配置文件。如果后续Mix版本有更新时，还需要手动合并webpack.config.js到自定义文件中。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mix.<span class="title function_ invoke__">webpackConfig</span>(&#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        modules: [</span><br><span class="line">            path.<span class="title function_ invoke__">resolve</span>(__dirname, <span class="string">&#x27;vendor/laravel/spark/resources/assets/js&#x27;</span>)</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="多语言国际化"><a href="#多语言国际化" class="headerlink" title="多语言国际化"></a>多语言国际化</h3><p>语言文件默认都放都在<code>resources/lang</code>文件夹中，相应的语言文件存在相应的文件夹下，所有的语言文件都返回一个键值对</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// resources/lang/en/messages.php</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">&#x27;welcome&#x27;</span> =&gt; <span class="string">&#x27;Welcome to our application&#x27;</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>Laravel 也提供支持使用字符串的『默认』翻译作为关键字来定义翻译字符串</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--resources/lang/es.json--&gt;</span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;I love programming.&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Me encanta programar.&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在<code>config/app.php</code>配置文件中可以根据需要修改当前语言设置</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;locale&#x27;</span> =&gt; <span class="string">&#x27;en&#x27;</span>, <span class="comment">// 当前语言</span></span><br><span class="line"><span class="string">&#x27;fallback_locale&#x27;</span> =&gt; <span class="string">&#x27;en&#x27;</span>, <span class="comment">// 备用语言，在当前语言不包含给定翻译字符串时被使用</span></span><br></pre></td></tr></table></figure>
+
+<p>可以灵活使用<code>App Facade</code>的<code>setLocale</code>、<code>getLocale</code>及<code>isLocale</code>方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;welcome/&#123;locale&#125;&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"><span class="variable">$locale</span></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 动态修改当前语言</span></span><br><span class="line">    <span class="title class_">App</span>::<span class="title function_ invoke__">setLocale</span>(<span class="variable">$locale</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取当前语言</span></span><br><span class="line"><span class="variable">$locale</span> = <span class="title class_">App</span>::<span class="title function_ invoke__">getLocale</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查语言环境是否为给定值</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title class_">App</span>::<span class="title function_ invoke__">isLocale</span>(<span class="string">&#x27;en&#x27;</span>)) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用辅助函数<code>__</code>从语言文件中检索，<code>__</code>方法接受翻译字符串的文件名和键值作为其第一个参数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">__</span>(<span class="string">&#x27;messages.welcome&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">__</span>(<span class="string">&#x27;I love programming.&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>可以在视图文件中打印翻译字符串</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用&#123;&#123;  &#125;&#125;语法</span></span><br><span class="line">&#123;&#123; <span class="title function_ invoke__">__</span>(<span class="string">&#x27;messages.welcome&#x27;</span>) &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用@lang指令</span></span><br><span class="line">@<span class="title function_ invoke__">lang</span>(<span class="string">&#x27;messages.welcome&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果需要，也可以在翻译字符串中定义占位符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">__</span>(<span class="string">&#x27;messages.welcome&#x27;</span>, [<span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;dayle&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;welcome&#x27;</span> =&gt; <span class="string">&#x27;Welcome, :name&#x27;</span>,</span><br><span class="line"><span class="comment">// 如果占位符中包含了首字母大写或者全体大写，翻译的内容也会做相应处理</span></span><br><span class="line"><span class="string">&#x27;welcome&#x27;</span> =&gt; <span class="string">&#x27;Welcome, :NAME&#x27;</span>, <span class="comment">// Welcome, DAYLE</span></span><br><span class="line"><span class="string">&#x27;goodbye&#x27;</span> =&gt; <span class="string">&#x27;Goodbye, :Name&#x27;</span>, <span class="comment">// Goodbye, Dayle</span></span><br></pre></td></tr></table></figure>
+
+<p>不同语言对于复数有不同的规则。使用管道符<code>|</code>，可以区分字符串的单复数形式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本用法</span></span><br><span class="line"><span class="string">&#x27;apples&#x27;</span> =&gt; <span class="string">&#x27;There is one apple|There are many apples&#x27;</span>,</span><br><span class="line"><span class="comment">// 为多个数字范围指定翻译字符串</span></span><br><span class="line"><span class="string">&#x27;apples&#x27;</span> =&gt; <span class="string">&#x27;&#123;0&#125; There are none|[1,19] There are some|[20,*] There are many&#x27;</span>,</span><br><span class="line"><span class="comment">// 也可以在复数字符串中插入占位符，trans_choice方法第三个参数所传递数组将会替换占位符</span></span><br><span class="line"><span class="string">&#x27;minutes_ago&#x27;</span> =&gt; <span class="string">&#x27;&#123;1&#125; :value minute ago|[2,*] :value minutes ago&#x27;</span>,</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">trans_choice</span>(<span class="string">&#x27;messages.apples&#x27;</span>, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">trans_choice</span>(<span class="string">&#x27;time.minutes_ago&#x27;</span>, <span class="number">5</span>, [<span class="string">&#x27;value&#x27;</span> =&gt; <span class="number">5</span>]);</span><br></pre></td></tr></table></figure>
+
+<p><strong>重写扩展包的语言文件</strong>：部分扩展包可能会附带自己的语言文件,可以通过在<code>resources/lang/vendor/&#123;package&#125;/&#123;locale&#125;</code>放置文件来重写它们，而不是直接修改扩展包的核心文件。</p>
+<h2 id="Blade模板引擎"><a href="#Blade模板引擎" class="headerlink" title="Blade模板引擎"></a>Blade模板引擎</h2><p>Blade是Laravel提供的一个模板引擎，并且不限制使用原生PHP代码，所有Blade视图文件都将被编译成原生PHP代码并缓存起来。Blade视图文件使用<code>.blade.php</code>作为文件扩展名，被存放在<code>resources/views</code>目录中。</p>
+<h3 id="模板继承"><a href="#模板继承" class="headerlink" title="模板继承"></a><strong>模板继承</strong></h3><ul>
+<li><code>@section</code>指令定义了视图的一部分内容，可以使用<code>@endsection</code>或<code>@show</code>收尾<ul>
+<li><code>@endsection</code>指令只定义一个区块</li>
+<li><code>@show</code>指令定义并立即生成该区块</li>
+<li><code>@parent</code>指令会被替换为「主」布局@section间的内容</li>
+</ul>
+</li>
+<li><code>@yield</code>指令用来显示指定部分的内容</li>
+<li><code>@extends</code>指令为子视图指定应该「继承」的布局</li>
+</ul>
+<p><em><strong>实例：</strong></em></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 父布局文件保存于 resources/views/layouts/app.blade.php --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>应用程序名称 - @yield(&#x27;title&#x27;)<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        @section(&#x27;sidebar&#x27;)</span><br><span class="line">            这是主布局的侧边栏。</span><br><span class="line">        @show</span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">            @yield(&#x27;content&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 子文件保存于 resources/views/layouts/child.blade.php --&gt;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">extends</span>(<span class="string">&#x27;layouts.app&#x27;</span>)</span><br><span class="line"></span><br><span class="line">@<span class="title function_ invoke__">section</span>(<span class="string">&#x27;title&#x27;</span>, <span class="string">&#x27;Page Title&#x27;</span>)</span><br><span class="line"></span><br><span class="line">@<span class="title function_ invoke__">section</span>(<span class="string">&#x27;sidebar&#x27;</span>)</span><br><span class="line">    @<span class="built_in">parent</span></span><br><span class="line"></span><br><span class="line">    &lt;p&gt;这将追加到主布局的侧边栏。&lt;/p&gt;</span><br><span class="line">@endsection</span><br><span class="line"></span><br><span class="line">@<span class="title function_ invoke__">section</span>(<span class="string">&#x27;content&#x27;</span>)</span><br><span class="line">    &lt;p&gt;这是主体内容。&lt;/p&gt;</span><br><span class="line">@endsection</span><br></pre></td></tr></table></figure>
+
+<h3 id="Components-amp-Slots"><a href="#Components-amp-Slots" class="headerlink" title="Components &amp; Slots"></a><strong>Components &amp; Slots</strong></h3><ul>
+<li><code>&#123;&#123; $slot &#125;&#125;</code>变量将包含注入到组件的内容</li>
+<li><code>@component</code>构建内容组件，使用<code>@endcomponent</code>收尾</li>
+<li>需要向组件传递数据时，可以给<code>@component</code>指令的第二个参数传入一个数组，数组里的数据将在组件模板以变量的形式生效</li>
+</ul>
+<p><em><strong>实例：</strong></em></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 组件文件存放于 /resources/views/alert.blade.php --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;alert alert-danger&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;alert-title&quot;</span>&gt;</span>&#123;&#123; $title &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123; $slot &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 引用组件的文件 --&gt;</span><br><span class="line">@<span class="title function_ invoke__">component</span>(<span class="string">&#x27;alert&#x27;</span>)</span><br><span class="line">    @<span class="title function_ invoke__">slot</span>(<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">        Forbidden</span><br><span class="line">    @endslot</span><br><span class="line">    你没有权限访问这个资源！</span><br><span class="line">@endcomponent</span><br><span class="line"></span><br><span class="line">@<span class="title function_ invoke__">component</span>(<span class="string">&#x27;alert&#x27;</span>, [<span class="string">&#x27;title&#x27;</span> =&gt; <span class="string">&#x27;Forbidden&#x27;</span>])</span><br><span class="line">@endcomponent</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可自定义创建@alert别名的组件，详见本文“自定义组件别名”部分</p>
+</blockquote>
+<h3 id="显示数据"><a href="#显示数据" class="headerlink" title="显示数据"></a><strong>显示数据</strong></h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由定义</span></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;greeting&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>, [<span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;Samantha&#x27;</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 默认情况下，Blade的&#123;&#123;&#125;&#125;会自动调用PHP的htmlspecialchars函数防止 XSS 攻击 --&gt;</span></span><br><span class="line">Hello, &#123;&#123; $name &#125;&#125;.</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 不想调用PHP的htmlspecialchars函数转义的话，可以使用以下语法 --&gt;</span></span><br><span class="line">Hello, &#123;!! $name !!&#125;.</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 渲染json，可以使用@json指令替代PHP的手动json_encode --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> app = @<span class="title function_">json</span>($array);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 使用@符告诉Blade渲染引擎保持这个表达式不变。渲染后，引擎会把@符移除，但&#123;&#123; name &#125;&#125;表达式保留 --&gt;</span></span><br><span class="line">Hello, @&#123;&#123; name &#125;&#125;.</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 如果模板中一大部分需要显示JS变量，可用@verbatim指令包住 HTML，就不用在每个Blade echo语句前加@符 --&gt;</span></span><br><span class="line">@verbatim</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        Hello, &#123;&#123; name &#125;&#125;.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">@endverbatim</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a><strong>流程控制</strong></h3><p><strong>条件指令</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">if</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$records</span>) === <span class="number">1</span>)</span><br><span class="line">    我有一条记录！</span><br><span class="line">@<span class="keyword">elseif</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$records</span>) &gt; <span class="number">1</span>)</span><br><span class="line">    我有好几条记录！</span><br><span class="line">@<span class="keyword">else</span></span><br><span class="line">   我没有记录！</span><br><span class="line">@<span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title function_ invoke__">unless</span> (<span class="title class_">Auth</span>::<span class="title function_ invoke__">check</span>())</span><br><span class="line">    未登陆 <span class="comment">// 当Auth::check()为false </span></span><br><span class="line">@endunless</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">isset</span>(<span class="variable">$records</span>)</span><br><span class="line">    <span class="comment">// $records 已定义且不为 null</span></span><br><span class="line">@endisset</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">empty</span>(<span class="variable">$records</span>)</span><br><span class="line">    <span class="comment">// $records 为空</span></span><br><span class="line">@endempty</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用`@auth`和`@guest`快速认证当前用户</span></span><br><span class="line">@auth</span><br><span class="line">   <span class="comment">// 通过认证</span></span><br><span class="line">@endauth</span><br><span class="line"></span><br><span class="line">@guest</span><br><span class="line">    <span class="comment">// 未通过认证</span></span><br><span class="line">@endguest</span><br><span class="line"></span><br><span class="line"><span class="comment">// 还可以在指令中指定认证看守器（Guard）</span></span><br><span class="line">@<span class="title function_ invoke__">auth</span>(<span class="string">&#x27;admin&#x27;</span>)</span><br><span class="line">    <span class="comment">// 通过认证</span></span><br><span class="line">@endauth</span><br><span class="line"></span><br><span class="line">@<span class="title function_ invoke__">guest</span>(<span class="string">&#x27;admin&#x27;</span>)</span><br><span class="line">    <span class="comment">// 未通过认证</span></span><br><span class="line">@endguest</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指令检查 section 是否有内容</span></span><br><span class="line">@<span class="title function_ invoke__">hasSection</span>(<span class="string">&#x27;navigation&#x27;</span>)</span><br><span class="line">    @<span class="keyword">yield</span>(<span class="string">&#x27;navigation&#x27;</span>)</span><br><span class="line">@<span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">switch</span>(<span class="variable">$i</span>)</span><br><span class="line">    @<span class="keyword">case</span>(<span class="number">1</span>)</span><br><span class="line">        First <span class="keyword">case</span>...</span><br><span class="line">        @<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    @<span class="keyword">case</span>(<span class="number">2</span>)</span><br><span class="line">        Second <span class="keyword">case</span>...</span><br><span class="line">        @<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    @<span class="keyword">default</span></span><br><span class="line">        Default <span class="keyword">case</span>...</span><br><span class="line">@<span class="keyword">endswitch</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>循环指令</strong></p>
+<p>支持for、foreach、forelse、while，与PHP中对应的函数相同。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="number">10</span>; <span class="variable">$i</span>++)</span><br><span class="line">    目前的值为 &#123;&#123; <span class="variable">$i</span> &#125;&#125;</span><br><span class="line">@<span class="keyword">endfor</span></span><br><span class="line"></span><br><span class="line">@<span class="keyword">foreach</span> (<span class="variable">$users</span> <span class="keyword">as</span> <span class="variable">$user</span>)</span><br><span class="line">    &lt;p&gt;此用户为 &#123;&#123; <span class="variable">$user</span>-&gt;id &#125;&#125;&lt;/p&gt;</span><br><span class="line">@<span class="keyword">endforeach</span></span><br><span class="line"></span><br><span class="line">@<span class="title function_ invoke__">forelse</span> (<span class="variable">$users</span> <span class="keyword">as</span> <span class="variable">$user</span>)</span><br><span class="line">    &lt;li&gt;&#123;&#123; <span class="variable">$user</span>-&gt;name &#125;&#125;&lt;/li&gt;</span><br><span class="line">@<span class="keyword">empty</span></span><br><span class="line">    &lt;p&gt;没有用户&lt;/p&gt;</span><br><span class="line">@endforelse</span><br><span class="line"></span><br><span class="line">@<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">    &lt;p&gt;死循环了&lt;/p&gt;</span><br><span class="line">@<span class="keyword">endwhile</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以使用@break结束循环或@continue跳过当前迭代</span></span><br><span class="line">@<span class="keyword">foreach</span> (<span class="variable">$users</span> <span class="keyword">as</span> <span class="variable">$user</span>)</span><br><span class="line">    @<span class="keyword">if</span> (<span class="variable">$user</span>-&gt;type == <span class="number">1</span>)</span><br><span class="line">        @<span class="keyword">continue</span></span><br><span class="line">    @<span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">    &lt;li&gt;&#123;&#123; <span class="variable">$user</span>-&gt;name &#125;&#125;&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">    @<span class="keyword">if</span> (<span class="variable">$user</span>-&gt;number == <span class="number">5</span>)</span><br><span class="line">        @<span class="keyword">break</span></span><br><span class="line">    @<span class="keyword">endif</span></span><br><span class="line">@<span class="keyword">endforeach</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 还可以使用一行代码包含指令声明的条件</span></span><br><span class="line">@<span class="keyword">foreach</span> (<span class="variable">$users</span> <span class="keyword">as</span> <span class="variable">$user</span>)</span><br><span class="line">    @<span class="keyword">continue</span>(<span class="variable">$user</span>-&gt;type == <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    &lt;li&gt;&#123;&#123; <span class="variable">$user</span>-&gt;name &#125;&#125;&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">    @<span class="keyword">break</span>(<span class="variable">$user</span>-&gt;number == <span class="number">5</span>)</span><br><span class="line">@<span class="keyword">endforeach</span></span><br></pre></td></tr></table></figure>
+
+<p>循环时，可以在循环内使用 $loop 变量获取一些有用的信息。</p>
+<ul>
+<li><code>$loop-&gt;index</code>: 当前循环迭代的索引（从 0 开始）。</li>
+<li><code>$loop-&gt;iteration</code>: 当前循环迭代 （从 1 开始）。</li>
+<li><code>$loop-&gt;remaining</code>: 循环中剩余迭代数量。</li>
+<li><code>$loop-&gt;count</code>: 迭代中的数组项目总数。</li>
+<li><code>$loop-&gt;first</code>: 当前迭代是否是循环中的首次迭代。</li>
+<li><code>$loop-&gt;last</code>: 当前迭代是否是循环中的最后一次迭代。</li>
+<li><code>$loop-&gt;depth</code>: 当前循环的嵌套级别。</li>
+<li><code>$loop-&gt;parent</code>: 在嵌套循环中，父循环的变量。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">foreach</span> (<span class="variable">$users</span> <span class="keyword">as</span> <span class="variable">$user</span>)</span><br><span class="line">    @<span class="keyword">if</span> (<span class="variable">$loop</span>-&gt;first)</span><br><span class="line">        这是第一个迭代。</span><br><span class="line">    @<span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">    @<span class="keyword">if</span> (<span class="variable">$loop</span>-&gt;last)</span><br><span class="line">        这是最后一个迭代。</span><br><span class="line">    @<span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">    &lt;p&gt;This is user &#123;&#123; <span class="variable">$user</span>-&gt;id &#125;&#125;&lt;/p&gt;</span><br><span class="line">@<span class="keyword">endforeach</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="引入子视图"><a href="#引入子视图" class="headerlink" title="引入子视图"></a>引入子视图</h3><p>可以使用Blade的<code>@include</code>引入一个已存在的视图，所有在父视图的可用变量在被引入的视图中都是可用的。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    @<span class="keyword">include</span>(<span class="string">&#x27;shared.errors&#x27;</span>)</span><br><span class="line">    &lt;form&gt;</span><br><span class="line">        &lt;!-- 表单内容 --&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--也可以向引入的视图传递额外的数组数据--&gt;</span><br><span class="line">    @<span class="keyword">include</span>(<span class="string">&#x27;view.name&#x27;</span>, [<span class="string">&#x27;some&#x27;</span> =&gt; <span class="string">&#x27;data&#x27;</span>])</span><br><span class="line">    </span><br><span class="line">    &lt;!--如果想引入一个可能存在或可能不存在的视图，可使用@includeIf指令--&gt;</span><br><span class="line">    @<span class="title function_ invoke__">includeIf</span>(<span class="string">&#x27;view.name&#x27;</span>, [<span class="string">&#x27;some&#x27;</span> =&gt; <span class="string">&#x27;data&#x27;</span>])</span><br><span class="line">    </span><br><span class="line">    &lt;!--如果要根据给定的布尔条件 @<span class="keyword">include</span> 视图，可以使用 @includeWhen 指令--&gt;</span><br><span class="line">    @<span class="title function_ invoke__">includeWhen</span>(<span class="variable">$boolean</span>, <span class="string">&#x27;view.name&#x27;</span>, [<span class="string">&#x27;some&#x27;</span> =&gt; <span class="string">&#x27;data&#x27;</span>])</span><br><span class="line"></span><br><span class="line">    &lt;!--要包含来自给定数组视图的第一个视图，可以使用 includeFirst 指令：--&gt;</span><br><span class="line">    @<span class="title function_ invoke__">includeFirst</span>([<span class="string">&#x27;custom.admin&#x27;</span>, <span class="string">&#x27;admin&#x27;</span>], [<span class="string">&#x27;some&#x27;</span> =&gt; <span class="string">&#x27;data&#x27;</span>])</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="为集合渲染视图"><a href="#为集合渲染视图" class="headerlink" title="为集合渲染视图"></a>为集合渲染视图</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title function_ invoke__">each</span>(<span class="string">&#x27;view.name&#x27;</span>, <span class="variable">$jobs</span>, <span class="string">&#x27;job&#x27;</span>, <span class="string">&#x27;view.empty&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>第一个参数</strong>：对数组或集合中的每个元素进行渲染的部分视图</li>
+<li><strong>第二个参数</strong>：要迭代的数组或集合</li>
+<li><strong>第三个参数</strong>：将被分配给视图中当前迭代的变量名称</li>
+<li><strong>第四个参数</strong>：选填，当需要迭代的数组为空时，将会使用这个参数提供的视图来渲染</li>
+</ul>
+<blockquote>
+<p>通过@each渲染的视图不会从父视图继承变量。如果子视图需要这些变量，则应该使用 @foreach 和 @include</p>
+</blockquote>
+<p><strong>堆栈</strong></p>
+<p>Blade 可以被推送到在其他视图或布局中的其他位置渲染的命名堆栈。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title function_ invoke__">push</span>(<span class="string">&#x27;scripts&#x27;</span>)</span><br><span class="line">    &lt;script src=<span class="string">&quot;/example.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">@endpush</span><br></pre></td></tr></table></figure>
+
+<p>可以根据需要多次压入堆栈，通过@stack命令中传递堆栈的名称来渲染完整的堆栈内容。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;!-- Head Contents --&gt;</span><br><span class="line">    @<span class="title function_ invoke__">stack</span>(<span class="string">&#x27;scripts&#x27;</span>)</span><br><span class="line">&lt;/head&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="服务注入"><a href="#服务注入" class="headerlink" title="服务注入"></a>服务注入</h3><ul>
+<li><code>@inject</code>命令可用于从Laravel服务容器中检索服务</li>
+<li>传递给<code>@inject</code>的第一个参数为置放该服务的变量名称，而第二个参数是要解析的服务的类或是接口的名称<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title function_ invoke__">inject</span>(<span class="string">&#x27;metrics&#x27;</span>, <span class="string">&#x27;App\Services\MetricsService&#x27;</span>)</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">    Monthly Revenue: &#123;&#123; <span class="variable">$metrics</span>-&gt;<span class="title function_ invoke__">monthlyRevenue</span>() &#125;&#125;.</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="拓展Blade"><a href="#拓展Blade" class="headerlink" title="拓展Blade"></a>拓展Blade</h3><p><strong>自定义组件别名</strong></p>
+<ul>
+<li>在<code>app\Providers\AppServiceProvider.php</code>中的<code>boot</code>函数中追加注册别名<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Blade</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">boot</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="title class_">Blade</span>::<span class="title function_ invoke__">component</span>(<span class="string">&#x27;components.alert&#x27;</span>, <span class="string">&#x27;alert&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在页面中使用指令渲染<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 数组里的数据将在组件模板以变量的形式生效 --&gt;</span><br><span class="line">@<span class="title function_ invoke__">alert</span>([<span class="string">&#x27;title&#x27;</span> =&gt; <span class="string">&#x27;Forbidden&#x27;</span>])</span><br><span class="line">    你无权访问！</span><br><span class="line">@endalert</span><br><span class="line"></span><br><span class="line">&lt;!-- 可不传参数 --&gt;</span><br><span class="line">@alert</span><br><span class="line">    你无权访问！</span><br><span class="line">@endalert</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>自定义指令</strong></p>
+<ul>
+<li><p>在<code>app\Providers\AppServiceProvider.php</code>中的<code>boot</code>函数中追加注册指令</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Blade</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">boot</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="title class_">Blade</span>::<span class="title function_ invoke__">directive</span>(<span class="string">&#x27;datetime&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"><span class="variable">$expression</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&lt;?php echo (<span class="subst">$expression</span>)-&gt;format(&#x27;m/d/Y H:i&#x27;); ?&gt;&quot;</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新Blade指令的逻辑后，需要使用Artisan命令<code>view:clear</code>删除所有已缓存的Blade视图。</p>
+</li>
+<li><p>在页面中使用指令<code>@datetime($var)</code></p>
+</li>
+</ul>
+<p><strong>自定义If语句</strong></p>
+<ol>
+<li>在<code>app\Providers\AppServiceProvider.php</code>中的<code>boot</code>函数中追加注册指令<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Blade</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">boot</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="title class_">Blade</span>::<span class="keyword">if</span>(<span class="string">&#x27;env&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"><span class="variable">$environment</span></span>) </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">app</span>()-&gt;<span class="title function_ invoke__">environment</span>(<span class="variable">$environment</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在模板中使用<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title function_ invoke__">env</span>(<span class="string">&#x27;local&#x27;</span>)</span><br><span class="line">    <span class="comment">// 该应用在本地环境中...</span></span><br><span class="line">@<span class="title function_ invoke__">elseenv</span>(<span class="string">&#x27;testing&#x27;</span>)</span><br><span class="line">    <span class="comment">// 该应用在测试环境中...</span></span><br><span class="line">@<span class="keyword">else</span></span><br><span class="line">    <span class="comment">// 该应用不在本地或测试环境中...</span></span><br><span class="line">@endenv</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>其他</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;-- 此注释将不会出现在渲染后的 HTML --&#125;&#125;</span><br><span class="line"></span><br><span class="line">@php</span><br><span class="line">    <span class="comment">// 在模板中执行一段纯 PHP 代码</span></span><br><span class="line">@endphp</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/summary-standard/" rel="prev" title="规范汇总">
+                  <i class="fa fa-chevron-left"></i> 规范汇总
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ability-meeting/" rel="next" title="对高效会议的思考">
+                  对高效会议的思考 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

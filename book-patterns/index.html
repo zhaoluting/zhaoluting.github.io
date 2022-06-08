@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="本文是我阅读《JavaScript设计模式与开发实践》过程中记录下来的笔记。之前以为设计模式是要到架构师那个境界才能真正用到的，看了这本书才发现，原来我们平时就一直在接触设计模式，自己也在无意识地用到了这些设计模式。理解了这些设计模式后，对日后的编码思路和代码优化也有很大的帮助，其中原型模式、策略模式、发布-订阅模式给我的印象是最深刻的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《JavaScript设计模式与开发实践》笔记">
+<meta property="og:url" content="https://zhaoluting.github.io/book-patterns/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="本文是我阅读《JavaScript设计模式与开发实践》过程中记录下来的笔记。之前以为设计模式是要到架构师那个境界才能真正用到的，看了这本书才发现，原来我们平时就一直在接触设计模式，自己也在无意识地用到了这些设计模式。理解了这些设计模式后，对日后的编码思路和代码优化也有很大的帮助，其中原型模式、策略模式、发布-订阅模式给我的印象是最深刻的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-11T12:20:03.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.788Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="book">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/book-patterns/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/book-patterns/","path":"book-patterns/","title":"《JavaScript设计模式与开发实践》笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《JavaScript设计模式与开发实践》笔记 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">小总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#this%E3%80%81call%E5%92%8Capply"><span class="nav-number">2.1.</span> <span class="nav-text">this、call和apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">2.3.</span> <span class="nav-text">闭包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">常用的设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">创建型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.1.</span> <span class="nav-text">原型模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.2.</span> <span class="nav-text">单例模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">结构型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.1.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.2.</span> <span class="nav-text">组合模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.3.</span> <span class="nav-text">享元模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.4.</span> <span class="nav-text">装饰者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.5.</span> <span class="nav-text">适配器模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">行为型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.2.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E5%B8%83-%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">3.3.3.</span> <span class="nav-text">发布-订阅模式（观察者模式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.4.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.5.</span> <span class="nav-text">模板方法模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.6.</span> <span class="nav-text">职责链模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.7.</span> <span class="nav-text">中介者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.8.</span> <span class="nav-text">状态模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">代码重构技巧</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/book-patterns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《JavaScript设计模式与开发实践》笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-11 20:20:03" itemprop="dateCreated datePublished" datetime="2019-01-11T20:20:03+08:00">2019-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本文是我阅读<a target="_blank" rel="noopener" href="https://book.douban.com/subject/26382780/">《JavaScript设计模式与开发实践》</a>过程中记录下来的笔记。之前以为设计模式是要到架构师那个境界才能真正用到的，看了这本书才发现，原来我们平时就一直在接触设计模式，自己也在无意识地用到了这些设计模式。理解了这些设计模式后，对日后的编码思路和代码优化也有很大的帮助，其中<a href="/book-patterns/#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F">原型模式</a>、<a href="/book-patterns/#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F">策略模式</a>、<a href="/book-patterns/#%E5%8F%91%E5%B8%83-%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%89">发布-订阅模式</a>给我的印象是最深刻的。</p>
+<span id="more"></span>
+
+<h2 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h2><ul>
+<li>JavaScript是一门基于原型的面向对象语言，它的对象系统是使用原型模式搭建的，没有类的概念，将函数作为一等对象。</li>
+<li>很多设计模式都是通过闭包和高阶函数实现的；编写函数式语言风格的代码，离不开call和apply。</li>
+<li>所有设计模式的实现都遵循一条原则：找出程序中变化的部分，并将变化封装起来，注重提高可复用和可维护性，保证代码的高内聚低耦合。</li>
+<li>很多模式的类图和结构看起来几乎没有区别，例如代理模式和装饰者模式、策略模式和智能命令模式等。虽然看起来差不多，但是它们之间的意图和设计目的是不同的。</li>
+<li>我们不能刻意的去套用设计模式，而是在理解了那些优秀的设计模式后，很自然地将那些模式融入到代码中。</li>
+</ul>
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><ul>
+<li><strong>设计模式</strong>：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。</li>
+<li><strong>动态类型语言</strong>：单至类型上的定义，变量类型在运行时才会确定。</li>
+<li>**面向对象编程(OOP)**：本质是以建立模型体现出来的抽象思维过程和面向对象的方法。以类为中心，抽象、封装、继承和多态是面向对象的基础。</li>
+<li><strong>抽象</strong>：提取现实世界中某事物的关键特性，为该事物构建模型的过程。得到的抽象模型(包含属性、操作)称之为类。</li>
+<li><strong>封装</strong>：使类具有独立性和隔离性，保证类的高内聚。只暴露给类外部或者子类必须的属性和操作。</li>
+<li><strong>继承</strong>：对现有类的一种复用机制。一个类如果继承现有的类，则这个类将拥有被继承类的所有非私有特性（属性和操作）。</li>
+<li><strong>多态</strong>：同一操作作用于不同对象上，可产生不同的解释和不同的执行结果。通常使用继承来得到多态效果。</li>
+<li><strong>鸭子类型</strong>：只关注对象行为，不关注对象本身。</li>
+<li>**单一职责原则(SRP)**：一个对象（方法）只做一件事。（低耦合）</li>
+<li><strong>最少知识原则(LKP)&#x2F;迪米特法则</strong>：一个软件实体（类、模块、函数等）应当尽可能少地与其他实体发生相互作用。（对象之间减少交互）</li>
+<li><strong>开放-封闭原则</strong>：软件实体应该是可以扩展的，但是不可修改。</li>
+</ul>
+<h3 id="this、call和apply"><a href="#this、call和apply" class="headerlink" title="this、call和apply"></a>this、call和apply</h3><ul>
+<li>this是执行上下文环境的一个属性，而不是某个变量对象的属性，总是指向一个对象。</li>
+<li>call和apply能很好地体现JavaScript函数式的语言特性。<ul>
+<li>最常见的用途是改变函数内部的this指向。</li>
+<li>apply是Function.prototype.bind的实现核心。</li>
+<li>借用其他对象的方法，扩充函数赖以运行的作用域，可以借此实现多重继承</li>
+</ul>
+</li>
+</ul>
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><p>高阶函数式指至少满足下列条件之一的函数：</p>
+<ul>
+<li>函数可以作为参数被传递，如回调、节流、分时函数。</li>
+<li>函数可以作为返回值输出，如柯里化(部分求值)函数</li>
+</ul>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><ul>
+<li><strong>定义</strong>：指有权访问另一个函数作用域中变量的函数。   </li>
+<li><strong>常见方式</strong>：函数内创建内部函数，外部通过内部函数访问此函数的局部变量。  </li>
+<li><strong>作用</strong>：<ul>
+<li>突破作用链域，将函数内部的变量和方法传递到外部。</li>
+<li>延续局部变量的生存周期，防止被垃圾回收机制清除。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：<ul>
+<li>将不需要暴露在全局的变量封装成“私有变量”；</li>
+<li>缓存功能，减少重复计算或防止数据丢失；</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用的设计模式"><a href="#常用的设计模式" class="headerlink" title="常用的设计模式"></a>常用的设计模式</h2><h3 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a><div style="color:#a88773">创建型模式</div></h3><h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><ul>
+<li><strong>定义</strong>：用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</li>
+<li><strong>要点</strong>：是一种对象创建型模式，实现关键是语言本身是否提供了clone方法。</li>
+<li><strong>基本规则</strong>：<ul>
+<li>所有数据都是对象。</li>
+<li>要得到一个对象，不是通过实例化类，而是找到一个对象作为原型并克隆它。</li>
+<li>对象会记住它的原型。</li>
+<li>如果对象无法响应某个请求，它会把这个请求委托给它自己的原型。</li>
+</ul>
+</li>
+<li><strong>意义</strong>：不单是一种设计模式，也是一种编程泛型，它构成了JavaScript这门语言的根本。</li>
+<li><strong>场景</strong>：在初始化信息不发生变化的情况，用克隆进行拷贝。</li>
+</ul>
+<h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><ul>
+<li><strong>定义</strong>：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 </li>
+<li><strong>要点</strong>：将创建对象和管理单例的职责分布在两个不同的方法中。</li>
+<li><strong>意义</strong>：惰性单例模式是重点，指的是在需要的时候才创建唯一的对象实例，非常简单实用。</li>
+<li><strong>场景</strong>：登录浮窗、全局缓存、window对象等。</li>
+</ul>
+<h3 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a><div style="color:#a88773">结构型模式</div></h3><h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><ul>
+<li><strong>定义</strong>：为对象提供一个代用品或占位符，以便控制对它的访问。</li>
+<li><strong>要点</strong>：虚拟代理是最常用的，用一个类去访问原类的接口，进行额外的操作。</li>
+<li><strong>意义</strong>：在客户看来，代理对象和本体是一致的（可通过鸭子类型来检测一致性），用户可以放心得在任何使用本体的地方替换成使用代理。</li>
+<li><strong>场景</strong>：虚拟代理（将开销大的对象延迟到需要时再创建），如懒加载、合并请求；缓存代理（为开销大的运算结果提供临时存储）；保护代理（控制不同权限的对象对目标对象的访问）</li>
+</ul>
+<h4 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h4><ul>
+<li><strong>定义</strong>：用小的子对象来构建更大的对象。</li>
+<li><strong>要点</strong>：将对象合成树形结构，以表示“部分-整体”的层次结构。</li>
+<li><strong>意义</strong>：通过对象的多态性表现，使得用户对单个对象和组合对象的使用具有一致性。</li>
+<li><strong>场景</strong>：文件系统的增删改查等树形结构场景。</li>
+</ul>
+<h4 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h4><ul>
+<li><strong>定义</strong>：运用共享技术有效的支持大量细粒度的对象。</li>
+<li><strong>要点</strong>：将对象属性划分为内部状态与外部状态，剥离了外部状态的对象成为共享对象，在合适的时刻将外部状态组装进共享对象。</li>
+<li><strong>意义</strong>：用于性能优化，用时间换空间，通过共享大幅度减少单个实例的数目。</li>
+<li><strong>场景</strong>：上次创建的DOM节点共享给下次创建操作。</li>
+</ul>
+<h4 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h4><ul>
+<li><strong>定义</strong>：在不改变对象自身的基础上，在程序运行期间给对象动态地添加职责，常常会形成一条装饰链。</li>
+<li><strong>要点</strong>：将对象放入另一个对象中，这些对象以链的形式进行引用，形成一个聚合对象。请求沿着链依次传递到所有对象，每个对象执行完自身操作，再讲请求转发给下一个对象。</li>
+<li><strong>意义</strong>：在框架开发中非常有用，个性化功能可在框架之外动态装饰上去。</li>
+<li><strong>场景</strong>：统计函数执行时间、插件式表单验证等。</li>
+</ul>
+<h4 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h4><ul>
+<li><strong>定义</strong>：将一个类的接口转换成客户希望的另外一个接口。</li>
+<li><strong>要点</strong>：不需要改变已有接口，只包装一次。</li>
+<li><strong>意义</strong>：复用现存的类，客户端统一调用同一接口，更简单、直接、紧凑。</li>
+<li><strong>场景</strong>：当系统的数据和行为都正确，但接口不符时。</li>
+</ul>
+<h3 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a><div style="color:#a88773">行为型模式</div></h3><h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><ul>
+<li><strong>定义</strong>：定义一系列算法，各自封装成策略类，对context发起请求时，context将请求委托给对应的策略类。</li>
+<li><strong>要点</strong>：将算法的使用(环境类context)和算法的实现(策略类)分离开来。</li>
+<li><strong>意义</strong>：策略模式是对象多态的完美体现，高阶函数就是一种隐式的策略模式。策略模式已经融入到了JS语言本身中。</li>
+<li><strong>场景</strong>：游戏动效、验证表单等。</li>
+</ul>
+<h4 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h4><ul>
+<li><strong>定义</strong>：提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。</li>
+<li><strong>要点</strong>：循环访问聚合对象（包括数组和类数组对象）中的各个元素，但没有规定访问规则，即可使用顺序、倒序、中序等方式。</li>
+<li><strong>意义</strong>：将迭代的过程从业务逻辑中分离出来，不用关心对象的内部构造。绝大部分语言都内置了迭代器。</li>
+<li><strong>场景</strong>：内部迭代器（内部已定义好迭代规则，外部不需要关心迭代器内部实现，外部仅需一次初始调用）；外部迭代器（必须显示地请求迭代下一个元素，可手动控制迭代的过程或顺序）</li>
+</ul>
+<h4 id="发布-订阅模式（观察者模式）"><a href="#发布-订阅模式（观察者模式）" class="headerlink" title="发布-订阅模式（观察者模式）"></a>发布-订阅模式（观察者模式）</h4><ul>
+<li><strong>定义</strong>：当一个对象的状态发生变化时，所有依赖于它的对象都将得到通知。</li>
+<li><strong>要点</strong>：在JS中是用注册回调函数的形式来代替传统的发布订阅者模式。</li>
+<li><strong>意义</strong>：发布订阅者模式可以实现对时间及对象间的解耦。从架构上看，MVC和MVVM都少不了发布订阅者模式，而且JS本身也是一门基于事件驱动的语言。</li>
+<li><strong>场景</strong>：DOM节点上绑定事件函数；订阅ajax请求的error、succ等事件；模块之间的通信；</li>
+</ul>
+<h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><ul>
+<li><strong>定义</strong>：将一个请求封装成一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及执行可撤销的操作。</li>
+<li><strong>要点</strong>：客户(client)创建命令；调用者(invoking)执行该命令；接收者(receiving)在命令执行时执行相应操作。当命令对象可以直接实现请求时，就不再需要接受者的存在，这时的命令模式与策略模式非常相近，只有意图的不同。</li>
+<li><strong>意义</strong>：旨在将函数的调用、请求和操作封装成一个单一的对象；解耦调用者与接收对象。</li>
+<li><strong>场景</strong>：命令模式与策略模式一样融入了JS语言中。</li>
+</ul>
+<h4 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h4><ul>
+<li><strong>定义</strong>：子类实现中的相同部分被上移到父类，将不同部分留待子类实现。</li>
+<li><strong>要点</strong>：在抽象父类中封装好子类的算法框架和方法的执行顺序，再由子类继承抽象类。</li>
+<li><strong>意义</strong>：基于继承的代码复用技术。</li>
+<li><strong>场景</strong>：有重复行为的平行子类。</li>
+</ul>
+<h4 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h4><ul>
+<li><strong>定义</strong>：一系列可能会处理请求的对象被连接成一条链，请求沿着链传递，直到有对象处理为止。</li>
+<li><strong>要点</strong>：节点数量和顺序可以自由变化，在运行时也能决定链中包含哪些节点。</li>
+<li><strong>意义</strong>：解耦了请求的发送者和多个接收者之间的关系。</li>
+<li><strong>场景</strong>：作用域链、原型链、DOM节点的事件冒泡。</li>
+</ul>
+<h4 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h4><ul>
+<li><strong>定义</strong>：用一个中介对象来封装一系列的对象交互。</li>
+<li><strong>要点</strong>：所有相关对象之间的交互都交给中介者来实现和维护。</li>
+<li><strong>意义</strong>：解除对象与对象之间的紧耦合关系。</li>
+<li><strong>场景</strong>：form表单各项的实时校验。</li>
+</ul>
+<h4 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h4><ul>
+<li><strong>定义</strong>：将对象的内部状态都封装成独立的类，请求会被委托给当前的状态对象。</li>
+<li><strong>要点</strong>：不同状态下，对象像是从不同的类中实例化而来的。</li>
+<li><strong>意义</strong>：状态模式是状态机的实现之一。</li>
+<li><strong>场景</strong>：游戏人物状态切换等。</li>
+</ul>
+<h2 id="代码重构技巧"><a href="#代码重构技巧" class="headerlink" title="代码重构技巧"></a>代码重构技巧</h2><ol>
+<li>提炼函数，包括重复代码、条件分支语句等情况</li>
+<li>合理使用循环</li>
+<li>使用return提前让函数退出</li>
+<li>传递对象参数代替过程的参数列表</li>
+<li>尽量减少参数数量</li>
+<li>少用三目运算符（可读性差）</li>
+<li>合理使用链式调用</li>
+<li>分解大类型</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/book/" rel="tag"># book</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/goodbye51/" rel="prev" title="告别51">
+                  <i class="fa fa-chevron-left"></i> 告别51
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/book-technology/" rel="next" title="《现代前端技术解析》笔记">
+                  《现代前端技术解析》笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

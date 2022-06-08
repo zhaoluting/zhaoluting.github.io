@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="简介工欲善其事,必先利其器。轻量 便捷 实时  Chrome 开发者工具是一套内置于Google Chrome中的Web开发和调试工具，可用来对网站进行迭代、调试和分析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chrome调试指南">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-devTool/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="简介工欲善其事,必先利其器。轻量 便捷 实时  Chrome 开发者工具是一套内置于Google Chrome中的Web开发和调试工具，可用来对网站进行迭代、调试和分析。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/device1_2.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/device2.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/elments.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/elements1.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/elements2.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/console.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/sources.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/network.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/network2.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/performance2.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/memory.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/application.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/security.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/audits.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/more.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/devTool/more2.png">
+<meta property="article:published_time" content="2017-10-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.810Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhaoluting.github.io/image/devTool/device1_2.png">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-devTool/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-devTool/","path":"tool-devTool/","title":"chrome调试指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>chrome调试指南 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">如何打开？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">设备模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">HOW TO USE？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E9%9D%A2%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">元素面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-1"><span class="nav-number">3.1.</span> <span class="nav-text">HOW TO USE？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A0%EF%BC%9AHtml%E7%9A%84DOM%E6%A0%91%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%9B%E8%A1%8C%E6%9F%A5%E7%9C%8B%E5%AE%9A%E4%BD%8D%E7%BC%96%E8%BE%91%EF%BC%9B"><span class="nav-number">3.1.1.</span> <span class="nav-text">区域①：Html的DOM树结构，可以进行查看定位编辑；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A1%EF%BC%9A%E7%BC%96%E8%BE%91%E4%BF%AE%E6%94%B9%E5%B9%B6%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E9%80%89%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84CSS%E6%A0%B7%E5%BC%8F%E3%80%81%E5%B1%9E%E6%80%A7%E7%AD%89%E3%80%82"><span class="nav-number">3.1.2.</span> <span class="nav-text">区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dom%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%BE%85%E5%8A%A9%E5%8A%9F%E8%83%BD"><span class="nav-number">3.1.3.</span> <span class="nav-text">dom对象的辅助功能</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%9D%A2%E6%9D%BF"><span class="nav-number">4.</span> <span class="nav-text">控制台面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-2"><span class="nav-number">4.1.</span> <span class="nav-text">HOW TO USE？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E4%BB%A3%E7%A0%81%E9%9D%A2%E6%9D%BF"><span class="nav-number">5.</span> <span class="nav-text">源代码面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-3"><span class="nav-number">5.1.</span> <span class="nav-text">HOW TO USE？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A0%EF%BC%9ASources-Panel-%E7%9A%84%E5%B7%A6%E4%BE%A7%E5%88%86%E5%88%AB%E6%98%AF-Sources-%E5%92%8C-Content-scripts%E5%92%8CSnippets"><span class="nav-number">5.1.1.</span> <span class="nav-text">区域①：Sources Panel 的左侧分别是 Sources 和 Content scripts和Snippets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A1%EF%BC%9A%E6%98%BE%E7%A4%BA%E6%BA%90%E7%A0%81"><span class="nav-number">5.1.2.</span> <span class="nav-text">区域②：显示源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A2%EF%BC%9A%E8%B0%83%E8%AF%95%E7%9A%84%E5%8A%9F%E8%83%BD%E5%8C%BA%E5%9F%9F"><span class="nav-number">5.1.3.</span> <span class="nav-text">区域③：调试的功能区域</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%9D%A2%E6%9D%BF"><span class="nav-number">6.</span> <span class="nav-text">网络面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-4"><span class="nav-number">6.1.</span> <span class="nav-text">HOW TO USE？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A0%EF%BC%9AControls%E5%B7%A5%E5%85%B7%E6%A0%8F"><span class="nav-number">6.1.1.</span> <span class="nav-text">区域①：Controls工具栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A1%EF%BC%9AFilters%E7%AD%9B%E9%80%89%E6%A0%8F"><span class="nav-number">6.1.2.</span> <span class="nav-text">区域②：Filters筛选栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A2%EF%BC%9AOverviews-%E6%A6%82%E8%A7%88"><span class="nav-number">6.1.3.</span> <span class="nav-text">区域③：Overviews 概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A3%EF%BC%9ARequest-Table-%E8%AF%B7%E6%B1%82%E5%88%97%E8%A1%A8"><span class="nav-number">6.1.4.</span> <span class="nav-text">区域④：Request Table 请求列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9F%9F%E2%91%A4%EF%BC%9ASummary-%E6%80%BB%E8%A7%88"><span class="nav-number">6.1.5.</span> <span class="nav-text">区域⑤：Summary 总览</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E9%9D%A2%E6%9D%BF"><span class="nav-number">7.</span> <span class="nav-text">性能面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-5"><span class="nav-number">7.1.</span> <span class="nav-text">HOW TO USE？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%9D%A2%E6%9D%BF"><span class="nav-number">8.</span> <span class="nav-text">内存面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-6"><span class="nav-number">8.1.</span> <span class="nav-text">HOW TO USE？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E9%9D%A2%E6%9D%BF"><span class="nav-number">9.</span> <span class="nav-text">应用面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-7"><span class="nav-number">9.1.</span> <span class="nav-text">HOW TO USE？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E9%9D%A2%E6%9D%BF"><span class="nav-number">10.</span> <span class="nav-text">安全面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-8"><span class="nav-number">10.1.</span> <span class="nav-text">HOW TO USE？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E9%9D%A2%E6%9D%BF"><span class="nav-number">11.</span> <span class="nav-text">检查面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-9"><span class="nav-number">11.1.</span> <span class="nav-text">HOW TO USE？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E4%B8%BB%E8%8F%9C%E5%8D%95"><span class="nav-number">12.</span> <span class="nav-text">开发者工具主菜单</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO-USE%EF%BC%9F-10"><span class="nav-number">12.1.</span> <span class="nav-text">HOW TO USE？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E8%BF%98%E6%9C%89%EF%BC%81"><span class="nav-number">12.1.1.</span> <span class="nav-text">最后还有！</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-devTool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chrome调试指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-10-12 00:00:00" itemprop="dateCreated datePublished" datetime="2017-10-12T00:00:00+08:00">2017-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>16k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><strong>工欲善其事,必先利其器。</strong><br>轻量 便捷 实时</p>
+<blockquote>
+<p>Chrome 开发者工具是一套内置于Google Chrome中的Web开发和调试工具，可用来对网站进行迭代、调试和分析。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="如何打开？"><a href="#如何打开？" class="headerlink" title="如何打开？"></a>如何打开？</h2><ul>
+<li>在Chrome菜单中选择 更多工具 &gt; 开发者工具</li>
+<li>在页面元素上右键点击，选择 “检查”</li>
+<li>使用 快捷键 Ctrl+Shift+I (Windows) 或 Cmd+Opt+I (Mac)</li>
+</ul>
+<h1 id="设备模式"><a href="#设备模式" class="headerlink" title="设备模式"></a>设备模式</h1><p><strong>构建完全响应式，移动优先的网络体验</strong></p>
+<blockquote>
+<p>点击它可以切换到不同的终端(移动端和pc端)进行开发模式。<br>还可以选择不同的移动终端设备，同时可以选择不同的尺寸比例。<br>chrome浏览器的模拟移动设备和真实的设备相差不大，是非常好的选择。    </p>
+</blockquote>
+<h2 id="HOW-TO-USE？"><a href="#HOW-TO-USE？" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/device1_2.png" alt="image">  </p>
+<p>除了上图标出的功能，右上角可以发现移动端调试的更多功能哦!<br><img src="/image/devTool/device2.png" width="300"/></p>
+<ul>
+<li>Show device frame : 显示设备外壳</li>
+<li>Show media queries : 显示媒体查询(对屏幕大小的判断生成响应式布局)</li>
+<li>Show rulers : 显示标尺</li>
+<li>Add device pixel ratio : 调整设备的像素比例</li>
+<li>Add device type : 调整设备类型</li>
+<li>Capture screenshot : 捕捉当前屏幕截图</li>
+<li>Capture full size screenshot : 捕捉完整屏幕截图</li>
+<li>Reset to defaults : 恢复默认</li>
+</ul>
+<h1 id="元素面板"><a href="#元素面板" class="headerlink" title="元素面板"></a>元素面板</h1><p><strong>使用元素面板可以自由的操作DOM和CSS来迭代布局和设计页面</strong></p>
+<blockquote>
+<p>该面板可以用来查看、修改页面上的元素，包括DOM标签以及css样式的查看、修改(ctrl + z 可撤销修改)，还可以展示相关盒模型的图形信息。    </p>
+</blockquote>
+<h2 id="HOW-TO-USE？-1"><a href="#HOW-TO-USE？-1" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/elments.png" alt="image">  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">🚩Tips：在 HTML DOM （文档对象模型）中，每个部分都是节点：  </span><br><span class="line">1、文档本身是文档节点  </span><br><span class="line">2、所有 HTML 元素是元素节点  </span><br><span class="line">3、所有 HTML 属性是属性节点  </span><br><span class="line">4、HTML 元素内的文本是文本节点（包括回车符也是属于文本节点）  </span><br><span class="line">5、注释是注释节点  </span><br><span class="line">Element 对象可以拥有类型为元素节点、文本节点、注释节点的子节点；  </span><br><span class="line">元素也可以拥有属性，属性是属性节点。  </span><br><span class="line">✔️总结：元素是元素节点，是节点中的一种，但元素节点中可以包含很多的节点。  </span><br></pre></td></tr></table></figure>
+<p><img src="/image/devTool/elements1.png" alt="image"></p>
+<p>点击箭头按钮可选择元素,激活后，Elements窗口会根据在页面中鼠标的位置自动移动到相应的代码段并显示相关信息。  </p>
+<h3 id="区域①：Html的DOM树结构，可以进行查看定位编辑；"><a href="#区域①：Html的DOM树结构，可以进行查看定位编辑；" class="headerlink" title="区域①：Html的DOM树结构，可以进行查看定位编辑；"></a>区域①：Html的DOM树结构，可以进行查看定位编辑；</h3><ul>
+<li>页面自动标出鼠标悬浮所在代码片段元素</li>
+<li>点击DOM树视图里面的节点，区域2显示相关信息</li>
+<li>直接在某个节点上双击即可修改，且能实时在浏览器里面得到反馈。</li>
+<li>拖拽节点可以直接调整顺序，也可以拖拽节点到编辑器</li>
+<li>浏览器对例如Video、Password等组件进行了封装，无法查看到组件的详细代码，不利于调试。Settings → Preferences → Elements → 勾选Show user agent shadow DOM,这样能够在元素标签器中显示被隐藏的组件代码<h3 id="区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。"><a href="#区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。" class="headerlink" title="区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。"></a>区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。</h3></li>
+<li>Styles标签页: 显示用户定义的样式，还有开发者工具添加的样式；<ul>
+<li>顶部”Filter”输入框 : 快速查找样式</li>
+<li>顶部”:hov”按钮 : 可强制改变元素状态,:active(当元素被鼠标按下还没有松开，处于激活状态时所显示的状态),:hover(鼠标悬停时显示的状态),:focus(元素获得光标焦点时的状态),:visited(元素被点击后显示的状态)</li>
+<li>顶部”.cls”按钮 : 快速修改元素class</li>
+<li>顶部”+”按钮 : 快速添加class</li>
+<li>单击即可修改样式</li>
+<li>在每个属性后面单击可以添加新的样式</li>
+<li>灰色的element.style同样可以进行添加和书写，唯一区别是在这里添加的样式是添加到了该元素内部，即style属性</li>
+<li>点击样式区域颜色前面的小方块可调出自定义调色板,支持在rgba、hsl和hexadecimal来回切换颜色模式和实时编辑预览页面颜色。</li>
+<li>每行右下角的”┇”可以快速添加阴影、字体颜色、背景颜色</li>
+</ul>
+</li>
+<li>Computed标签页: 显示开发者工具计算好的元素样式（盒式模型）；<ul>
+<li>双击数字即可修改</li>
+</ul>
+</li>
+<li>Event Listeners标签页: 显示当前DOM节点和其祖先节点的所有JavaScript事件监听器,即查看元素上绑定了哪些事件；<ul>
+<li>勾选Ancestors可显示其祖先节点的事件监听器</li>
+<li>勾选Framework listeners:解析框架绑定的事件监听器</li>
+<li>每个事件会有对应的几个属性 handler,useCapture等<ul>
+<li>handler是处理函数, 右键可以看到这个函数定义的位置</li>
+<li>useCapture 是 addEventListener 的第三个参数，如果是true，表示在事件捕获阶段调用事件处理程序；如果是false，表示在事件冒泡阶段调用事件处理程序。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DOM Breakpoints标签页: 列出所有的DOM断点；<ul>
+<li>在区域①右键可设置断点</li>
+</ul>
+</li>
+<li>Properties标签页: 全面地列出当前选中元素的属性；</li>
+</ul>
+<h3 id="dom对象的辅助功能"><a href="#dom对象的辅助功能" class="headerlink" title="dom对象的辅助功能"></a>dom对象的辅助功能</h3><img src="/image/devTool/elements2.png" width="300"/>
+- Add attribute : 添加元素属性
+- Edit attribute : 编辑元素属性
+- Edit as HTML : 直接对元素的HTML进行编辑，所有的修改都会即时在页面上得到呈现
+- Copy : 复制HTML代码
+    - Copy outerHTML : 复制元素内所有的html和文本内容
+    - Copy selector : 复制元素结构
+    - Copy xpath : 复制元素路径(爬虫神器)
+    - Cut element : 剪切元素
+    - Copy element : 复制元素
+    - Paste element : 粘贴元素
+- Hide element : 隐藏元素
+- Delete element : 删除元素
+- Expand all : 展开元素所有代码
+- Collapse all : 折叠元素所有代码
+- Scroll into view : 滚动浏览器窗口或容器元素，以便在当前视窗的可见范围看见当前元素。
+- Break on : 可以对某个元素进行监听，在JS对元素的属性或者HTML进行修改的时候，直接触发断点，跳转到对改元素进行修改的JS代码处
+    - subtree modifications : 当添加／改变／删除子元素时触发
+    - attribute modifications : 当元素属性被改变时触发
+    - node removal : 当移除元素时触发
+
+<h1 id="控制台面板"><a href="#控制台面板" class="headerlink" title="控制台面板"></a>控制台面板</h1><p><strong>在开发期间，可以使用控制台面板记录诊断信息，或者使用它作为shell在页面上与JavaScript交互</strong></p>
+<blockquote>
+<p>console 中有很多对我们调试代码有帮助的函数，我们可以在开发环境中配合 console 来调试代码，使得我们测试更加便利。<br>注： 当需要换到下一行而不是回车的时候，请按Shift+Enter。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-2"><a href="#HOW-TO-USE？-2" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/console.png" alt="image">  </p>
+<table>
+<thead>
+<tr>
+<th>代码实例</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>console.log(“这是平凡的字符串”);</td>
+<td>打印字符串</td>
+</tr>
+<tr>
+<td>console.info(“这是温柔的提示”);</td>
+<td>打印提示消息</td>
+</tr>
+<tr>
+<td>console.warn(“这是严肃的警告”);</td>
+<td>打印警告消息</td>
+</tr>
+<tr>
+<td>console.error(“这是错误消息”);</td>
+<td>打印错误消息</td>
+</tr>
+<tr>
+<td>console.debug(“这是调试信息”);</td>
+<td>打印调试信息,console.log方法的别称</td>
+</tr>
+<tr>
+<td>console.log(console);</td>
+<td>打印对象</td>
+</tr>
+<tr>
+<td>console.assert(1 &#x3D;&#x3D; 0);</td>
+<td>判断真假情况</td>
+</tr>
+<tr>
+<td>console.group(‘报数’);  console.log(“一！”);  console.log(“二！”);  console.groupEnd();</td>
+<td>分组输出</td>
+</tr>
+<tr>
+<td>console.groupCollapsed();</td>
+<td>创建一个新的分组.随后输出到控制台上的内容都会被添加一个缩进,表示该内容属于当前分组,直到调用console.groupEnd() 之后,当前分组结束。</td>
+</tr>
+<tr>
+<td>var data &#x3D; [{‘姓名’: ‘zlt’, ‘数量’: 1}];    console.table(data);</td>
+<td>显示关联数组信息</td>
+</tr>
+<tr>
+<td>console.dir(document.body);</td>
+<td>将一个 JavaScript 对象的所有属性和属性值显示成一个可交互的列表,以树的结构进行输出</td>
+</tr>
+<tr>
+<td>var test &#x3D; document.getElementById(‘test’);   console.dirxml(test);</td>
+<td>查看页面中对应元素的 html&#x2F;xml 内容</td>
+</tr>
+<tr>
+<td>console.log(‘%cMy name is zlt.’, ‘color: #fff; background: #000; font-size: 24px;’);</td>
+<td>特殊的标示符%c，对输出的文字可以附加特殊的样式,background属性的url()中添加图片路径就可以实现图片的输出了</td>
+</tr>
+<tr>
+<td>$(‘table’)</td>
+<td>返回与指定的CSS选择器相匹配的第一个元素，等同于document.querySelector();如果你使用的库，如jQuery使用$，那么这个功能将被覆盖，并且$将对应用该库的实现</td>
+</tr>
+<tr>
+<td>$$(‘table’)</td>
+<td>返回与指定的CSS选择器相匹配的所有元素的数组，等同于document.querySelectorAll()</td>
+</tr>
+<tr>
+<td>$_</td>
+<td>引用最近的一个表达式,功能与按向上的方向键再回车一样</td>
+</tr>
+<tr>
+<td>$0 ~ $4</td>
+<td>最近选择过的5个DOM节点。$0会返回最近一次点选的DOM结点。以此类推，$1返回的是上上次点选的DOM节点。最多可以保存5个，如果不满5个，则返回undefined。</td>
+</tr>
+<tr>
+<td>$x(‘&#x2F;&#x2F;*[@id&#x3D;”console”]&#x2F;div[2]&#x2F;table[2]&#x2F;tbody&#x2F;tr[4]’)</td>
+<td>返回与指定的XPath相匹配的所有元素的数组</td>
+</tr>
+<tr>
+<td>var data &#x3D; {name: ‘zlt’,num: 1};   keys(data);</td>
+<td>返回传入对象所有属性名组成的数据</td>
+</tr>
+<tr>
+<td>var data &#x3D; {name: ‘zlt’,num: 1};   values(data);</td>
+<td>返回所有属性值组成的数组</td>
+</tr>
+<tr>
+<td>inspect(document.body)</td>
+<td>Elements面板跳到需要查看的对象上</td>
+</tr>
+<tr>
+<td>getEventListeners(document.getElementById  (“eventListeners”)).click[0].listener</td>
+<td>查看某个DOM对象上的事件</td>
+</tr>
+<tr>
+<td>monitorEvents(document.body, “click”)</td>
+<td>监控相关的事件,unmonitorEvents便是用来停止这一监控</td>
+</tr>
+<tr>
+<td>console.clear()</td>
+<td>清理函数</td>
+</tr>
+<tr>
+<td>clear()</td>
+<td>用 chrome 的 command line api 来清理控制台</td>
+</tr>
+<tr>
+<td>copy(document.body)</td>
+<td>在控制台获取到的内容复制到剪贴板</td>
+</tr>
+<tr>
+<td>document.designMode &#x3D; “on”</td>
+<td>直接修改网页内容</td>
+</tr>
+<tr>
+<td><strong>monitor(function) 接收一个函数名作为参数，比如function a,每次a被执行了，都会在控制台输出一条信息，里面包含了函数的名称a及执行时所传入的参数。 而unmonitor(function)便是用来停止这一监听。</strong></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sayHello</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="title function_">alert</span>(<span class="string">&#x27;hello,&#x27;</span> + name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">monitor</span>(sayHello);</span><br><span class="line"><span class="title function_">sayHello</span>(<span class="string">&#x27;zlt&#x27;</span>);</span><br><span class="line"><span class="title function_">unmonitor</span>(sayHello);</span><br><span class="line"><span class="title function_">sayHello</span>(<span class="string">&#x27;zlttt&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>调试一个方法，当该方法调用时会暂停并且在源码中定位，效果和断点类似。undebug可以停止调试。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sayHello</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;hello,&#x27;</span> + name); </span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">debug</span>(sayHello);</span><br><span class="line"><span class="title function_">sayHello</span>(<span class="string">&#x27;zlt&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>记录次数</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hi</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">count</span>(name);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;hi &quot;</span> + name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span>(i &lt; <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="title function_">hi</span>(<span class="string">&quot;person&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">hi</span>(<span class="string">&quot;zlt&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>记录代码运行所花费的时间,评估某段代码或是某个函数的性能</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">time</span>(<span class="string">&quot;神机妙算&quot;</span>);</span><br><span class="line">  (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> sum = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> flog = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">          flog+=i;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;)();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">timeEnd</span>(<span class="string">&quot;神机妙算&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>评估某段代码或是某个函数的性能,结果显示在 Memory面板的profile中</strong><br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">profile</span>(<span class="string">&quot;更高级的神机妙算&quot;</span>);</span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> sum = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> flog = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">          flog+=i;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">profileEnd</span>(<span class="string">&quot;更高级的神机妙算&quot;</span>);</span><br></pre></td></tr></table></figure><br><strong>追踪函数的调用过程</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">num</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="number">0</span> &lt; num) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">trace</span>(<span class="string">&quot;现在num的值为&quot;</span>, num);</span><br><span class="line">    <span class="keyword">return</span> num + <span class="title function_">add</span>(num - <span class="number">1</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a =<span class="number">3</span>;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="源代码面板"><a href="#源代码面板" class="headerlink" title="源代码面板"></a>源代码面板</h1><blockquote>
+<p>在源代码面板中设置断点来调试 JavaScript ，或者通过Workspaces（工作区）连接本地文件来使用开发者工具的实时编辑器。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-3"><a href="#HOW-TO-USE？-3" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/sources.png" alt="image">  </p>
+<h3 id="区域①：Sources-Panel-的左侧分别是-Sources-和-Content-scripts和Snippets"><a href="#区域①：Sources-Panel-的左侧分别是-Sources-和-Content-scripts和Snippets" class="headerlink" title="区域①：Sources Panel 的左侧分别是 Sources 和 Content scripts和Snippets"></a>区域①：Sources Panel 的左侧分别是 Sources 和 Content scripts和Snippets</h3><ul>
+<li>Sources : 显示加载的JS、CSS、HTML资源列表，点击后会在区域2显示对应的源代码<ul>
+<li>Workspaces是Chrome DevTools的一个强大功能，这使DevTools变成了一个真正的IDE。只需打开Sources选项，然后右击左边面板的任何一个地方，选择Add Folder To Worskpace，或者只是把你的整个工程文件夹拖放入Developer Tool。</li>
+<li>Workspaces会将Sources选项卡中的文件和本地项目中的文件进行匹配，所以你可以直接编辑和保存，而不必复制&#x2F;粘贴外部改变的文件到编辑器。</li>
+</ul>
+</li>
+<li>Content scripts : 这是 Chrome 的一种扩展程序， 它是按照扩展的ID来组织的，这些文件也是嵌入在页面中的资源，这类文件可以 读写和操作我们的资源，需要调试这些扩展文件，则可以在这个目录下打开相关 文件调试（但是我们的项目一般没有相关的扩展文件）</li>
+<li>Snippets : 点击创建一个新的片段文件，写完后把右键文件Run，再结合控制台查看相关信息</li>
+</ul>
+<h3 id="区域②：显示源码"><a href="#区域②：显示源码" class="headerlink" title="区域②：显示源码"></a>区域②：显示源码</h3><ul>
+<li>如果当前代码是经过压缩的话，可以点击左下方的花括号{}来增强可读性</li>
+<li>点击JS代码块前面的数字可以设置断点，所有的断点都会列出右侧的断点区；</li>
+<li>除了常规断点外, 还有个条件断点(右键 conditional breakpoint), 在设置的条件为 true 时才会断点, 在循环中需要断点时比较有用.</li>
+<li>在当前的代码执行区域，在调试中如果发现需要修改的地方，可以立即修改，修改后保存即可生效</li>
+</ul>
+<h3 id="区域③：调试的功能区域"><a href="#区域③：调试的功能区域" class="headerlink" title="区域③：调试的功能区域"></a>区域③：调试的功能区域</h3><ul>
+<li>最上面一排按钮分别是：<ul>
+<li>暂停(F8快捷键):继续执行脚本的命令,如果后面还有断点,直接执行到后面的断点,没有断点直接执行到代码最后面</li>
+<li>单步执行(F10快捷键):直接执行完函数进行下一步,不进入函数</li>
+<li>单步跳入此执行块(F11快捷键):进入函数逐步执行函数</li>
+<li>单步跳出此执行块(shift + F11快捷键):跳出函数</li>
+<li>禁用所有断点:注释断点,仍旧显示但是不起作用</li>
+<li>启用所有断点:图标激活之后,在代码出错之后会直接跳转到代码出错的那一行</li>
+</ul>
+</li>
+<li>Watch：可以添加需要监听的变量，执行断点时可以观察变量的变化情况；<ul>
+<li>选中变量后右键add selected text to watches可以添加监听</li>
+<li>Watch窗口可直接添加需要监听的变量</li>
+</ul>
+</li>
+<li>Call Stack：查看断点执行的堆栈情况，可以快速定位断点执行入口；<ul>
+<li>若想重新从某个调用方法处执行，可以右键Restart Frame， 断点就会跳到此处开头重新执行，Scope 中的变量值也会依据代码重新更改</li>
+</ul>
+</li>
+<li>Scope : 查看此时局部变量和全局变量的值</li>
+<li>Breakpoints: 所有当前js的断点都会展示在这个区域，你可以点击按钮用来“去掉&#x2F;加上”此处断点，也可以点击下方的代码表达式，跳到相应的程序代码处来查看</li>
+<li>XHR Breakpoints: 点击右侧的+号，可以添加请求的URL，一旦 XHR 调用触发时就会在 request.send() 的地方中断</li>
+<li>DOM Breakpoints: 监听和查看某个元素的变化的DOM断点列表</li>
+<li>Event Listener Breakpoints：勾选你要监听的事件，在指定的事件执行时，断点就会有触发；</li>
+</ul>
+<h1 id="网络面板"><a href="#网络面板" class="headerlink" title="网络面板"></a>网络面板</h1><p><strong>使用网络面板了解请求和下载的资源文件并优化网页加载性能</strong></p>
+<blockquote>
+<p>可以看到所有的资源请求，包括网络请求，图片资源，html,css，js文件等请求，可以根据需求筛选请求项，一般多用于网络请求的查看和分析，分析后端接口是否正确传输，获取的数据是否准确，请求头，请求参数的查看。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-4"><a href="#HOW-TO-USE？-4" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/network.png" alt="image">  </p>
+<h3 id="区域①：Controls工具栏"><a href="#区域①：Controls工具栏" class="headerlink" title="区域①：Controls工具栏"></a>区域①：Controls工具栏</h3><p>用来控制Network的功能及外观,从左往右功能依次为：</p>
+<ul>
+<li>(红色圆点)Record Network Log: 红色表示此时正在记录资源请求信息；</li>
+<li>(灰色🚫)Clear: 清空所有的资源请求信息；</li>
+<li>(摄像标志)捕获快照：选中某一个快照，在概览&#x2F;请求列表出现的黄色竖线，就是该快照被捕捉的真实时间，双击快照可以放大。</li>
+<li>(过滤标志)Filter: 过滤资源请求信息，选择后，会出现区域2所显示的过滤条件；</li>
+<li>Perserve Log: 勾选后，再次记录请求的信息时不擦除之前的资源信息；</li>
+<li>Disable cache: 勾选后，不允许缓存，所有资源均重新加载</li>
+<li>offline: 勾选后，模拟断开网络</li>
+<li>Online: 选择模拟网络状态</li>
+</ul>
+<h3 id="区域②：Filters筛选栏"><a href="#区域②：Filters筛选栏" class="headerlink" title="区域②：Filters筛选栏"></a>区域②：Filters筛选栏</h3><p>根据筛选条件筛选请求列表，按住command&#x2F;ctrl键可多选;筛选框可以实现很多定制化的筛选，比如字符串匹配，关键词筛选等，其中关键词筛选主要有如下几种：</p>
+<ul>
+<li>domain：筛选出指定域名的请求，不仅支持自动补全，还支持*匹配。</li>
+<li>has-response-header：筛选出包含指定响应头的请求。</li>
+<li>is：通过is:running找出WebSocket请求。</li>
+<li>larger-than：筛选出请求大于指定字节大小的请求，其中1000表示1k。</li>
+<li>method：筛选出指定HTTP方法的请求，比如GET请求、POST请求等。</li>
+<li>mime-type：筛选出指定文件类型的请求。</li>
+<li>mixed-content：筛选出混合内容的请求（不懂啥意思）。</li>
+<li>scheme：筛选出指定协议的请求，比如scheme:http、scheme:https。</li>
+<li>set-cookie-domain：筛选出指定cookie域名属性的包含Set-Cookie的请求。</li>
+<li>set-cookie-name：筛选出指定cookie名称属性的包含Set-Cookie的请求。</li>
+<li>set-cookie-value：筛选出指定cookie值属性的包含Set-Cookie的请求。</li>
+<li>status-code：筛选出指定HTTP状态码的请求。</li>
+</ul>
+<h3 id="区域③：Overviews-概览"><a href="#区域③：Overviews-概览" class="headerlink" title="区域③：Overviews 概览"></a>区域③：Overviews 概览</h3><p>资源被加载过来的时间线</p>
+<ul>
+<li>如果多条时间线垂直堆叠，表示多个资源被并行加载。</li>
+</ul>
+<h3 id="区域④：Request-Table-请求列表"><a href="#区域④：Request-Table-请求列表" class="headerlink" title="区域④：Request Table 请求列表"></a>区域④：Request Table 请求列表</h3><ul>
+<li>该视窗列出了所有的资源请求，默认按时间顺序排序，点击某个资源，可以查看更详细的信息。</li>
+<li>Name: 资源名称以及URL路径；</li>
+<li>Status: HTTP状态码；</li>
+<li>Type: 请求资源的MIME类型；</li>
+<li>Initiator解释请求是怎么发起的，有四种可能的值：<ul>
+<li>Parser：请求是由页面的HTML解析时发送的;</li>
+<li>Redirect：请求是由页面重定向发送的;</li>
+<li>Script：请求是由script脚本处理发送的;</li>
+<li>Other：请求是由其他过程发送的，比如页面里的link链接点击。</li>
+</ul>
+</li>
+<li>Size: Size是响应头部和响应体结合起来的大小；</li>
+<li>Time: Time是从请求开始到接收到最后一个字节的总时长,可利用区域3进行过滤；</li>
+<li>Waterfall: 显示网络请求的可视化瀑布流，鼠标悬停在某一个时间线上，可以显示整个请求各部分花费的时间</li>
+<li>右键配置可请求列表</li>
+<li>按时shift键，鼠标hover在请求上，可以查看请求的上游和下游，例如hover在common.js上，可以看到有一个绿色请求、一个红色请求。其中绿色请求表示common.js的上游请求，即谁触发了common.js请求，红色请求表示common.js的下游请求，即common.js又触发了什么请求。</li>
+</ul>
+<h3 id="区域⑤：Summary-总览"><a href="#区域⑤：Summary-总览" class="headerlink" title="区域⑤：Summary 总览"></a>区域⑤：Summary 总览</h3><p>汇总了请求数量，传输数据大小，加载时间等信息,从左往右依次显示为：</p>
+<ul>
+<li>X requests:请求总个数</li>
+<li>X transferred:所有请求的大小</li>
+<li>Finish:加载完毕时间</li>
+<li>DOMContentLoaded:页面文档完全加载并解析完毕之后，会触发DOMContentLoaded事件，它在两个地方都有体现：概览视窗的蓝色竖线，总览视窗的触发时间。</li>
+<li>Load:当所有资源加载完成后触发的，它在三个地方有体现：概览视窗的红色竖线，请求列表视窗的红色竖线，总览视窗的触发时间。</li>
+</ul>
+<p><img src="/image/devTool/network2.png" alt="image"><br>点击左侧某一个具体请求URL，可以看到该请求的详细HTTP请求情况：</p>
+<ul>
+<li>Headers：请求头信息和响应头信息</li>
+<li>Preview：预览结果，如果是文件可以查看这个文件；如果是图片可以预览这个图片；如果是从服务器返回来的JSON数据，可以查看格式话后的JSON</li>
+<li>Response：从服务器返回的响应结果</li>
+<li>Cookies：请求和响应的Cookie<ul>
+<li>Name：cookie的名称。</li>
+<li>Value：cookie的值。</li>
+<li>Domain：cookie所属域名。</li>
+<li>Path：cookie所属URL。</li>
+<li>Expire&#x2F;Max-Age：cookie的存活时间。</li>
+<li>Size：cookie的字节大小。</li>
+<li>HTTP：表示cookie只能被浏览器设置，而且JS不能修改。</li>
+<li>Secure：表示cookie只能在安全连接上传输。</li>
+</ul>
+</li>
+<li>Timing：查看资源请求的生命周期，包含Queing&#x2F;Stalled&#x2F;Request&#x2F;Response&#x2F;Request sent&#x2F;Waiting&#x2F;Content Download各个阶段</li>
+</ul>
+<h1 id="性能面板"><a href="#性能面板" class="headerlink" title="性能面板"></a>性能面板</h1><p><strong>使用性能面板可以通过记录和查看网站生命周期内发生的各种事件来提高页面的运行时性能</strong></p>
+<blockquote>
+<p>在 Chrome 57 之后时间线(Timeline)面板更名为性能(Performance)面板。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-5"><a href="#HOW-TO-USE？-5" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/performance2.png" alt="image"><br>使用 Chrome DevTools 的 Performance 面板记录程序运行时的所有行为，并用于加以分析是解决程序性能问题的最好方案。 由以下四个子面板构成：</p>
+<ul>
+<li>控制面板（Controls）: 开启记录，停止记录，配置记录期间需要记录的内容。</li>
+<li>概括（Overview）: 对页面表现（行为）的一个概述。<ul>
+<li>概括区域由三个图形记录组成:<ul>
+<li>FPS（Frames Per Second）:绿色的柱越高， FPS 值也越高。FPS 图表上方的红色小块指明了长帧(long frame)，这些可能是卡顿</li>
+<li>CPU(CPU Resources):这个面积图(area chart)表明了哪种事件在消耗 CPU 资源。</li>
+<li>NET:每种不同颜色的条代表一种资源。<ul>
+<li>条越长表明获取该资源所花的时间越长。</li>
+<li>每个条中的浅色部分代表等待时间（资源请求被发送到收到第一个响应字节的时间），深色部分代表文件传输时间（从收到第一个字节到这个资源完全被下载好）</li>
+<li>蓝色 代表 HTML 文件，黄色 代表 Script 文件，紫色 代表 Stylesheets 文件， 绿色 代表 Media 文件，灰色 代表其他资源。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>火焰图（Flame Chart）: 可视化 CPU 堆栈(stack)信息记录。<ul>
+<li>从不同的角度分析框选区域 。例如：Network，Frames, Interactions, Main等</li>
+<li>在 Flame Chart 面板上你可能看到三根垂直的线，蓝线代表 DOMContentLoaded 事件，绿线代表渲染开始的时间( time to first paint)，红线代表 load 事件。</li>
+</ul>
+</li>
+<li>详细信息（Detail）: 当有具体事件被选择时，该面板展示这个事件的更多详细信息。如果没有事件被选择，该面板展示当前所选时间段的一些信息。<ul>
+<li>精确到毫秒级的分析，以及按调用层级，事件分类的整理<ul>
+<li>Summary面板:从宏观层面概括了浏览器加载的总时间<ul>
+<li>颜色：蓝色    ；英文： Loading；含义：加载</li>
+<li>颜色：黄色    ；英文： Scripting；含义：    脚本</li>
+<li>颜色：紫色    ；英文： Rendering；含义：    渲染</li>
+<li>颜色：绿色    ；英文： Painting；含义：    绘制</li>
+<li>颜色：深灰    ；英文： Other；含义：    其他</li>
+<li>颜色：浅灰    ；英文： Idle；含义：    空闲</li>
+</ul>
+</li>
+<li>Bottom-Up面板：The Heavy (Bottom Up) view is available in the Bottom-Up tab<ul>
+<li>Self Time代表函数本身执行消耗时间，Total Time则是函数本身消耗再加上在调用它的函数中消耗的总时间，Activity是浏览器活动。</li>
+<li>Group面板可以很清晰明了得分析按照活动、目录、域、子域、URL和Frame进行分组的前端性能。</li>
+</ul>
+</li>
+<li>Call Tree面板：the Tree (Top Down) view is available in the Call Tree tab<ul>
+<li>Bottom-Up类似事件冒泡，Call Tree类似事件捕获。自上而下的Call-Tree更符合我们的人类正常思维，可以更直观地分析浏览器对页面的build精确到毫秒级的情况</li>
+</ul>
+</li>
+<li>Event Log面板 :展示所有阶段包括loading、javascripting、rendering、painting中各事件的耗时情况，并提供了filter输入框和按钮供你快速过滤。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="内存面板"><a href="#内存面板" class="headerlink" title="内存面板"></a>内存面板</h1><p><strong>如果需要比性能面板提供的更多信息，可以使用内存面板，例如跟踪内存泄漏</strong></p>
+<blockquote>
+<p>在 Chrome 57 之后分析（Profiles）面板更名为内存（Memory）面板。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-6"><a href="#HOW-TO-USE？-6" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/memory.png" alt="image"><br>如果在页面中出现卡顿现象，可以使用 CPU 分析器，它准确地记录调用了哪些函数和每个函数花费的时间，</p>
+<ul>
+<li>Take Heap Snapshot:创建堆快照用来显示网页上的JS对象和相关的DOM节点的内存分布情况。<ul>
+<li>利用该工具你可以创建JS的堆快照、内存分析图、对比堆快照以及定位内存泄漏问题。</li>
+<li>选中Take Heap Snapshot,点击Take Snapshot按钮即可获取快照，在每一次获取快照前都会自动执行垃圾回收操作。</li>
+<li>堆快照提供了不同的视角来进行查看：<ul>
+<li>Summary : 该视图按照构造函数进行分组，用它可以捕获对象和它们使用的内存情况，对于跟踪定位DOM节点的内存泄漏特别有用。</li>
+<li>Comparison : 对比两个快照的差别，用它可以对比某个操作前后的内存快照。分析操作前后的内存释放情况以及它的引用计数，便于你确认内存是否存在泄漏以及造成的原因。</li>
+<li>Containment : 该视图可以探测堆的具体内容，它提供了一个更适合的视图来查看对象结构，有助于分析对象的引用情况，使用它可以分析闭包和进行更深层次的对象分析。</li>
+<li>Statistics : 统计视图。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Record Allocation Profile:从JS函数角度记录内存的分配信息。<ul>
+<li>点击Start按钮，执行你想要去深入分析的页面操作，当你完成你的操作后点击Stop按钮。然后会显示一个按JS函数进行内存分配的分解图.</li>
+</ul>
+</li>
+<li>Record Allocation Timeline 从整个Heap角度记录内存的分配信息的时间轴信息，利用这个可以实现隔离内存泄漏问题。<ul>
+<li>选中Record Allocation Timeline按钮，点击Start按钮之后，执行你认为可能会引起内存泄漏的操作，操作之后点击左上角的停止按钮即可。</li>
+<li>你可以在蓝色竖线上通过缩放来过滤构造器窗格来仅仅显示在指定的时间帧内的被分配的对象。</li>
+<li>录制过程中，在时间线上会出现一些蓝色竖条，这些蓝色竖条代表一个新的内存分配，这个新的内存分配都可以会有潜在的内存泄露问题。</li>
+<li>通过展开对象并点击它的值则可以在Object窗格中查看更多新分配的对象细节。</li>
+</ul>
+</li>
+</ul>
+<h1 id="应用面板"><a href="#应用面板" class="headerlink" title="应用面板"></a>应用面板</h1><p><strong>使用应用面板可以检查加载的所有资源</strong></p>
+<blockquote>
+<p>在 Chrome 52 之后资源(Resources)面板更名为应用(Application)面板. 该面板可以检查和修改IndexedDB与Web SQL数据库，本地和会话存储，cookie，应用程序缓存，图像，字体和样式表。 点击一次按钮即可清除所有存储、数据库、缓存和服务工作线程。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-7"><a href="#HOW-TO-USE？-7" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/application.png" alt="image">  </p>
+<ul>
+<li>Local Storage : 如果你在开发过程中使用了local storage来存储键值对(KVPs)，那么你就可以通过Local Storage窗格来检查、新增、修改、删除这个键值对。</li>
+<li>Application Cache : 你可以使用Application Cache窗格去查看通过Application Cache API创建的资源。</li>
+<li>Frames : 将页面上的资源按frame类别进行组织显示。在资源上右击后在弹出菜单选择Reveal in Network Panel，就会跳转到Network面板并定位到该资源的位置。</li>
+</ul>
+<h1 id="安全面板"><a href="#安全面板" class="headerlink" title="安全面板"></a>安全面板</h1><p><strong>使用安全面板调试混合内容问题，证书问题等等。</strong></p>
+<blockquote>
+<p>使用 Security Overview 可以立即查看当前页面是否安全。 检查各个源以查看连接和证书详情（安全源）或找出具体哪些请求未受保护（非安全源）。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-8"><a href="#HOW-TO-USE？-8" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/security.png" alt="image">  </p>
+<ul>
+<li>如果网页是安全的，则会显示这样一条消息：This page is secure (valid HTTPS)。<ul>
+<li>通过点击View certificate可以查看main origin的服务器证书信息。</li>
+<li>点击左侧可以查看指定源的连接和证书详情。</li>
+</ul>
+</li>
+<li>如果网页是不安全的，则会显示：This page is not secure。该面板可以区分两种类型的不安全的页面：<ul>
+<li>如果被请求的页面通过HTTP提供服务，那么这个主源就会被标记为不安全。</li>
+<li>如果被请求的页面是通过HTTPS获取的，但这个页面接着通过HTTP继续从其他来源检索内容， 那么这个页面仍然被标记为不安全。这就是所谓的混合内容页面,混合内容页面只是部分受到保护, 因为HTTP内容(非加密的内容)可以被嗅探者入侵,容易受到中间人攻击。</li>
+</ul>
+</li>
+</ul>
+<h1 id="检查面板"><a href="#检查面板" class="headerlink" title="检查面板"></a>检查面板</h1><p><strong>对当前网页进行网络利用情况、网页性能方面的诊断，并给出一些优化建议</strong></p>
+<blockquote>
+<p>选中Performance, Best Practices, Accessibility, and Progressive Web App，点击Run按钮，将会对当前页面进行网络利用率和页面的性能优化作出诊断，并给出相应的优化建议。 这个对于优化前端页面、加速网页加载速度很有用（相当于Yslow）</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-9"><a href="#HOW-TO-USE？-9" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><p><img src="/image/devTool/audits.png" alt="image"> </p>
+<ul>
+<li>Progressive Web App（在移动端利用提供的标准化框架，在网页应用中实现和原生应用相近的用户体验）: 检查网页是否符合PWA的标准。</li>
+<li>Performance:检查网页加载时间</li>
+<li>Best Practices : 检查页面是否遵循Google Web开发最佳实践</li>
+<li>Accessibility : 检查网页能否给残障人士使用</li>
+</ul>
+<h1 id="开发者工具主菜单"><a href="#开发者工具主菜单" class="headerlink" title="开发者工具主菜单"></a>开发者工具主菜单</h1><p><strong>自定义并控制DevTools，也叫开发者工具主菜单</strong></p>
+<blockquote>
+<p>单击DevTools窗口右上角的“┇”按钮即可打开主菜单。</p>
+</blockquote>
+<h2 id="HOW-TO-USE？-10"><a href="#HOW-TO-USE？-10" class="headerlink" title="HOW TO USE？"></a>HOW TO USE？</h2><img src="/image/devTool/more.png" width="300"/>
+- Dock side: 调整DevTools的位置
+- Show console drawer: 打开console的抽屉式选项卡
+- Search all files : 在所有文件中搜索
+- Open file : 打开指定文件
+- More tools: 在抽屉式选项卡中打开更多工具
+    - Animations:动画检查器
+    - Coverage:使用动态分析（Dynamic Analysis）法来收集代码运行时的覆盖率
+    - JavaScript Profiler:查看JavaScript函数的执行性能
+    - Layers:看到页面中的复合层。（查找页面原因的时候非常有用）
+    - Legacy Audits:旧版检查面板,面板的优化建议参照的是雅虎前端工程师的十四条黄金建议。
+        - Network Utillzation(网络利用率)、Web Page Performance(界面性能)
+        - Audit Present State(针对目前网页状态分析)、Reload Page and Audit on load(重新加载网页进行分析)
+    - Network conditions:设置网络节流
+    - Quick source:打开Source的抽屉式选项卡
+    - Remote devices:连接远程设备
+    - Rendering: 渲染设置
+    - Request blocking:拦截请求
+    - Search:在所有资源中搜索
+    - Sensors:仿真面板,模拟移动设备的传感器
+- Shortcuts:查看快捷键
+- Settings:打开设置面板
+
+<p><img src="/image/devTool/more2.png" alt="image"> </p>
+<ul>
+<li>Preferences :首选项<ul>
+<li>Appearance:外观设置<ul>
+<li>Show third party URL badges:显示第三方URL标记？？？</li>
+<li>Theme:改变devtool主题(简洁白／炫酷黑)</li>
+<li>Panel layout:改变面板布局(横版／竖版／自动)</li>
+<li>Enable Ctrl + 1-9 shortcut to switch panels:用快捷键Ctrl + 1-9来切换面板</li>
+<li>Don’t show Chrome Data Saver warning:不显示chrome的节省数据流量警告</li>
+<li>Disable paused state overlay: 禁用暂停悬浮框状态？？？</li>
+</ul>
+</li>
+<li>Sources:源代码面板设置<ul>
+<li>Automatically reveal files in navigator:在导航栏自动显示文件</li>
+<li>Enable JavaScript source maps:在调试时如果有JS报错，浏览器就会通过解析map文件来重新merge压缩后的JS,使开发者可以用未压缩前的代码来调试。只有Chrome浏览器支持这个功能😲</li>
+<li>Detect indentation:自动检测缩进</li>
+<li>Autocompletion:自动补全</li>
+<li>Bracket matching:括号自动匹配</li>
+<li>Show whitespace characters:空白（空格、TAB、回车）显示设置</li>
+<li>Display variable values inline while debugging:当前调试点及时预览 JavaScript 变量的内联值</li>
+<li>Enable CSS source maps:在调试时如果有CSS报错，浏览器就会通过解析map文件来重新merge压缩后的CSS,使开发者可以用未压缩前的代码来调试。</li>
+<li>Default indentation: 自定义默认缩进</li>
+<li>Search in anonymous and content scripts:在匿名和内容脚本中搜索</li>
+</ul>
+</li>
+<li>Elements:元素面板设置<ul>
+<li>Color format:设置颜色格式</li>
+<li>Show user agent shadow DOM:在元素标签器中显示被隐藏的组件代码</li>
+<li>Word wrap:自动换行</li>
+<li>Show HTML comments:显示HTML注释</li>
+<li>Reveal DOM node on hover:在悬停状态下显示DOM节点</li>
+<li>Show rulers: 鼠标悬停在某个元素上或者选中一个元素的时候会显示</li>
+</ul>
+</li>
+<li>Network:网络面板设置<ul>
+<li>Preserve log:保留请求日志</li>
+<li>Color-code resource types: 不同色彩作标记资源类型</li>
+<li>Group network log by frame:逐帧分组网络日志</li>
+<li>Disable cache (while DevTools is open):禁用缓存</li>
+<li>Enable request blocking:使请求阻塞</li>
+</ul>
+</li>
+<li>Performance:性能面板设置<ul>
+<li>Flamechart mouse wheel action:查看火焰图时鼠标滚轮的作用(缩放&#x2F;滚动)</li>
+<li>High resolution CPU profiling: 提高记录分析数据的准确性，能够以十分之一毫秒的度量来查看火焰图的数据</li>
+<li>Record heap allocation stack traces:使用 Allocation 视图查看内存分配</li>
+<li>Hide chrome frame in Layers view:Layers视图中隐藏谷歌浏览器内嵌框架(通过Internet Explorer的用户界面，以Chrome内核的渲染方式浏览网页)</li>
+<li>Show native functions in JS Profile:使用 profiler 查看原生函数的执行性能</li>
+</ul>
+</li>
+<li>Console:控制台面板设置<ul>
+<li>Hide network messages:默认情况下，控制台将报告网络问题。启用此设置将指示控制台不显示这些错误的日志。例如，将不会记录 404 和 500 系列错误。</li>
+<li>Selected context only:仅显示当前上下文的信息(top iframe worker extension)</li>
+<li>User messages only: 仅显示console API方法的信息</li>
+<li>Log XMLHttpRequests:确定控制台是否记录每一个 XMLHttpRequest。</li>
+<li>Show timestamps:在调用时向显示的每条控制台消息追加一个时间戳。对于发生特定事件时的调试非常实用。这会停用消息堆叠。</li>
+<li>Autocomplete from history:历史记录提示</li>
+<li>Enable custom formatters:控制 JavaScript 对象的格式设置。</li>
+<li>Preserve log upon navigation:在页面刷新或导航时保留控制台历史记录。</li>
+</ul>
+</li>
+<li>Extensions:扩展<ul>
+<li>Link handling:链接处理</li>
+</ul>
+</li>
+<li>Debugger:断点设置<ul>
+<li>Disable JavaScript:禁用JavaScript</li>
+<li>Disable async stack traces:禁用异步堆栈跟踪</li>
+</ul>
+</li>
+<li>DevTools<ul>
+<li>Auto-open DevTools for popups:当新的标签&#x2F;新窗口打开时,自动打开浏览器开发工具</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Workspace :把本地服务器的资源映射为硬盘上的文件，实现调试 JS 和 CSS 的同时自动保存文件</li>
+<li>Blackbox:屏蔽JS文件<ul>
+<li>库代码（被屏蔽的文件）里抛出异常时不会暂停（当设置为Pause on exceptions时）</li>
+<li>调试时Stepping into&#x2F;out&#x2F;over都会忽略库代码</li>
+<li>事件断点也会忽略库代码</li>
+<li>库代码里设置的任何断点也不会起作用</li>
+<li>最终的结果就是只会调试应用代码而忽略第三方代码（配置了Blackbox的代码）。</li>
+</ul>
+</li>
+<li>Emulated Devices:管理模拟设备</li>
+<li>Throttling:设置网络延迟与带宽</li>
+<li>Shortcuts:查看快捷键</li>
+</ul>
+<h3 id="最后还有！"><a href="#最后还有！" class="headerlink" title="最后还有！"></a>最后还有！</h3><p><strong>小技能</strong></p>
+<ul>
+<li>在浏览器地址栏输入：chrome:&#x2F;&#x2F;about&#x2F;,你看到得这些地址几乎包含了所有谷歌浏览器的实用功能，下面来详解部分常用功能。</li>
+<li>清除缓存、硬重载:如果你请求一个硬刷新，在开发者工具打开的情况下点击并按住 Chromes 的刷新按钮。你应该会看见一个下拉菜单，它允许你进行清除缓存和并进行硬重载。</li>
+<li>任务管理器：在浏览器工具栏中点击 Chrome 菜单，选择更多工具，选择任务管理器。可以让你深入了解任何选项卡对应的 GPU，CPU 以及 JavaScript 内存使用状况，CSS 和脚本缓存使用状况。</li>
+<li><a target="_blank" rel="noopener" href="https://plus.google.com/+AddyOsmani/posts/ih85hKCyGve">JSRunTime</a>：开发者工具检索 JavaScript 对象的拓展,它可以在内存中检索可用的 JavaScript 对象并生成相应的图，还可以根据值或者名称来进行匹配。</li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd">Vue.js devtools</a>：墙裂推荐，调试vue应用的神器</li>
+</ul>
+<blockquote>
+<p>这些只是chrome Devtool的其中一部分功能，还有待补充。目前只能算入门篇。<br>so,欢迎来找我讨论补充～   </p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-hexo/" rel="prev" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-swagger/" rel="next" title="swagger文档规范">
+                  swagger文档规范 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

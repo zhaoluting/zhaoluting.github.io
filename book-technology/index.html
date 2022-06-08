@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="本文是我阅读《现代前端技术解析》过程中记录下来的笔记。这是一本以现代前端技术思想与理论为主要内容的书，在前端知识体系上做了很好的总结和梳理，涵盖了现代前端技术绝大部分的知识内容，包括浏览器基础知识、前端相关协议、三层结构演进与实践、前端交互框架、前端项目与技术实践、前端跨栈技术等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《现代前端技术解析》笔记">
+<meta property="og:url" content="https://zhaoluting.github.io/book-technology/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="本文是我阅读《现代前端技术解析》过程中记录下来的笔记。这是一本以现代前端技术思想与理论为主要内容的书，在前端知识体系上做了很好的总结和梳理，涵盖了现代前端技术绝大部分的知识内容，包括浏览器基础知识、前端相关协议、三层结构演进与实践、前端交互框架、前端项目与技术实践、前端跨栈技术等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-19T09:28:16.000Z">
+<meta property="article:modified_time" content="2022-06-07T10:32:42.354Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="book">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/book-technology/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/book-technology/","path":"book-technology/","title":"《现代前端技术解析》笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《现代前端技术解析》笔记 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">浏览器基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AA%E7%BD%91%E5%9D%80%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA%E5%86%85%E5%AE%B9%E7%9A%84%E8%BF%99%E6%AE%B5%E6%97%B6%E9%97%B4%E5%86%85%EF%BC%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%BD%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%E4%BA%8B%E6%83%85%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">用户输入一个网址到页面展示内容的这段时间内，浏览器和服务器都发生了什么事情？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%BC%95%E6%93%8E%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">浏览器渲染引擎工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">1.3.</span> <span class="nav-text">浏览器数据持久化存储技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">前端相关协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP1-0%E9%87%8D%E8%A6%81%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.1.</span> <span class="nav-text">HTTP1.0重要特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP1-1%E9%87%8D%E8%A6%81%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.2.</span> <span class="nav-text">HTTP1.1重要特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP2-0%E9%87%8D%E8%A6%81%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.3.</span> <span class="nav-text">HTTP2.0重要特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS"><span class="nav-number">2.2.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS%E6%A6%82%E8%BF%B0"><span class="nav-number">2.2.1.</span> <span class="nav-text">HTTPS概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS%E5%8F%8C%E5%90%91%E7%9A%84%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.2.2.</span> <span class="nav-text">HTTPS双向的加密传输连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">常见攻击方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.4.</span> <span class="nav-text">实时协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.5.</span> <span class="nav-text">其他协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8ENative%E4%BA%A4%E4%BA%92%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.6.</span> <span class="nav-text">与Native交互协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hybrid-App%E6%A6%82%E8%BF%B0"><span class="nav-number">2.6.1.</span> <span class="nav-text">Hybrid App概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Web%E5%88%B0Native%E5%8D%8F%E8%AE%AE%E8%B0%83%E7%94%A8"><span class="nav-number">2.6.2.</span> <span class="nav-text">Web到Native协议调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Native%E5%88%B0Web%E5%8D%8F%E8%AE%AE%E8%B0%83%E7%94%A8"><span class="nav-number">2.6.3.</span> <span class="nav-text">Native到Web协议调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSBridge%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83"><span class="nav-number">2.6.4.</span> <span class="nav-text">JSBridge设计规范</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">三层结构演进与实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML%E7%BB%93%E6%9E%84%E5%B1%82%E5%9F%BA%E7%A1%80"><span class="nav-number">3.1.</span> <span class="nav-text">HTML结构层基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E8%A1%8C%E4%B8%BA%E5%B1%82%E5%9F%BA%E7%A1%80"><span class="nav-number">3.2.</span> <span class="nav-text">JavaScript行为层基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="nav-number">3.2.1.</span> <span class="nav-text">前端脚本语言的演进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES5%E7%89%B9%E6%80%A7"><span class="nav-number">3.2.2.</span> <span class="nav-text">ES5特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6%E7%89%B9%E6%80%A7"><span class="nav-number">3.2.3.</span> <span class="nav-text">ES6特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES7-%E7%89%B9%E6%80%A7"><span class="nav-number">3.2.4.</span> <span class="nav-text">ES7+特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TypeScript%E7%89%B9%E6%80%A7"><span class="nav-number">3.2.5.</span> <span class="nav-text">TypeScript特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS%E8%A1%A8%E7%8E%B0%E5%B1%82%E5%9F%BA%E7%A1%80"><span class="nav-number">3.3.</span> <span class="nav-text">CSS表现层基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">3.3.1.</span> <span class="nav-text">小知识点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-number">3.3.2.</span> <span class="nav-text">实现动画的方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91"><span class="nav-number">3.4.</span> <span class="nav-text">响应式页面开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E4%BA%A4%E4%BA%92%E6%A1%86%E6%9E%B6"><span class="nav-number">4.</span> <span class="nav-text">前端交互框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM%E4%BA%A4%E4%BA%92%E6%A1%86%E6%9E%B6-%E2%80%93-jQuery"><span class="nav-number">4.1.</span> <span class="nav-text">DOM交互框架 – jQuery</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81API"><span class="nav-number">4.1.1.</span> <span class="nav-text">常见API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JQuery-1-X%E7%89%88%E6%9C%AC-%E6%9C%80%E4%B8%BA%E5%B9%BF%E6%B3%9B-%E7%89%B9%E6%80%A7"><span class="nav-number">4.1.2.</span> <span class="nav-text">JQuery 1.X版本(最为广泛)特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MV"><span class="nav-number">4.2.</span> <span class="nav-text">MV*</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81MV-%E6%A1%86%E6%9E%B6"><span class="nav-number">4.2.1.</span> <span class="nav-text">常见MV*框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B"><span class="nav-number">4.2.2.</span> <span class="nav-text">数据变更检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Virtual-DOM"><span class="nav-number">4.2.3.</span> <span class="nav-text">Virtual DOM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MNV"><span class="nav-number">4.3.</span> <span class="nav-text">MNV*</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5"><span class="nav-number">5.</span> <span class="nav-text">前端项目与技术实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.</span> <span class="nav-text">前端规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.1.</span> <span class="nav-text">通用规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.2.</span> <span class="nav-text">HTML规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSS%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.3.</span> <span class="nav-text">CSS规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES5%E5%B8%B8%E7%94%A8%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.4.</span> <span class="nav-text">ES5常用规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6-%E5%8F%82%E8%80%83%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.5.</span> <span class="nav-text">ES6+参考规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%98%B2%E5%BE%A1%E6%80%A7%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.6.</span> <span class="nav-text">前端防御性编程规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%BB%84%E4%BB%B6%E8%A7%84%E8%8C%83"><span class="nav-number">5.1.7.</span> <span class="nav-text">前端组件规范</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA"><span class="nav-number">5.2.</span> <span class="nav-text">自动化构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">5.3.</span> <span class="nav-text">前端性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-number">5.3.1.</span> <span class="nav-text">前端性能测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%8C%E9%9D%A2%E6%B5%8F%E8%A7%88%E5%99%A8%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-number">5.3.2.</span> <span class="nav-text">桌面浏览器前端优化策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B5%8F%E8%A7%88%E5%99%A8%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-number">5.3.3.</span> <span class="nav-text">移动端浏览器前端优化策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-number">5.4.</span> <span class="nav-text">前端用户数据分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96%EF%BC%88SEO%EF%BC%89"><span class="nav-number">5.5.</span> <span class="nav-text">前端搜索引擎优化（SEO）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%8D%8F%E4%BD%9C"><span class="nav-number">5.6.</span> <span class="nav-text">前端协作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E8%B7%A8%E6%A0%88%E6%8A%80%E6%9C%AF"><span class="nav-number">6.</span> <span class="nav-text">前端跨栈技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E8%B7%A8%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B0%E6%8A%80%E6%9C%AF"><span class="nav-number">6.1.</span> <span class="nav-text">JavaScript跨后端实现技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E7%BB%88%E7%AB%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.2.</span> <span class="nav-text">跨终端设计与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#native%E3%80%81web%E3%80%81hybrid%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">6.2.1.</span> <span class="nav-text">native、web、hybrid三者的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hybrid%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">6.2.2.</span> <span class="nav-text">Hybrid实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ElocalStorage%E7%9A%84%E8%B5%84%E6%BA%90%E7%A6%BB%E7%BA%BF%E5%92%8C%E6%9B%B4%E6%96%B0%E6%8A%80%E6%9C%AF"><span class="nav-number">6.2.3.</span> <span class="nav-text">基于localStorage的资源离线和更新技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Native%E4%B8%8EWeb%E7%BB%93%E5%90%88%E7%9A%84Hybrid%E8%B5%84%E6%BA%90%E7%A6%BB%E7%BA%BF%E5%92%8C%E6%9B%B4%E6%96%B0%E6%8A%80%E6%9C%AF"><span class="nav-number">6.2.4.</span> <span class="nav-text">Native与Web结合的Hybrid资源离线和更新技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%A6%86%E7%9B%96%E7%8E%87%E7%BB%9F%E8%AE%A1"><span class="nav-number">6.2.5.</span> <span class="nav-text">资源覆盖率统计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hybrid%E5%BC%80%E5%8F%91%E6%97%B6%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">6.2.6.</span> <span class="nav-text">Hybrid开发时需要考虑的其他问题</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/book-technology/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《现代前端技术解析》笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-19 17:28:16" itemprop="dateCreated datePublished" datetime="2019-01-19T17:28:16+08:00">2019-01-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>22k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>20 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本文是我阅读<a target="_blank" rel="noopener" href="https://book.douban.com/subject/27021790/">《现代前端技术解析》</a>过程中记录下来的笔记。这是一本以现代前端技术思想与理论为主要内容的书，在前端知识体系上做了很好的总结和梳理，涵盖了现代前端技术绝大部分的知识内容，包括<a href="/book-technology/#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86">浏览器基础知识</a>、<a href="/book-technology/#%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3%E5%8D%8F%E8%AE%AE">前端相关协议</a>、<a href="/book-technology/#%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5">三层结构演进与实践</a>、<a href="/book-technology/#%E5%89%8D%E7%AB%AF%E4%BA%A4%E4%BA%92%E6%A1%86%E6%9E%B6">前端交互框架</a>、<a href="/book-technology/#%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5">前端项目与技术实践</a>、<a href="/book-technology/#%E5%89%8D%E7%AB%AF%E8%B7%A8%E6%A0%88%E6%8A%80%E6%9C%AF">前端跨栈技术</a>等。</p>
+<span id="more"></span>
+<h2 id="浏览器基础知识"><a href="#浏览器基础知识" class="headerlink" title="浏览器基础知识"></a>浏览器基础知识</h2><h3 id="用户输入一个网址到页面展示内容的这段时间内，浏览器和服务器都发生了什么事情？"><a href="#用户输入一个网址到页面展示内容的这段时间内，浏览器和服务器都发生了什么事情？" class="headerlink" title="用户输入一个网址到页面展示内容的这段时间内，浏览器和服务器都发生了什么事情？"></a>用户输入一个网址到页面展示内容的这段时间内，浏览器和服务器都发生了什么事情？</h3><ul>
+<li>在接收到用户输入的网址后，浏览器会开启一个线程来处理这个请求，对用户输入的URL地址进行分析判断，如果是HTTP协议就按照 HTTP方式来处理。</li>
+<li>调用浏览器引擎中的对应方法，比如WebView中的loadUrl方法，分析并加载这个URL地址。</li>
+<li>通过DNS解析获取该网站对应的IP地址，查询完成后联同浏览器的COOKIE、userAgent等信息向网站目的IP发出GET请求。</li>
+<li>进行HTTP协议会话，浏览器客户端向Web服务器发送报文。</li>
+<li>进入网站后台的Web服务器处理请求，如Apache、Tomcat、Node.js等服务器。</li>
+<li>进入部署好的后端应用，如PHP、Java、Javascript、Python等后端程序，找到对应的请求处理逻辑，这期间可能会读取服务器缓存或查询数据库。</li>
+<li>服务器处理请求并返回响应报文，此时如果浏览器访问过该页面，缓存上有对应的资源，会与服务器最后修改记录对比，一致则返回304，否则返回200和对应的内容。</li>
+<li>浏览器开始下载HTML文档（响应报头状态码为200时）或者从本地缓存读取文件内容（浏览器缓存有效或响应报头状态码为304时）。</li>
+<li>浏览器根据下载接收到的HTML文件解析结构建立DOM（Document Object Model，文档对象模型）文档树，并根据HTML中的标记请求下载指定的MIME类型文件（如CSS、Javascript脚本等），同时设置缓存等内容。</li>
+<li>页面开始解析渲染DOM，CSS根据规则解析并结合DOM文档树进行网页内容布局和绘制渲染，Javascript提供DOM API操作 DOM,并读取浏览器缓存、执行事件绑定等，页面整个展示过程完成。</li>
+</ul>
+<h3 id="浏览器渲染引擎工作流程"><a href="#浏览器渲染引擎工作流程" class="headerlink" title="浏览器渲染引擎工作流程"></a>浏览器渲染引擎工作流程</h3><ul>
+<li><strong>解析HTML构建DOM树</strong>：解析通过网络模块下载的HTML文件，将HTML元素标签解析成由多个DOM元素对象节点组成的具有节点父子关系的DOM树结构。</li>
+<li>**构建渲染树(render tree)**：根据DOM树结构的每个节点顺序提取计算使用的CSS规则并重新计算DOM树结构的样式数据，生成一个带样式描述的DOM渲染树对象。</li>
+<li><strong>渲染树的布局</strong>：根据每个渲染树节点在页面中大小和位置，将节点固定到页面的对应位置上。元素的布局属性生效，如position、float、margin等属性。</li>
+<li><strong>绘制渲染树</strong>：将渲染树节点的背景、文本等样式信息应用到每个节点上。元素内部显示样式生效，如color、text-shadow等属性。</li>
+</ul>
+<h3 id="浏览器数据持久化存储技术"><a href="#浏览器数据持久化存储技术" class="headerlink" title="浏览器数据持久化存储技术"></a>浏览器数据持久化存储技术</h3><ul>
+<li>http文件缓存：强缓存（200 from cache）与协商缓存（304）<ul>
+<li>属于强缓存控制的：（http1.1）Cache-Control&#x2F;Max-Age、（http1.0）Pragma&#x2F;Expires</li>
+<li>属于协商缓存控制的：（http1.1）If-None-Match&#x2F;E-tag、 （http1.0）If-Modified-Since&#x2F;Last-Modified</li>
+</ul>
+</li>
+<li>本地存储小容量：Cookie、LocalStorage、SessionStorage。<ul>
+<li>cookie：<ul>
+<li>在设置的过期时间之前一直有效，即使窗口或浏览器关闭。</li>
+<li>cookie数据不能超过4k，只适合保存很小的数据，且有个数限制（各浏览器不同），一般不能超过20个。</li>
+<li>与服务器端通信，每次都会携带在HTTP头中，如果使用cookie保存过多数据会带来性能问题。</li>
+<li>在所有同源窗口中都是共享的。</li>
+<li>缺点：需要程序员自己封装，源生的Cookie接口不友好；浪费宽带。</li>
+<li>备注：被设置为HttpOnly的cookie不能被JS读取，保证了安全性。</li>
+</ul>
+</li>
+<li>localStorage（本地存储）：<ul>
+<li>数据有效期是永久，浏览器关闭后数据不丢失除非主动删除数据。</li>
+<li>存放数据大小为一般为2MB到5MB不等，不同浏览器各不相同。</li>
+<li>不参与和服务器的通信。</li>
+<li>在所有同源窗口中都是共享的。</li>
+<li>缺点：在浏览器的隐私模式下和存满时会报错；可被js访问，易受到XSS攻击。</li>
+</ul>
+</li>
+<li>sessionStorage（会话存储）：<ul>
+<li>在当前浏览器窗口关闭后自动删除。</li>
+<li>存放数据大小为一般为2MB到5MB不等，不同浏览器各不相同。</li>
+<li>不参与和服务器的通信。</li>
+<li>同一会话时间内单标签页同域下的不同页面之间共享；</li>
+<li>缺点：在浏览器的隐私模式下和存满时会报错；可被js访问，易受到XSS攻击。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>本地存储大容量：WebSql和IndexDB主要用在前端有大容量存储需求的页面上，例如，在线编辑浏览器或者网页邮箱。<ul>
+<li>webSql是关系型数据库，已被W3C标准废弃。</li>
+<li>IndexDB是非关系数据库，可正常使用。</li>
+</ul>
+</li>
+<li>manifest离线配置：Manifest是H5提供的一种应用缓存机制，基于它web应用可以实现离线访问(offline cache)，主要是通过manifest文件来标注要被缓存的静态文件清单，是一个被W3C标准废弃的功能。</li>
+<li>cacheStorage：用于保存Service Worker声明的cache对象，ServiceWorker和WebWorker一样是浏览器后台独立的线程。这种方式可利用浏览器本身机制来实现离线缓存，但兼容性很差，暂不成熟。</li>
+<li>flash缓存：少用，可忽视。</li>
+</ul>
+<h2 id="前端相关协议"><a href="#前端相关协议" class="headerlink" title="前端相关协议"></a>前端相关协议</h2><h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><ul>
+<li>HTTP（超文本传输协议）协议是WWW服务器和用户请求代理（如浏览器）之间通过应答请求模式传输超文本（如HTML、JS文件、接口数据等）内容的一种协议。</li>
+<li>浏览器发送请求报文，服务器发送响应报文。</li>
+<li>通常一个完整的HTTP报文由头部、空行（用于区分头部和正文，由回车符和换行符组成）、正文组成。</li>
+<li>HTTP协议先后经历了HTTP0.9、HTTP1.0、HTTP1.1和HTTP2四个版本。目前最为广泛的是HTTP1.1。</li>
+</ul>
+<h4 id="HTTP1-0重要特性"><a href="#HTTP1-0重要特性" class="headerlink" title="HTTP1.0重要特性"></a>HTTP1.0重要特性</h4><ul>
+<li><strong>无连接</strong>：浏览器和服务器保持短暂的连接，浏览器的每次请求都需要与服务器建立一个TCP连接，服务器处理完成后立即断开TCP连接。缺陷是无法复用连接。</li>
+<li><strong>无状态</strong>：服务器不跟踪每个客户端也不记录过去的请求。</li>
+<li><strong>三种请求方法</strong>：只有三个，GET、POST、HEAD</li>
+</ul>
+<h4 id="HTTP1-1重要特性"><a href="#HTTP1-1重要特性" class="headerlink" title="HTTP1.1重要特性"></a>HTTP1.1重要特性</h4><ul>
+<li><strong>长连接</strong>：通过设置请求头Connection：keep-alive来控制，可以让客户端到服务器端之间的连接在一段时间内持续有效。用于传输HTTP数据的TCP连接建立后不会关闭，客户端再次访问服务器时，会复用已建立的连接。</li>
+<li><strong>协议扩展切换</strong>：通过请求头中的Upgrade控制，让客户端通过头部标识令服务器知道它能够支持其他备用通信协议的一种机制。如WebSocket协议通信是通过HTTP方式建立的，通过在请求头中设置Upgrade为WebSocket，来通知服务器在通信连接建立后切换到WebSocket协议来完成后面的数据通信。</li>
+<li><strong>缓存控制</strong>：强缓存通过Cache-Control：Max-Age来控制，协商缓存通过If-None-Match&#x2F;E-tag来控制。</li>
+<li><strong>部分文件传输优化</strong>：可以支持超文本文件的部分传输。</li>
+<li><strong>host头域</strong>：使得一个服务器能够用来创建多个Web站点</li>
+<li><strong>新增请求方法</strong>：PUT、DELETE、OPTIONS、CONNECT、TRACE</li>
+</ul>
+<h4 id="HTTP2-0重要特性"><a href="#HTTP2-0重要特性" class="headerlink" title="HTTP2.0重要特性"></a>HTTP2.0重要特性</h4><blockquote>
+<p>http2.0不是https，它相当于是http的下一代规范。如果http2.0全面应用，很多http1.1中的优化方案就无需用到，如精灵图、静态资源多域名拆分、CSS和JS放置位置等。</p>
+</blockquote>
+<ul>
+<li><strong>流式传输</strong>：采用完全二进制的格式传输数据，在应用层跟传送层之间增加了一个二进制分帧层，改进传输性能，实现低延迟和高吞吐量。</li>
+<li><strong>首部压缩</strong>：http头部压缩，减少体积，最大限度节省传输带宽。</li>
+<li><strong>多路复用&#x2F;连接共享</strong>：不同文件的传输帧可以在一个tcp&#x2F;ip连接中一起同时进行流式传输。基于“二进制分帧”的特性实现了真正的并行传输，能够在一个TCP上进行任意数量HTTP请求。</li>
+<li><strong>传输优先级</strong>：服务器会保证优先级高的文件流先传输。</li>
+<li><strong>服务器端推送</strong>：除了对最初请求的响应外，服务器还可以额外的向客户端推送资源，而无需客户端明确的请求。即可以主动通知客户端。</li>
+</ul>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><h4 id="HTTPS概述"><a href="#HTTPS概述" class="headerlink" title="HTTPS概述"></a>HTTPS概述</h4><ul>
+<li>HTTP + 加密 + 认证 + 完整性保护 &#x3D; HTTP + SSL&#x2F;TLS证书 &#x3D; HTTPS</li>
+<li>https协议需要到ca申请证书，一般免费证书很少，需要交费。</li>
+<li>http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</li>
+<li>http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全，对搜索引擎更友好，利于SEO。</li>
+<li>公钥和私钥是通过一种加密算法得到的密钥对，公钥常用于会话加密、验证数字签名或加密可以用相应私钥解密的数据。密钥对是唯一的。用公钥加密数据只能用私钥解密，私钥加密只能用公钥解。</li>
+</ul>
+<h4 id="HTTPS双向的加密传输连接"><a href="#HTTPS双向的加密传输连接" class="headerlink" title="HTTPS双向的加密传输连接"></a>HTTPS双向的加密传输连接</h4><ul>
+<li>客户端告诉服务端将建立HTTPS连接。</li>
+<li>服务器生成公钥返回给客户端，同时要求客户端进行连接验证。</li>
+<li>客户端将服务器公钥加密过的验证串和客户端公钥发给服务器。</li>
+<li>服务器使用服务器私钥解密报文获得验证串，再将验证串通过客户端公钥加密后返回给客户端。</li>
+<li>客户端通过客户端私钥解密验证串，判断是否为最开始发送的验证串。</li>
+<li>正确则安全，客户端开始将后面的数据通过服务器公钥加密发送给服务端，服务器不断解密获取报文，并通过客户端公钥加密响应报文返回给客户端。</li>
+</ul>
+<h3 id="常见攻击方式"><a href="#常见攻击方式" class="headerlink" title="常见攻击方式"></a>常见攻击方式</h3><ul>
+<li><strong>XSS</strong>：跨站脚本（Cross-site scripting）<ul>
+<li>是注入攻击的一种，带有页面可解析内容的数据未经过处理直接插入到页面上解析。常见的是前端提交的数据未经处理直接存入数据库，后又通过前端读取回显到浏览器。例如发布评论。除了上述的存储型XSS，还有反射型XSS（URL参数注入）、DOM XSS（DOM属性注入）。</li>
+<li>防御方式：对输入到页面的所有内容来源数据进行验证过滤，可用正则、替换标签的方式进行转码或解码。</li>
+</ul>
+</li>
+<li><strong>SQL注入</strong><ul>
+<li>页面提交数据到服务端后，在服务器端未进行数据验证就将数据拼接到SQL语句中执行。</li>
+<li>防御方式：对前端网页提交的数据内容进行严格的检查校验。</li>
+</ul>
+</li>
+<li><strong>CSRF</strong>：跨站请求伪造（Cross-site request forgery）<ul>
+<li>是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。冒充用户发起请求（在用户不知情的情况下）,完成一些违背用户意愿的请求（如恶意发帖，删帖，改密码，发邮件等）。</li>
+<li>通常来说CSRF是由XSS实现的，所以CSRF时常也被称为XSRF[用XSS的方式实现伪造请求]</li>
+<li>防御方式：1、验证HTTP Referer字段；2、加密计算的token验证；3、在HTTP头中自定义属性并验证</li>
+</ul>
+</li>
+<li><strong>网络劫持攻击</strong>：<ul>
+<li>一般指网站资源请求在请求过程中因为人为的攻击导致没有加载到预期的资源内容。主要分为DNS劫持（篡改域名解析结果）与HTTP劫持（劫持请求返回的数据包）。</li>
+<li>防御方式：使用HTTPS协议来访问目标网站。</li>
+</ul>
+</li>
+</ul>
+<h3 id="实时协议"><a href="#实时协议" class="headerlink" title="实时协议"></a>实时协议</h3><ul>
+<li><strong>WebSocket通信机制</strong>：是浏览器和服务器之间的双向数据实时通信的一种协议。但低版本浏览器存在兼容性问题。</li>
+<li><strong>HTTP 2.0</strong>：HTTP 2也支持服务端的消息推送。但目前还未普及。</li>
+<li><strong>poll轮询</strong>：浏览器采用定时向服务器发送请求轮询的方法不断发送或拉取消息。但实时性较差，也比较消耗系统资源。</li>
+<li><strong>long-poll长轮询</strong>：对HTTP请求设置较长的Timeout等待时间，网络轮询请求就可以维持一段较长的时间，服务器如果在这段时间内进行了响应，请求便会立即返回结果，若未响应，浏览器将自动响应超时并重新发起一个长轮询请求。</li>
+</ul>
+<h3 id="其他协议"><a href="#其他协议" class="headerlink" title="其他协议"></a>其他协议</h3><ul>
+<li><strong>DDP协议（分布式数据协议）</strong>：使用JSON数据格式在客户端和服务器之间进行数据传输通信，新型的实时通信协议。目前存在兼容性问题，未被广泛使用。</li>
+<li><strong>RESTful数据协议规范</strong>：软件架构之间交互调用数据的协议风格规范，建议以一种通用的方式来定义和管理数据交互调用接口。它可以让数据交互的方式更加规范化，一定程素上有利于较低项目开发和维护成本。</li>
+</ul>
+<h3 id="与Native交互协议"><a href="#与Native交互协议" class="headerlink" title="与Native交互协议"></a>与Native交互协议</h3><h4 id="Hybrid-App概述"><a href="#Hybrid-App概述" class="headerlink" title="Hybrid App概述"></a>Hybrid App概述</h4><p>Hybrid App是在Native App应用（原生应用）的基础上结合了Web App应用所形成的模式，称之为混合APP。</p>
+<p><strong>相比于传统的桌面浏览器端的Web App，它具有以下特点：</strong></p>
+<ul>
+<li><strong>可用系统网络资源少</strong>。这是由于移动设备CPU、内存、网卡、网络连接多方面的限制。</li>
+<li><strong>支持更新的浏览器特性</strong>。智能设备浏览器种类较少，以webkit内核居多，不用考虑低版本IE兼容。</li>
+<li><strong>可实现离线应用</strong>。可以通过新浏览器特性或Native文件读取机制进行文件级的文件缓存和离线更新。</li>
+<li><strong>较多的机型考虑</strong>。由于目前移动设备平台的不统一性，需要考虑不同设备机型的兼容性问题。</li>
+<li><strong>支持与Native交互</strong>。可以在前端页面中调用客户端Native的能力。</li>
+</ul>
+<h4 id="Web到Native协议调用"><a href="#Web到Native协议调用" class="headerlink" title="Web到Native协议调用"></a>Web到Native协议调用</h4><p>在HTML5中调用Native程序一般有两种通用方法：</p>
+<ul>
+<li>通过URL请求：Native应用向移动端系统注册schema协议的URI供JS调用。</li>
+<li>通过addJavascriptInterface注入方法到页面中调用：Native向webView全局作用域中注入一个native全局对象，供JS调用。主要原理是通过addJavascriptInterface将Java的实例对象注入到WebView中。</li>
+</ul>
+<h4 id="Native到Web协议调用"><a href="#Native到Web协议调用" class="headerlink" title="Native到Web协议调用"></a>Native到Web协议调用</h4><p>在Native中调用HTML5中JavaScript方法或指令一般有两种通用方法：</p>
+<ul>
+<li>通过loadUrl方法：在H5页面全局作用域中添加方法，类似于schema协议。Android平台下叫loadUrl，IOS系统下通常为stringByEvaluatingJavaScriptFromString。</li>
+</ul>
+<h4 id="JSBridge设计规范"><a href="#JSBridge设计规范" class="headerlink" title="JSBridge设计规范"></a>JSBridge设计规范</h4><ul>
+<li>在Android平台下，通常使用JSBridge来定义前端与Native的相互调用协议。</li>
+<li>通过一个协议串定义数据通信规则，如：jsbridge:&#x2F;&#x2F;className:callbackMethod&#x2F;methodName?jsonObj</li>
+<li>协议串必须包括：调用Native APP的特定标识头、类名称、方法名、参数、回调JavaScript的方法</li>
+<li>以Android为例，前端使用prompt传入协议串来注册类和方法，Native端使用loadUrl(‘javascript:callbackMethod()’)来调用</li>
+</ul>
+<h2 id="三层结构演进与实践"><a href="#三层结构演进与实践" class="headerlink" title="三层结构演进与实践"></a>三层结构演进与实践</h2><blockquote>
+<p>前端的三个基本构成：HTML结构层、CSS表现层、JavaScript行为层</p>
+</blockquote>
+<h3 id="HTML结构层基础"><a href="#HTML结构层基础" class="headerlink" title="HTML结构层基础"></a>HTML结构层基础</h3><ul>
+<li><strong>DOCTYPE</strong><ul>
+<li>处于HTML文档的头部的<code>&lt;!DOCTYPE&gt;</code>声明不是一个HTML标签，是一个用于告诉浏览器当前HTMl版本的指令，指示web浏览器使用对应的HTML版本编写的只能进行解析。</li>
+<li>由于HTML4.01基于SGML（标准通用标记语言），所以在HTML4.01中<code>&lt;!DOCTYPE&gt;</code>声明指向一个DTD（文档类型定义），DTD指定了标记规则以保证浏览器正确渲染内容。HTML5不基于SGML，所以不用指定DTD。</li>
+<li><code>&lt;!DOCTYPE html&gt;</code>兼容所有HTML的历史版本和最新的HTML5版本。如果DOCTYPE不存在或格式错误，文档会以兼容模式呈现，浏览器会使用较低的标准模式来解析HTML。</li>
+</ul>
+</li>
+<li><strong>web语义化标签</strong>：web语义化是指在HTML结构的恰当位置上使用语义恰当的标签，使页面具有良好的结构，使页面标签元素具有含义，能够让人或搜索引擎更容易理解。</li>
+<li><strong>HTML糟糕的部分</strong><ul>
+<li>有些HTML5新语义化标签会存在兼容性问题，仍需使用div标签替代。</li>
+<li>table标签性能存在问题，因为table内容渲染是等表格内容全部解析完生成渲染树后一次性渲染到页面上的。通常使用其他方式模拟table元素。</li>
+<li>HTML标签随意添加属性、CSS属性使用错误等情况不会报错。通常需要借助插件或者构建工具来辅助开发。</li>
+</ul>
+</li>
+<li><strong>AMP HTML</strong><ul>
+<li>流动网页提速(AMP)是Google推行的一个提升页面资源载入效率的HTML提议规范。</li>
+<li>基本思路：<strong>使用严格受限的高效HTML标签</strong>以及<strong>使用静态网页缓存技术</strong>来提高网络访问静态资源的性能和用户体验。</li>
+</ul>
+</li>
+<li><strong>关于XML</strong><ul>
+<li>是可扩展性标记语言，一种重量级的数据交换格式语言，基于SGML，类似HTML。</li>
+<li>设计宗旨是传输数据，而非显示数据。</li>
+<li>XML标签没有被预定义，需要自行定义标签。</li>
+<li>XML被设计为具有自我描述性。</li>
+</ul>
+</li>
+<li><strong>Web Component</strong><ul>
+<li><strong>Shadow DOM</strong>是HTML的一个规范，允许浏览器开发者封装自己的HTML标签、CSS样式和特定的JavaScript代码，同时也可让开发者创建类似video这样的自定义一级标签，创建这些新标签内容的技术和相关的API被称为<strong>Web Component</strong>。</li>
+<li>Chrome 31及Android 4.4 以上版本浏览器提供了创建Shadow DOM的API ：document.createShadowRoot()。</li>
+</ul>
+</li>
+</ul>
+<h3 id="JavaScript行为层基础"><a href="#JavaScript行为层基础" class="headerlink" title="JavaScript行为层基础"></a>JavaScript行为层基础</h3><h4 id="前端脚本语言的演进"><a href="#前端脚本语言的演进" class="headerlink" title="前端脚本语言的演进"></a>前端脚本语言的演进</h4><p>演进过程主要包括以下几个阶段：ECMAScript 5、CoffeeScript、ECMAScript 6+、TypeScript和衍生脚本。</p>
+<ul>
+<li><strong>CoffeeScript</strong>重新定义了一套语法规则，使用了更加简洁高效的编码语法，按照统一的规则转译成规范、可读、默认在严格模式下运行的JavaScript代码。它在ES5时代是极具代表性的，但随着更高效的ES6的发布，CoffeeScript走向了没落。</li>
+<li><strong>ES6标准</strong>：是2015年TC39制定的JavaScript规范。在浏览器应用开发中，由于浏览器版本较多，需要将ES6转译为ES5语法运行，ES6只能作为语法糖使用；在Node端的应用开发中，Node环境对新版本特性支持较为完善，大大提高了开发效率。</li>
+<li><strong>TypeScript</strong>：是微软在2012年推出的一种自由开源编程语言，是JavaScript的一个超集，与ES6差异很小，增加了少数特殊应用场景下优势的内容。</li>
+<li><strong>衍生脚本</strong>：基于现有JavaScript的实现扩展自己特有语法规则来适应特殊应用场景的一类脚本规范，即JavaScript的超集。如JSX或HyperScript，CoffeeScript和TypeScript在某种意义上也是JavaScript的衍生脚本。</li>
+</ul>
+<h4 id="ES5特性"><a href="#ES5特性" class="headerlink" title="ES5特性"></a>ES5特性</h4><ul>
+<li><strong>严格模式</strong>：限制了原有一些不规范的写法，让一些不合理的语法直接报错，从而提高了代码的安全性和规范性。对全局变量、with、eval、arguments、var等方面进行了限制，消除了JS语法一些不合理、不严谨之处。</li>
+<li><strong>内置JSON对象</strong>：内置了JSON对象，用于JSON对象和JSON字符串之间的转换操作，不再需要用第三方库来转换。</li>
+<li><strong>新增Object方法属性</strong>：如getPrototypeOf(返回原型)、create(创建对象)、defineProperty(用于数据劫持)、freeze(冻结对象)等</li>
+<li><strong>新增Array方法属性</strong>：indexOf(返回索引值)、forEach(遍历执行)、map(返回处理过的数组)、reduce(累加器)等</li>
+<li><strong>新增bind()、trim()、Date.now()等实用函数</strong>：Function.prototype.bind()用于将当前函数和指定对象绑定并返回新函数，新函数被调用时，代码会在指定对象的上下文中执行；String.prototype.trim()用于去除字符串前后空格；Date.now()会返回当前时间戳。</li>
+</ul>
+<h4 id="ES6特性"><a href="#ES6特性" class="headerlink" title="ES6特性"></a>ES6特性</h4><ul>
+<li><strong>块级作用域变量</strong>：声明关键字let和const。</li>
+<li><strong>字符串模板</strong>：使用倒引号&#96;&#96;拼接字符串，用${expression} 表示占位符。</li>
+<li><strong>解构赋值</strong>：例如const [x, y, z] &#x3D; point或const {x, y, z} &#x3D;  point。</li>
+<li><strong>数组新特性</strong>：如Array.from、Array.key、Array.prototype.copyWithin等。</li>
+<li><strong>函数参数</strong>：函数添加了默认参数、不定参数和拓展参数的设计。</li>
+<li><strong>箭头函数</strong>：不需要 function 关键字来创建函数，省略 return 关键字，继承当前上下文的 this 关键字。</li>
+<li><strong>增强对象</strong>：可以在定义对象时通过属性简写、变量作为属性名、省略对象函数属性的书写等方式提高编码效率。</li>
+<li><strong>Class（类）</strong>：只是个语法糖，实际上还是原型继承，通过extends关键字实现继承。实质是先创造父类的实例对象this（所以必须先调用super方法），然后再用子类的构造函数修改this。</li>
+<li><strong>模块化</strong>：通过export暴露接口，通过import引用其他文件的内容。</li>
+<li><strong>循环与迭代器</strong>：可使用for…in遍历对象，使用for…of遍历数组、Map、Set等合集。interator迭代器则可以控制单步循环触发的时机。</li>
+<li>**Generators(生成器)*<em>：是能返回一个迭代器的函数。比普通的function多了个星号</em>，在其函数体内可以使用yield关键字，会在每个yield后暂停，调用next()方法继续。</li>
+<li><strong>集合类型Map + Set + weakMap + WeakSet</strong>：集合类型是对对象的增强类型，是一类是数据管理操作更加高效的对象类型。</li>
+<li><strong>Promise、Symbol、Proxy增强类型</strong>：Promise可以用同步的方式去写异步代码，ES6遵守的是Promise&#x2F;A+规范；Symbol是ES6新增的基本数据类型，一般用作属性键值，并且能避免对象属性键的命名冲突；Proxy可以用来拦截某个对象的属性访问方法，和ES5的defineProperty相似。</li>
+<li><strong>统一码</strong>：ES6字符串支持新的Unicode文本形式，也增加了新的正则表达式修饰符u来处理统一码。</li>
+<li><strong>进制数支持</strong>：增加了二进制和八进制字面量的支持。</li>
+<li><strong>Reflect对象和tail calls尾调用</strong>：Reflect用于对原有对象进行赋值或取值操作，但不会触发getter或setter调用；tail calls尾调用保证了函数尾部调用时调用栈有一定的长度限制。</li>
+</ul>
+<h4 id="ES7-特性"><a href="#ES7-特性" class="headerlink" title="ES7+特性"></a>ES7+特性</h4><ul>
+<li><strong>幂指数操作符</strong>：新增操作符来进行幂指数运算</li>
+<li><strong>Array.prototype.includes</strong>：用来判断数组中是否包含某个元素。</li>
+<li><strong>异步函数 async&#x2F;await</strong>：async&#x2F;await是对Generator的简化封装，专门用于处理异步场景。</li>
+<li><strong>SIMD.JS – SIMD APIs + Polyfill</strong>：指单指令多数据流，涉及并行计算范畴的语法指令。</li>
+</ul>
+<h4 id="TypeScript特性"><a href="#TypeScript特性" class="headerlink" title="TypeScript特性"></a>TypeScript特性</h4><ul>
+<li><strong>是ES6的超集</strong>：就语言特性而言，是ES6的超集，基本包含了ES6和ES6中部分未实现的内容，如async&#x2F;await。</li>
+<li><strong>强类型支持</strong>：数据类型是强类型的，声明时需要对类型进行定义。</li>
+<li><strong>Decorator装饰器特性</strong>：可以用来注解class、property、method和parameter，也是一种面向对象编程语言设计模式的借鉴。</li>
+</ul>
+<h3 id="CSS表现层基础"><a href="#CSS表现层基础" class="headerlink" title="CSS表现层基础"></a>CSS表现层基础</h3><h4 id="小知识点"><a href="#小知识点" class="headerlink" title="小知识点"></a>小知识点</h4><ul>
+<li><strong>CSS选择器</strong>：<ul>
+<li>css选择器类别：id选择器、类选择器、元素选择器、组合选择器、伪类、伪元素等。</li>
+<li>选择器属性优先级：!important &gt; 内联样式(权重1000) &gt; ID选择器(权重100)  &gt; 类选择器(权重10)  &gt; 元素选择器(权重1) &gt; 通配符 &gt; 继承 &gt; 浏览器默认属性;</li>
+</ul>
+</li>
+<li><strong>CSS属性</strong>：<ul>
+<li>布局类属性：position类、弹性布局flex、浮动float、对齐align</li>
+<li>几何类属性：盒模型相关（margin、padding、width、height、border）、box-shadow、渐变gradient、background类、transform类</li>
+<li>文本类属性：font类、line-height、color类、text类（text-decoration、text-indent、text-overflow）、white-space、user-select、text-shawdow等</li>
+<li>动画类属性：以CSS3为主的transition、animation等</li>
+<li>查询类：Media query 和 IE Hack等</li>
+</ul>
+</li>
+<li><strong>不同浏览器下CSS样式统一化</strong>：<ul>
+<li>reset：将浏览器中的默认样式全部清除。例如：body, h1{ margin: 0 }</li>
+<li>normalize：在整站样式基本确定的情况下使用同一个默认样式规则。例如：body, h1{ margin: 5px }</li>
+<li>neat：具体需要根据网站的设计特点来确定。例如：body { margin: 0 } h1{ margin: 5px }</li>
+</ul>
+</li>
+<li><strong>CSS预处理</strong>：<ul>
+<li>预处理工具：SASS、LESS、Stylus、postCSS等</li>
+<li>目的：通过编写更高效、易管理的类CSS脚本并将它们自动生成浏览器解析执行的CSS代码，实现高效开发和便捷管理。</li>
+<li>特性：变量声明和计算、语法表达式、函数处理、属性继承、兼容性补全。</li>
+</ul>
+</li>
+</ul>
+<h4 id="实现动画的方案"><a href="#实现动画的方案" class="headerlink" title="实现动画的方案"></a>实现动画的方案</h4><ul>
+<li>JavaScript直接实现：通过setInterval或setTimeout的回调函数来持续调用改变某个元素的CSS样式，一般以16ms为间隔达到60帧。</li>
+<li>SVG(可伸缩矢量图形)：由SVG内部元素（如<code>&lt;set&gt;</code>、<code>&lt;animate&gt;</code>等）的属性控制。</li>
+<li>CSS3 transition：只能在某个标签元素样式或状态改变时进行平滑的动画效果过渡。</li>
+<li>CSS3 animation：真正意义上页面内容的动画，通过对关键帧和循环次数的控制能实现很多动画，脱离JS的控制。</li>
+<li>Canvas：通过JavaScript调用Canvas的API控制渲染动画，一般做法是用定时器不断清空画布并重新绘制。</li>
+<li>requestAnimationFrame：是浏览器针对动画专门优化而成的API，原理和定时器类似，通过JS持续循环调用来触发动画动作。</li>
+</ul>
+<p><strong>总结</strong>：PC端推荐JS直接实现或SVG，移动端推荐transition、animation、canvas或requestAnimationFrame。</p>
+<h3 id="响应式页面开发"><a href="#响应式页面开发" class="headerlink" title="响应式页面开发"></a>响应式页面开发</h3><ul>
+<li><strong>响应式设计</strong>：根据不同设备浏览器尺寸或分辨率来展示不同页面结构层、行为层、表现层内容的设计方式。</li>
+<li><strong>主流实现方法</strong>：<ul>
+<li>通过前端或后端判断userAgent来跳转不同的页面完成不同设备浏览器的适配，需要维护两个不同站点来根据用户设备进行对应的跳转。适用于功能复杂但对性能要求较高的站点应用。</li>
+<li>使用media query媒体查询等手段让页面根据不同设备浏览器自动改变页面的布局和显示，不用做跳转。适用于访问量较小、性能要求不高的应用场景。</li>
+</ul>
+</li>
+<li>**结构层响应式(HTML内容的自适应渲染)**：<ul>
+<li>前端渲染数据：桌面端和移动端直接加载到的HTML结构是相同的，使用异步的方式加载桌面端或者移动端不同的JS资源列表。</li>
+<li>后端渲染数据：后端根据userAgent直出不同的HTML模板进行渲染。</li>
+<li>结构层媒体响应式：让浏览器上的展示媒体内容（主要指图片）尺寸根据屏幕宽度或分辨率进行自适应调节。</li>
+</ul>
+</li>
+<li><strong>表现层响应式(响应式布局和屏幕适配布局)</strong><ul>
+<li>响应式布局：根据浏览器宽度、分辨率、横竖屏等情况自动改变页面元素的展示。一般通过栅格系统和媒体查询来实现响应式。</li>
+<li>屏幕适配布局：内容按照不同屏幕大小自动等比例缩放。一般通过设置<code>&lt;meta name=&quot;viewport&quot;&gt;</code>使页面保持内容不缩放、使用rem作为单位来实现适配。</li>
+</ul>
+</li>
+<li><strong>行为层响应式</strong>：与结构层类似，也是通过设备浏览器环境判断来异步加载不同的JS脚本，同样分为前端引入与后端引入。</li>
+</ul>
+<h2 id="前端交互框架"><a href="#前端交互框架" class="headerlink" title="前端交互框架"></a>前端交互框架</h2><h3 id="DOM交互框架-–-jQuery"><a href="#DOM交互框架-–-jQuery" class="headerlink" title="DOM交互框架 – jQuery"></a>DOM交互框架 – jQuery</h3><p>通过原生的DOM API基本可以完成前端页面的任何操作，但开发复杂网站应用，使用原生API开发就显得低效且不易管理。于是jQuery这个典型的DOM交互框架就对六类DOM API进行了封装，方便开发者调用。</p>
+<h4 id="常见API"><a href="#常见API" class="headerlink" title="常见API"></a>常见API</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>常见DOM API</th>
+<th>常见jQuery API</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>节点查询型</td>
+<td>getElementById、getElementsByName(ClassName、TagName)、querySelector、querySelectorAll</td>
+<td>$(selector)、find()等</td>
+</tr>
+<tr>
+<td>节点创建型</td>
+<td>createElement、createDocumentFragment、createTextNode、cloneNode</td>
+<td>$(html)、clone()等</td>
+</tr>
+<tr>
+<td>节点修改型</td>
+<td>appendChild、replaceChild、removeChild、insertBefore、innerHTML</td>
+<td>html()、replace()、remove()、append()、before()、after()等</td>
+</tr>
+<tr>
+<td>节点关系型</td>
+<td>parentNode、previousSibling、childNodes</td>
+<td>parent()、sibling()、child()、closest()、next()等</td>
+</tr>
+<tr>
+<td>节点属性型</td>
+<td>innerHTML、attributes、getAttribute、setAttribute、getComputedStyle</td>
+<td>attr()、data()、css()、hide()、show()、slideDown()、slideUp()、animate()等</td>
+</tr>
+<tr>
+<td>内容加载型</td>
+<td>XMLHttpRequest、ActiveX</td>
+<td>ajax()、get()、post()等</td>
+</tr>
+</tbody></table>
+<h4 id="JQuery-1-X版本-最为广泛-特性"><a href="#JQuery-1-X版本-最为广泛-特性" class="headerlink" title="JQuery 1.X版本(最为广泛)特性"></a>JQuery 1.X版本(最为广泛)特性</h4><ul>
+<li>简化了选择器，可调用$()、find等API以简短的形式进行组合查询。</li>
+<li>扩展实现了如html()、append、animate()等多种类型的DOM操作方法。</li>
+<li>实现了对XMLHttpRequest和ActiveX的统一封装，使AJAX网络请求的调用更加方便。</li>
+<li>对DOM添加了on等方法来统一处理事件，包括事件绑定和事件代理等。</li>
+<li>添加了$.Deferred对象来处理异步回调嵌套问题，借鉴了Promise&#x2F;A规范。</li>
+<li>做到了兼容性问题对开发者的透明。例如实现事件绑定、AJAX封装时充分考虑了不同浏览器的差异性，并做统一处理。</li>
+</ul>
+<h3 id="MV"><a href="#MV" class="headerlink" title="MV*"></a>MV*</h3><p>随着AJAX技术的盛行，SPA应用开始被广泛使用，但使用JQuery来开发维护SPA应用是比较麻烦的。为了解决这个问题，通常会使用MV*框架。</p>
+<h4 id="常见MV-框架"><a href="#常见MV-框架" class="headerlink" title="常见MV*框架"></a>常见MV*框架</h4><ul>
+<li><strong>MVC框架</strong>：<ul>
+<li>Model-数据模型、View-视图、Controller-控制器</li>
+<li>View 传送指令到 Controller，Controller 完成业务逻辑后，要求 Model 改变状态，Model 将新的数据发送到 View，用户得到反馈。</li>
+<li>一般通过事件监听或观察者模式实现，所有通信都是单向的。</li>
+</ul>
+</li>
+<li><strong>MVP框架</strong>：<ul>
+<li>Model-数据模型、View-视图、Presenter-发布者</li>
+<li>View层将用户交互传递给Presenter，由Presenter完成相应的业务逻辑及对Modal中数据的操作。</li>
+<li>由MVC模式进化而来的，改进了MVC中的控制器过于臃肿的问题。Presenter和View之间的通信是双向的。</li>
+</ul>
+</li>
+<li><strong>MVVM框架</strong>：<ul>
+<li>Model-数据模型、View-视图、ViewModel-视图模型</li>
+<li>用户操作时，ViewModel会捕获数据变化，自动触发Modal的调用和模板内容的渲染。</li>
+<li>可以认为是自动化的MVP框架，将Presenter的工作拆分成多个小指令步骤，通过对指令的识别来渲染数据和绑定事件。</li>
+</ul>
+</li>
+</ul>
+<p><strong>各层解释</strong></p>
+<ul>
+<li>M(Model-数据模型)：用于存放请求的数据结果和数据对象。</li>
+<li>V(View-视图)：用于页面DOM的更新与修改。</li>
+<li>C(Controller-控制器)：实现业务逻辑，根据路由切换页面及数据的增删改查。</li>
+<li>P(Presenter-发布者)：作为中间部分连接View和Model的通信交互完成所有的逻辑操作。</li>
+<li>VM(ViewModel-视图模型)：是视图View的模型、映射和显示逻辑，用来连接数据和视图</li>
+</ul>
+<h4 id="数据变更检测"><a href="#数据变更检测" class="headerlink" title="数据变更检测"></a>数据变更检测</h4><ul>
+<li><strong>手动触发绑定</strong>：在数据对象上定义get()、set()方法，调用时手动触发get和set函数来获取、修改数据，改变数据后悔主动触发get和set函数中View层的重新渲染功能。</li>
+<li><strong>脏数据检测</strong>：在ViewModal对象的某个属性值发送变化时找到与之相关的所有元素，对比数据变化来决定是否重新渲染。最简单的方式就是通过 setInterval() 定时轮询检测数据变动。如Angular.js。</li>
+<li><strong>对象劫持</strong>：使用Object.defineProperty对ViewModal对象进行属性set()、get()的监听，当有数据读取和赋值操作时扫描元素节点，运行指定对应节点的指令。</li>
+<li><strong>Proxy</strong>：Proxy可以用于在已有的对象基础上重新定义一个对象，并重新定义对象原型上的方法，包括get()和set()。</li>
+</ul>
+<h4 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h4><ul>
+<li><strong>定义</strong>：Virtual DOM是一个能够直接描述一段HTML DOM结构的JavaScript对象。</li>
+<li><strong>核心步骤</strong>：<ul>
+<li>创建Virtual DOM：JS直接解析HTML文本字符串，根据词法分析内容，生成一个JavaScript对象。</li>
+<li>对比新旧Virtual DOM生成差异化的Virtual DOM；</li>
+<li>将差异化的Virtual DOM渲染到页面上。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：减少了对DOM对象的操作，在页面结构变化时进行最小代价的DOM渲染操作，提高交互性能和效率。</li>
+</ul>
+<h3 id="MNV"><a href="#MNV" class="headerlink" title="MNV*"></a>MNV*</h3><ul>
+<li><strong>定义</strong>：使用JavaScript调用原生控件或事件绑定来生成应用程序的交互模式。可以简单理解为Modal-NativeView-*。</li>
+<li><strong>例子</strong>：Modal-NativeView-Virtual DOM 和 Modal-NativeView-ViewModel</li>
+<li><strong>场景</strong>：目前仅适用于移动端Hybrid应用，因为它完全抛弃了DOM，需要依赖原生应用控件的调用支持。</li>
+</ul>
+<h2 id="前端项目与技术实践"><a href="#前端项目与技术实践" class="headerlink" title="前端项目与技术实践"></a>前端项目与技术实践</h2><h3 id="前端规范"><a href="#前端规范" class="headerlink" title="前端规范"></a>前端规范</h3><h4 id="通用规范"><a href="#通用规范" class="headerlink" title="通用规范"></a>通用规范</h4><ul>
+<li>保证结构层(HTML)、表现层(CSS)、行为层(JavaScript)之间的最小耦合。</li>
+<li>统一使用tab或4个空格缩进。</li>
+<li>HTML文档中使用<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>指定编码，避免乱码。</li>
+<li>HTML标签、标签属性、样式名及规则建议使用小写，HTML属性id建议使用驼峰命名方式。</li>
+<li>代码单行长度不能超过80或120字符。</li>
+<li>尽可能地为代码写上注释。</li>
+<li>删除行尾空格和多余符号。</li>
+</ul>
+<h4 id="HTML规范"><a href="#HTML规范" class="headerlink" title="HTML规范"></a>HTML规范</h4><ul>
+<li>统一使用HTML5的标准文档类型<code>&lt;!DOCTYPE html&gt;</code>来定义。</li>
+<li>head中必须定义title、keyword、description保证基本SEO页面关键字和内容描述；移动端head添加viewport控制页面不缩放。</li>
+<li>引用CSS或JavaScript时，省略type属性，因为HTML5引入时带默认值。</li>
+<li>所有标签属性值必须用双引号包裹。</li>
+<li>非必须属性值可省略不写。</li>
+<li>所有元素必须正确嵌套，尽量使用语义化标签，不允许交叉，不允许在inline元素中包含block元素。</li>
+<li>非自闭合标签必须添加关闭标识，自闭合标签无须关闭。</li>
+<li>避免img元素的alt属性值为空。</li>
+<li>为表单内部元素<code>&lt;label&gt;</code>加上for属性或将对应控件放在<code>&lt;label&gt;</code>标签内部。</li>
+<li>为每个大的模块的开始和结束的地方添加起始注释标记。</li>
+<li>块级元素另起一行写；子元素尽量相对其父级进行缩进。</li>
+<li>在合适的地方选择语义合适的标签。</li>
+</ul>
+<h4 id="CSS规范"><a href="#CSS规范" class="headerlink" title="CSS规范"></a>CSS规范</h4><ul>
+<li>使用link调用外部样式文件，紧张使用内联样式。</li>
+<li>样式命名要统一约定，可使用BEM方案。</li>
+<li>尽量缩写，如单位0不用加单位、URL引用资源不用写引号、颜色值小写并尽量缩写至3位。</li>
+<li>CSS样式书写顺序遵循先写布局属性后写内容属性的规则。</li>
+<li>尽可能减少对CSS Hack的使用和依赖。</li>
+<li>高效实现，如避免标签名与id或class组合的选择器、属性尽可能使用合并写法等。</li>
+<li>使用预处理脚本编码开发。</li>
+</ul>
+<h4 id="ES5常用规范"><a href="#ES5常用规范" class="headerlink" title="ES5常用规范"></a>ES5常用规范</h4><ul>
+<li>JavaScript语句后统一加上分号。</li>
+<li>所有运算符、符号和英文单词之间添加必要的空格，便于阅读。</li>
+<li>推荐在代码块后保留一行空行，使块内容层次分明。</li>
+<li>推荐JavaScript字符串最外层统一使用单引号。</li>
+<li>标准变量采用驼峰式命名；常量使用全大写命名，并用下划线连接；构造函数首字母大写；jQuery对象推荐以$开头命名便于区分。</li>
+<li>对象属性名不需要加引号；对象属性键值以缩进的形式书写；数组、对象属性后不能有都好。</li>
+<li>块代码推荐使用大括号包裹。</li>
+<li>尽量不要直接使用undefined进行变量判断；用&#x3D;&#x3D;&#x3D;、!==代替==、!&#x3D;&#x3D;。</li>
+<li>不要在条件语句或循环语句中声明函数。</li>
+</ul>
+<h4 id="ES6-参考规范"><a href="#ES6-参考规范" class="headerlink" title="ES6+参考规范"></a>ES6+参考规范</h4><ul>
+<li>正确使用ES6的let和const。</li>
+<li>字符串拼接使用字符串模板完成。</li>
+<li>解构赋值尽量使用一层解构。</li>
+<li>数组拷贝推荐使用…实现。</li>
+<li>数组循环遍历使用for…of，非必须情况不推荐使用forEach、map、简单循环。</li>
+<li>使用ES6的类来代替之前的类实现方式，尽量使用constructor进行属性成员变量赋值。</li>
+<li>模块化多变量导出时尽量使用对象解构，不使用全局导出。尽量不要把import和export写在一行。</li>
+<li>导出类名时，保持模块名称和文件名相同，类名首字符需要大写。</li>
+<li>生成器中yield进行一步操作时需要使用try…catch包裹，方便对异常进行处理。</li>
+<li>推荐使用promise，避免使用第三方库或直接回调，原生的一步处理性能更好且符合语言规范。</li>
+<li>如果不是必须，避免使用迭代器Iterators。</li>
+<li>不要使用统一码，中文的正则匹配和计算较消耗时间，且容易出问题。</li>
+<li>合理使用Generator，推荐使用async&#x2F;await。更加简洁。</li>
+</ul>
+<h4 id="前端防御性编程规范"><a href="#前端防御性编程规范" class="headerlink" title="前端防御性编程规范"></a>前端防御性编程规范</h4><ul>
+<li>对外部数据的安全检测判断。</li>
+<li>规范化的错误处理</li>
+</ul>
+<h4 id="前端组件规范"><a href="#前端组件规范" class="headerlink" title="前端组件规范"></a>前端组件规范</h4><ul>
+<li>UI组件规范<ul>
+<li>原则：UI设计一致性、开发实现一致性</li>
+<li>设计实现UI库：统一的页面布局方案、基础UI结构和样式实现、组件化UI结构和样式实现、响应式布局、扩展性。</li>
+</ul>
+</li>
+<li>模块化规范<ul>
+<li>AMD：是运行在浏览器端的模块化异步加载规范，主要以requireJS为代表。基本原理是定义define和require方法异步请求对应的JavaScript模块文件到浏览器端运行。</li>
+<li>CMD：是在浏览器端调用类似commonJS的书写方式进行模块引用的模块化规范，CMD遵循按需执行依赖的原则，只有在用到某个模块时才会执行模块内部的require语句。</li>
+<li>CommonJS：是Node端使用的JavaScript模块化规范，使用require进行模块引入，并使用module.export来定义模块导出。</li>
+<li>import&#x2F;export：是ES6定义的JavaScript模块引用方式，是唯一一个遵循JavaScript语言标准的模块化规范。</li>
+</ul>
+</li>
+<li>项目组件化设计规范<ul>
+<li>组件化实践方案：Web Component组件化、MVVM框架组件化、Virtual DOM组件化、基于目录管理的通用组件化</li>
+<li>要解决的问题：组件之间独立、松耦合；组件间嵌套使用；组件间通信；公共部分设计；组件构建打包；异步组件的加载模式；组件继承与复用性；私有组件的统一管理；根据特定场景进行扩展或定义。</li>
+</ul>
+</li>
+</ul>
+<h3 id="自动化构建"><a href="#自动化构建" class="headerlink" title="自动化构建"></a>自动化构建</h3><ul>
+<li><strong>目的</strong>：对源项目文件或资源进行文件级处理，将文件或资源处理成需求的最佳输出结构和形式。</li>
+<li><strong>构建原理流程</strong>：读取入口文件 &#x3D;&gt; 分析模块引用 &#x3D;&gt; 按照引用加载模块 &#x3D;&gt; 模块文件编译处理 &#x3D;&gt; 模块文件合并 &#x3D;&gt; 文件优化处理 &#x3D;&gt; 写入生成目录</li>
+<li><strong>构建工具的作用</strong>：<ul>
+<li>模块分析引入</li>
+<li>模块化规范支持</li>
+<li>CSS编译、自动合并图片</li>
+<li>HTML、JavaScript、CSS资源压缩优化</li>
+<li>HTML路径分析替换（将相对路径自动替换成绝对或CDN路径）</li>
+<li>区分开发和线上目录环境</li>
+<li>异步文件打包方案</li>
+<li>文件目录白名单设置</li>
+</ul>
+</li>
+</ul>
+<h3 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h3><h4 id="前端性能测试"><a href="#前端性能测试" class="headerlink" title="前端性能测试"></a>前端性能测试</h4><ul>
+<li>Performance Timing PAI：描述了页面资源从加载到解析各个阶段的执行关键点时间记录。</li>
+<li>Profile：是Chrome和Firefox等标准浏览器提供的一种用于测试页面脚本运行时系统内存和CPU资源占用情况的API。</li>
+<li>页面埋点计时：通常在移动端使用，找到页面中执行JS耗时的操作，将耗时的执行过程进行埋点计时并上报。</li>
+<li>资源加载时序图：粗粒度地宏观分析浏览器的所有资源文件请求耗时和文件加载顺序情况。</li>
+</ul>
+<h4 id="桌面浏览器前端优化策略"><a href="#桌面浏览器前端优化策略" class="headerlink" title="桌面浏览器前端优化策略"></a>桌面浏览器前端优化策略</h4><ul>
+<li><strong>网络加载类</strong><ul>
+<li>减少HTTP资源请求次数（如合并图片、代码等）</li>
+<li>减少HTTP请求大小（如gzip压缩）</li>
+<li>将CSS或JavaScript放到外部文件（引用外部资源可以有效利用缓存）</li>
+<li>避免页面中空的href和src（为空时仍会去加载）</li>
+<li>为HTML指定Cache-Control或Expires（将HTML内容强缓存）</li>
+<li>合理设置Etag和Last-Modified（使用协商缓存）</li>
+<li>减少页面重定向（重定向会增加时间开销）</li>
+<li>使用静态资源分域存放来增加下载并行数（利用多个域名增加页面加载时资源的并行下载数）</li>
+<li>使用静态资源CDN来存储文件（利用CDN加快同一地理区域内重复静态资源的响应下载速度）</li>
+<li>使用CDN Combo下载传输内容（CDN Combo能将多个文件请求打包成一个文件的形式来返回）</li>
+<li>使用可缓存的AJAX（将ajax的参数cache设为true即可）</li>
+<li>使用GET来完成AJAX请求（使用XMLHttpRequest时，GET只发送头部）</li>
+<li>减少cookie的大小并进行cookie隔离（由于cookie受同源策略限制，且HTTP请求会带上cookie）</li>
+<li>缩小favicon.ico并缓存（因为一般favicon.ico很少改变）</li>
+<li>推荐使用异步JavaScript资源（因为异步JS资源不会阻塞文档解析）</li>
+<li>消除阻塞渲染的CSS及JavaScript（合理拆分或延后加载耗时过长的文件）</li>
+<li>避免使用CSS import引用加载CSS（因为@import会导致串行加载）</li>
+</ul>
+</li>
+<li><strong>页面渲染类</strong><ul>
+<li>把CSS资源引用放到HTML文件顶部（为了优先下载CSS尽早完成渲染）</li>
+<li>JavaScript资源引用放到HTML文件底部（防止JS的加载和解析执行阻塞页面渲染）</li>
+<li>不要在HTML中直接缩放图片（直接缩放会导致页面的重排重绘）</li>
+<li>减少DOM元素数量和深度（减少DOM解析和绘制时长）</li>
+<li>尽量避免使用table、iframe等慢元素（有些元素影响页面性能）</li>
+<li>避免运行耗时的JavaScript（任何与页面初次渲染无关的逻辑功能都应延迟加载执行）</li>
+<li>避免使用CSS表达式或CSS滤镜（CSS表达式和滤镜的解析渲染速度比较慢）</li>
+</ul>
+</li>
+</ul>
+<h4 id="移动端浏览器前端优化策略"><a href="#移动端浏览器前端优化策略" class="headerlink" title="移动端浏览器前端优化策略"></a>移动端浏览器前端优化策略</h4><ul>
+<li><strong>网络加载类</strong><ul>
+<li>首屏数据请求提前，避免JavaScript文件加载后才请求数据</li>
+<li>首屏加载和按需加载，非首屏内容滚屏加载，保证首屏内容最小化</li>
+<li>模块化资源并行下载</li>
+<li>将首屏必备的css和JavaScript内联到页面中避免白屏</li>
+<li>设置文件资源的DNS预解析，让浏览器提前解析获取静态资源的主机IP</li>
+<li>首屏完成加载后，可能会被使用的资源需要进行预加载</li>
+<li>合理利用MTU（最大传输单元）策略，尽量保证页面HTML内容在1KB以内</li>
+</ul>
+</li>
+<li><strong>缓存类</strong><ul>
+<li>合理利用浏览器缓存，保证静态资源内容的快速加载</li>
+<li>移动端或Hybrid应用可设置离线文件或离线包机制，加快资源载入速度，并实现离线更新</li>
+<li>尝试使用AMP Component中的元素来代替原始的页面元素进行直接渲染</li>
+</ul>
+</li>
+<li><strong>图片类</strong><ul>
+<li>通常要保证页面中所有图片都进行压缩优化处理</li>
+<li>使用较小图片，合理使用base64内嵌图片</li>
+<li>使用更高压缩比格式图片，如webp等</li>
+<li>页面图片资源推荐使用懒加载</li>
+<li>使用media query或srcset根据不同屏幕加载不同大小图片</li>
+<li>使用iconfont代替图片图标，iconfont体积小、矢量、易修改</li>
+<li>一般建议单张图片不超过30k</li>
+</ul>
+</li>
+<li><strong>脚本类</strong><ul>
+<li>尽量使用ID选择器，速度快</li>
+<li>对于需要重复使用的DOM对象，要优先设置缓存变量</li>
+<li>页面元素尽量使用事件代理，避免直接事件绑定</li>
+<li>在没有实现滚动处理的情况下，推荐使用touchstart代替click事件，加快点击响应速度</li>
+<li>对touchmove、scroll这类可能连续触发回调的事件设置节流</li>
+<li>避免使用eval、with，使用join代替连接符+，推荐使用ES6的字符串模板</li>
+<li>尽量使用ES6+的特性来编程，更加安全高效</li>
+</ul>
+</li>
+<li><strong>渲染类</strong><ul>
+<li>设置viewport加速渲染，同时也避免了缩放导致的重排重绘</li>
+<li>避免各种形式的重排重绘，如图片大小、位置的变化等</li>
+<li>使用CSS 3动画，开启GPU加速</li>
+<li>选择合适、高效的方式实现动画，尽量避免定时器等方式直接处理连续动画</li>
+<li>部分情况下考虑使用SVG代替图片实现动画，内容小且SVG DOM结构易调整</li>
+<li>布局渲染阶段float元素布局计算比较耗性能，推荐使用固定布局或flex布局</li>
+<li>不滥用web字体或过多font-size声明</li>
+</ul>
+</li>
+<li><strong>架构协议类</strong><ul>
+<li>可尝试使用SPDY和HTTP 2协议</li>
+<li>可尝试使用后端数据渲染</li>
+<li>可尝试使用Native Viewd MNV*开发模式来避免HTML DOM性能慢的问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="前端用户数据分析"><a href="#前端用户数据分析" class="headerlink" title="前端用户数据分析"></a>前端用户数据分析</h3><ul>
+<li><strong>用户访问统计</strong><ul>
+<li>PV：Page View，在一天内页面被所有用户访问的总次数，每一次页面刷新就增加一次PV</li>
+<li>UV：Unique Visitor，在一天内访问内页的不同用户数，较多站点按照IP数计算</li>
+<li>VV：Visit View，通常用户从进入网站到最终离开该网站的整个过程算一次VV</li>
+</ul>
+</li>
+<li><strong>用户行为分析</strong><ul>
+<li>页面点击量：统计用户对页面某个可点击或可操作区域的点击或操作次数</li>
+<li>用户点击流分析：统计用户在页面中发生点击或操作动作的顺序</li>
+<li>用户访问路径分析：统计用户访问不同页面的路径顺序</li>
+<li>用户点击热力图：统计用户的点击或操作发生在整个页面哪些区域位置，并绘制出热力图</li>
+<li>用户转化率：&#x3D; 通过该页面注册的用户数 &#x2F; 页面PV</li>
+<li>导流转化率：&#x3D; 通过源页面导入的页面访问PV &#x2F; 源页面PV</li>
+<li>用户访问时长、内容分析：统计分析用户在某些关键内容页面的停留时间</li>
+</ul>
+</li>
+<li><strong>前端日志上报</strong><ul>
+<li>通过try…catch和window.onerror两种机制获取用户页面的脚本错误信息</li>
+<li>通过创建HTTP请求将错误信息发送到日志收集服务器</li>
+<li>通常会建立一个简单的内容管理系统来管理查看错误日志</li>
+<li>若要进一步完善检测异常信息，可尝试对静态资源文件加载失败的情况进行监控</li>
+<li>可以将页面性能数据进行上报统计，来评判具体页面的性能情况</li>
+</ul>
+</li>
+</ul>
+<h3 id="前端搜索引擎优化（SEO）"><a href="#前端搜索引擎优化（SEO）" class="headerlink" title="前端搜索引擎优化（SEO）"></a>前端搜索引擎优化（SEO）</h3><ul>
+<li>合理设置<code>&lt;title&gt;</code>、<code>&lt;meta keywords&gt;</code>、<code>&lt;meta description&gt;</code></li>
+<li>使用具有语义化的HTML5标签结构，建议每个页面都有个唯一的H1标题，img标签设置alt属性</li>
+<li>URL规范化：统一网站的地址链接、URL变化后使旧地址301指向新地址、带参数页面<code>&lt;head&gt;</code>加上canonical声明</li>
+<li>用robots.txt指导搜索引擎爬虫的抓取</li>
+<li>用sitemap文件列出网站所有URL地址来指导搜索引擎抓取</li>
+</ul>
+<h3 id="前端协作"><a href="#前端协作" class="headerlink" title="前端协作"></a>前端协作</h3><ul>
+<li>与产品经理的沟通：明确产品经理提出的需求、对需求开发的难度进行评估、分析需求性价比、需求不合理时要提出质疑、做好风险管理</li>
+<li>与后端的合作：需求开发前定好数据协议文档、采用合适的开发沟通方式</li>
+</ul>
+<h2 id="前端跨栈技术"><a href="#前端跨栈技术" class="headerlink" title="前端跨栈技术"></a>前端跨栈技术</h2><h3 id="JavaScript跨后端实现技术"><a href="#JavaScript跨后端实现技术" class="headerlink" title="JavaScript跨后端实现技术"></a>JavaScript跨后端实现技术</h3><ul>
+<li><strong>Node开发</strong><ul>
+<li><strong>Node优点</strong>：基于事件驱动和无阻塞的服务器，适合处理并发请求，尽管目前node服务器仍是单进程运行。且node端运行的是JavaScript，对于前端开发者来说学习成本低。</li>
+<li><strong>node后端开发需要掌握的基础知识和技术</strong>：服务器知识基础、数据库知识基础、后端MVC设计理念、后端异步编程（如对数据库操作或网络请求的异步处理）、模块化思想、中间件技术、接口设计规范、后端部署技术和基本运维能力</li>
+<li><strong>早期MEAN技术组合方案</strong>：M-MySQL、E-Express、A-angular、N-node</li>
+<li><strong>node可解决的前后端分离模式下的问题</strong>：node可以在页面请求时直接将内容渲染到页面上输出，即直出，可解决在SPA或前后端分离模式下SEO和前端渲染展示缓慢的问题。</li>
+</ul>
+</li>
+<li><strong>前后端同构</strong><ul>
+<li><strong>前后端同构的宗旨</strong>：可以使用同一套项目代码在前后端分别进行数据渲染解析。</li>
+<li><strong>同构的三种思路</strong>：数据模块的前端渲染和后台直出、MVVM的前端实现和和后台直出、Virtual DOM的前端渲染和后台直出</li>
+<li><strong>需要关注的问题</strong>：前后端框架选择、模板渲染机制、构建打包、区分渲染和直出的方式</li>
+</ul>
+</li>
+</ul>
+<h3 id="跨终端设计与实现"><a href="#跨终端设计与实现" class="headerlink" title="跨终端设计与实现"></a>跨终端设计与实现</h3><h4 id="native、web、hybrid三者的区别"><a href="#native、web、hybrid三者的区别" class="headerlink" title="native、web、hybrid三者的区别"></a>native、web、hybrid三者的区别</h4><p><strong>native应用特点</strong></p>
+<ul>
+<li>优点<ul>
+<li>原生系统Native API的支持，如访问本地资源、相机API等</li>
+<li>资源在打包安装时完成，节省用户使用时的流量</li>
+<li>可针对不同平台特性进行用户体验优化</li>
+<li>运行速度快、性能好，可使用原生Native动画库</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>开发成本高，兼容性差，尤其Android机型</li>
+<li>维护成本高，用户必须手动下载更新，历史版本也需要维护</li>
+<li>上线时间不确定，一般需要通过应用商店的审核</li>
+<li>版本更新慢，更新时需要用户重新下载安装包</li>
+<li>应用界面的内容不可被搜索引擎检索</li>
+</ul>
+</li>
+</ul>
+<p><strong>web应用特点</strong></p>
+<ul>
+<li>优点<ul>
+<li>开发成本低，使用前端开发技术即可</li>
+<li>跨平台和终端，基于浏览器或WebView运行</li>
+<li>部署方式简单、快捷，无需用户安装</li>
+<li>用户总能访问到最新版本，迭代速度快</li>
+<li>内容可被搜索引擎检索</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>浏览体验无法超越Native应用</li>
+<li>消息推送、动画等实现方式相对Native实现方式较差</li>
+<li>不能调用设备的原生特性，如无法访问本地资源、相机API等</li>
+</ul>
+</li>
+</ul>
+<p><strong>Hybrid应用特点</strong></p>
+<ul>
+<li>优点<ul>
+<li>开发成本较低，可以使用前端开发技术，甚至可以自动添加Native外壳来实现独立移动端应用</li>
+<li>跨平台和终端，内容网页可基于浏览器或WebView运行</li>
+<li>拥有与Web应用相同的快速迭代特性</li>
+<li>部署方式简单、快捷，只更新Web资源即可</li>
+<li>可支持实现离线应用</li>
+<li>可通过JSBridge调用设备的系统级API，如访问本地资源、相机API等</li>
+<li>原生应用版本迭代和Web功能迭代互相独立也可以相互结合</li>
+<li>不同性能需求的功能可以选择性使用Native或Web实现</li>
+<li>内容可被搜索引擎检索</li>
+<li>借助于MNV*的开发模式可以更接近Native应用的用户体验</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>部分机型兼容相对Native较差，但比Web应用体验好很多</li>
+</ul>
+</li>
+</ul>
+<h4 id="Hybrid实现方式"><a href="#Hybrid实现方式" class="headerlink" title="Hybrid实现方式"></a>Hybrid实现方式</h4><p>目前Hybrid应用的开发模式已经突破了开发效率和性能的两大问题，更加适应移动互联网时代产品高迭代速度的需求，而且目前主流的移动端应用均是采用Hybrid的方式来实现。</p>
+<ul>
+<li>以前端为主的Hybrid实现方式<ul>
+<li>以完全的前端模式来开发整个应用，页面开发完成后，通过工具自动打包将前端资源目录装入Native容器中运行。打开应用运行时，除了部分通用的简单逻辑外，内部逻辑全部由打包的Web端代码来实现。</li>
+<li>优点：前端开发者可以独立快速构建Hybrid应用，不需要Native开发人员的支持调用Native可以使用开源的JSBridge库来实现。</li>
+<li>缺点：Native功能只能通过Web的方式实现，且无法添加复杂的Native功能；即时通信或服务器端推送的应用场景，使用web的方式实现性能较差；与Native的交互方式上也会受到固有开源库实现的限制，无法灵活拓展；无法避免在应用版本更新时重新下载安装应用的问题；Webview的执行性能较差，不适合复杂场景。</li>
+<li>适用于中小型需要快速完成开发的应用场景。</li>
+</ul>
+</li>
+<li>Native和Web结合的Hybrid实现方式<ul>
+<li>移动端应用中Native和Web功能上的结合开发实现</li>
+<li>Native用来实现移动端应用的通用导航菜单、系统UI层、核心界面动效、默认访问页、高效的消息推送或APP大版本的应用更新等，因为这些功能比较稳定，不涉及需要快速迭代的业务逻辑。</li>
+<li>Web端用来实现开发迭代速度更快的相关业务层界面逻辑，如某个Native应用内关联的某个Web轻应用。</li>
+</ul>
+</li>
+</ul>
+<h4 id="基于localStorage的资源离线和更新技术"><a href="#基于localStorage的资源离线和更新技术" class="headerlink" title="基于localStorage的资源离线和更新技术"></a>基于localStorage的资源离线和更新技术</h4><p>在Hybrid应用开发时，常常需要在离线的情况下打开页面或为了让Hybrid页面应用加载启动更快，避免长时间等待资源加载过程中造成页面空白的出现。使用资源的离线缓存技术能加快页面启动时的载入速度。</p>
+<ul>
+<li><strong>ServiceWorker的资源离线与更新</strong>：目前兼容性很差，暂不考虑</li>
+<li><strong>localStorage资源离线缓存与更新</strong>：将JavaScript、CSS文件缓存到localStorage，根据版本号判断是否读取本地缓存资源。</li>
+<li><strong>基于增量文件的更新方式</strong>：通过比较不同版本就可以只加载不同版本的增量文件，但同时需要在服务器端每次新版本发布时维护多个增量文件来适应不同的旧版本更新的需要。<ul>
+<li><strong>基于文件代码分块的增量更新机制</strong>：基于文件内容分块chunk算法进行增量更新，节省资源的量取决于块的大小和内容变化的块序号分布。</li>
+<li><strong>基于编辑距离的增量更新机制</strong>：计算获取两个文件对比变化时每个字符的操作步骤，将操作步骤作为增量文件下载，在浏览器端进行代码的运算更新。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Native与Web结合的Hybrid资源离线和更新技术"><a href="#Native与Web结合的Hybrid资源离线和更新技术" class="headerlink" title="Native与Web结合的Hybrid资源离线和更新技术"></a>Native与Web结合的Hybrid资源离线和更新技术</h4><ul>
+<li>通常Native应用启动时会主动拉取线上web离线包版本，然后与本地保存的版本进行对比，如果没有更新则不做操作。</li>
+<li>如果本地离线包需要更新或本地没有离线包在，则会去离线包服务器拉取最新的离线包或者拉取增量离线包到本地，然后解压合并到本地的指定离线包目录下。</li>
+<li>当有用户访问目标页面时，Native应用会先检查该文件地址映射到的离线包本地目录中的文件。<ul>
+<li>如果有内容则直接读取并加载；</li>
+<li>否则线上拉取静态资源到页面上执行解析；</li>
+<li>同时通知Native应用去拉取最新的离线包资源，这样当下次请求目标页面时Webview就可以读取到本地离线目录中的内容了。</li>
+</ul>
+</li>
+<li>增量包的计算方法与localStorage的增量文件计算方法类似，如何根据两个离线包计算增量包的算法也和计算差量文件的算法类似。</li>
+</ul>
+<h4 id="资源覆盖率统计"><a href="#资源覆盖率统计" class="headerlink" title="资源覆盖率统计"></a>资源覆盖率统计</h4><ul>
+<li>在增量包生成过程中，如果某个旧版本的用户使用率很小或接近0，就可以考虑后面不再对这个版本生成增量包，并让这部分用户直接拉取最近的全量包，避免在版本发布较多时线上有过多的历史增量包版本存在。</li>
+<li>统计方法：后台统计上报版本号，每次PV统计时带上版本号。</li>
+</ul>
+<h4 id="Hybrid开发时需要考虑的其他问题"><a href="#Hybrid开发时需要考虑的其他问题" class="headerlink" title="Hybrid开发时需要考虑的其他问题"></a>Hybrid开发时需要考虑的其他问题</h4><ul>
+<li>Hybrid性能问题：Hybrid的WebView存在HTML的DOM渲染和操作较慢的性能问题。可尝试调用Native原生控件来弥补这一劣势。</li>
+<li>前端技术栈的其他应用实现：如Native编译技术、桌面应用开发</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/book/" rel="tag"># book</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/book-patterns/" rel="prev" title="《JavaScript设计模式与开发实践》笔记">
+                  <i class="fa fa-chevron-left"></i> 《JavaScript设计模式与开发实践》笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-logLevel/" rel="next" title="logLevel">
+                  logLevel <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

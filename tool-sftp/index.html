@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="公司架构原因，前端部署还没有实现CI&#x2F;CD，仍需要本地打包再上传到服务器。这种部署方式以前工作上没用过，只有早前自己玩服务器的时候学过，但只停留在会用的阶段。正好借这个机会把知识补一补，顺带安利下自用的一些工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SFTP入门">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-sftp/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="公司架构原因，前端部署还没有实现CI&#x2F;CD，仍需要本地打包再上传到服务器。这种部署方式以前工作上没用过，只有早前自己玩服务器的时候学过，但只停留在会用的阶段。正好借这个机会把知识补一补，顺带安利下自用的一些工具。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-sftp/2_1.jpg">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-sftp/2_4.jpg">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-sftp/2_2.jpg">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-sftp/2_3.jpg">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-sftp/2_5.jpg">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-sftp/3_1.jpg">
+<meta property="og:image" content="https://zhaoluting.github.io/image/tool-sftp/4_1.jpg">
+<meta property="article:published_time" content="2022-01-26T06:49:31.000Z">
+<meta property="article:modified_time" content="2022-02-25T02:38:32.833Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhaoluting.github.io/image/tool-sftp/2_1.jpg">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-sftp/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-sftp/","path":"tool-sftp/","title":"SFTP入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SFTP入门 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">技术概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FTP"><span class="nav-number">1.1.</span> <span class="nav-text">FTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FTPS"><span class="nav-number">1.2.</span> <span class="nav-text">FTPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SFTP"><span class="nav-number">1.3.</span> <span class="nav-text">SFTP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sftp%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90"><span class="nav-number">2.</span> <span class="nav-text">sftp工具推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%AD%E9%97%A8%E5%B7%A5%E5%85%B7"><span class="nav-number">2.1.</span> <span class="nav-text">热门工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#termius"><span class="nav-number">2.2.</span> <span class="nav-text">termius</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E6%8F%92%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">vscode插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">2.3.1.</span> <span class="nav-text">常用功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Commands"><span class="nav-number">2.3.3.</span> <span class="nav-text">Commands</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%88%97%E8%A1%A8"><span class="nav-number">2.3.4.</span> <span class="nav-text">配置列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF"><span class="nav-number">2.4.</span> <span class="nav-text">终端</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-sftp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SFTP入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-26 14:49:31" itemprop="dateCreated datePublished" datetime="2022-01-26T14:49:31+08:00">2022-01-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>公司架构原因，前端部署还没有实现CI&#x2F;CD，仍需要本地打包再上传到服务器。这种部署方式以前工作上没用过，只有早前自己玩服务器的时候学过，但只停留在会用的阶段。正好借这个机会把知识补一补，顺带安利下自用的一些工具。</p>
+<span id="more"></span>
+
+<h2 id="技术概述"><a href="#技术概述" class="headerlink" title="技术概述"></a>技术概述</h2><h3 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h3><ul>
+<li>FTP即<strong>文件传输协议</strong>（File Transfer Protocol），TCP&#x2F;IP协议组中的协议之一，是用于计算机网络上在客户端和服务器之间进行文件传输的应用层协议。通俗讲就是可以通过网络将数据文件从一台计算机传输到另一台计算机。FTP包括客户端和服务器两部分，使用命令通道（默认端口21）和数据通道（默认端口20）两个独立的通道来传输信息。</li>
+<li><strong>两种传输模式</strong>：<ul>
+<li>主动模式（PORT，默认）下，建立命令通道后，服务器将启动与客户端的数据连接。主动模式更利于管理服务端，因为只需打开21端口“准入”、20端口“准出”即可。</li>
+<li>被动模式下（PASV），建立命令通道后，由客户端启动与服务器的数据连接。被动模式更利于管理客户端，因为如果由服务器发送连接请求可能会触发客户端防火墙。</li>
+</ul>
+</li>
+<li><strong>FTP缺点</strong>：安全隐患（明文传输，无法保证安全性）、缺乏可见性（无法维护对系统操作的审核跟踪）、存储开销大（不允许发件人自动过期或删除文件）、工作流程繁琐。</li>
+</ul>
+<h3 id="FTPS"><a href="#FTPS" class="headerlink" title="FTPS"></a>FTPS</h3><ul>
+<li>FTPS也称作“FTP-SSL”和“FTP-over-SSL”，是一种对FTP添加SSL&#x2F;TLS加密协议支持的扩展协议，即<strong>加密版FTP</strong>。 <ul>
+<li><strong>SSL</strong>（Secure Socket Layer，安全套接字层）通过互相认证、使用数字签名确保完整性、使用加密确保私密性，是为HTTP&#x2F;SMTP等加密设计的（HTTPS &#x3D; HTTP + SSL&#x2F;TLS）。</li>
+<li><strong>TLS</strong>（Transport Layer Security，传输层安全协议）用于两个应用程序之间提供保密性和数据完整性。</li>
+</ul>
+</li>
+<li>FPTS有<strong>隐式SSL</strong>和<strong>显式SSL</strong>两种模式：<ul>
+<li>当启用隐式模式时，FTP的默认端口就被改为TCP&#x2F;990，服务器自动建立安全连接，并且要求客户端也必须支持安全连接模式也就是使用SSL进行连接。</li>
+<li>当启用显式模式时，与FTP连接方式和默认端口一样，但是需要以命令AUTH SSL&#x2F;TLS类型的命令进行激活安全连接后才能正常传输数据。</li>
+</ul>
+</li>
+</ul>
+<h3 id="SFTP"><a href="#SFTP" class="headerlink" title="SFTP"></a>SFTP</h3><ul>
+<li>SFTP即<strong>安全文件传输协议</strong>（Secure File Transfer Protocol），语法与FTP一样，在客户端和服务器之间通过SSH协议（默认端口22）建立的安全连接来传输文件。<ul>
+<li><strong>SSH</strong>（Secure Shell，安全外壳协议）是专为远程登录会话和其他网络服务提供安全性的协议。</li>
+<li>SSH软件包中包含SFTP安全文件传输子系统，SSH最初又是Unix中的一个程序，所以Unix、Linux系统中都是自带SSH和SFTP。</li>
+</ul>
+</li>
+<li>SFTP仅使用单个通道，允许使用用户名&#x2F;密码或SSH加密密钥对客户端进行身份验证，并且在客户端和服务器之间移动的数据是加密的，虽然传输速率比FTP低，但是非常安全。</li>
+<li>SFTP和FTPS很容易混淆，但它们俩是完全不同的，SFTP主体是SSH，而FTPS主体是FTP。</li>
+<li>像使用“丢包”的方式部署网站时，更建议使用SFTP。用网上很形象的一个说法解释就是，SSH像铺管子，SSL像打包裹，它们都能保证数据的安全，但SSH是管子所以更适合FTP的安全传输。</li>
+</ul>
+<h2 id="sftp工具推荐"><a href="#sftp工具推荐" class="headerlink" title="sftp工具推荐"></a>sftp工具推荐</h2><h3 id="热门工具"><a href="#热门工具" class="headerlink" title="热门工具"></a>热门工具</h3><p>以下是网上推荐的最多的几款工具，都很好用</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.filezilla.cn/">FileZilla</a>：老牌，免费，支持macOS、Windows，客户端工具中算是榜首老大哥了。</li>
+<li><a target="_blank" rel="noopener" href="https://winscp.net/eng/index.php">WinScp</a>：老牌，免费，只支持Windows。</li>
+<li><a target="_blank" rel="noopener" href="https://www.termius.com/">termius</a>：全平台应用，支持macOS、Windows甚至手机端，<a target="_blank" rel="noopener" href="https://www.termius.com/pricing">部分功能收费</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://panic.com/transmit/">transmit</a>：收费，只支持macOS。</li>
+</ul>
+<h3 id="termius"><a href="#termius" class="headerlink" title="termius"></a>termius</h3><p><a target="_blank" rel="noopener" href="https://www.termius.com/">termius</a>是我个人最喜欢的一款，支持Windows &#x2F; macOS &#x2F; iOS &#x2F; Android &#x2F; Linux，全平台软件，颜值也高，可惜sftp功能要付费。但使用学生认证的GitHub账号登录可以免费用哦😏弟弟妹妹们的用处到了，<a target="_blank" rel="noopener" href="https://education.github.com/pack">github大礼包</a>薅起来！</p>
+<blockquote>
+<p>但在Mac上通过appstore下载的termius无法访问本地文件，官方解决办法是：在本地开一个ssh服务或者去官方网站下载软件。</p>
+</blockquote>
+<div style="width:74%;display:inline-block">
+    <img src="../image/tool-sftp/2_1.jpg" width="48%" style="margin: 0;display:inline-block!important;"><img src="../image/tool-sftp/2_4.jpg" width="48%" style="margin: 0;display:inline-block!important;"><img src="../image/tool-sftp/2_2.jpg" width="48%" style="margin: 0;display:inline-block!important;"><img src="../image/tool-sftp/2_3.jpg" width="48%" style="margin: 0;display:inline-block!important;">
+</div><img src="../image/tool-sftp/2_5.jpg" width="25%" style="margin: 0;display:inline-block!important;">
+
+<h3 id="vscode插件"><a href="#vscode插件" class="headerlink" title="vscode插件"></a>vscode插件</h3><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=liximomo.sftp">vscode-sftp</a>是ftp工具中我使用频率最高的一个插件，使用很简单，又很直观，对于前端来说很实用。详细使用说明和配置可以在<a target="_blank" rel="noopener" href="https://github.com/liximomo/vscode-sftp/wiki/Setting">这里</a>查看。<br><img src="../image/tool-sftp/3_1.jpg" width="70%"></p>
+<h4 id="常用功能"><a href="#常用功能" class="headerlink" title="常用功能"></a>常用功能</h4><ul>
+<li>同步本地与远程服务器上的文件</li>
+<li>本地与远程的同文件对比（diff）</li>
+<li>可视化远程目录及远程文件的删除</li>
+<li>快捷打开已登录远程服务器的终端</li>
+<li>支持映射多台远程服务器：<a target="_blank" rel="noopener" href="https://github.com/liximomo/vscode-sftp#example-configs">配置范例</a></li>
+</ul>
+<h4 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h4><ul>
+<li><strong>初始化</strong>：VSCode中打开本地项目，Windows&#x2F;Linux系统按下<code>Ctrl+Shift+P</code>或者macOS系统按下<code>Cmd+Shift+P</code>，运行<code>SFTP:Config</code>命令后，项目根目录<code>.vscode</code>文件夹下就会出现<code>sftp.json</code>配置文件，同时VSCode左侧视图会出现sftp项。</li>
+<li><strong>配置</strong>：在<code>sftp.json</code>中填写配置信息，正确填写后才能正常使用sftp功能。</li>
+<li><strong>对比</strong>：左侧资源管理器中或在打开的文件中右键，点击“Diff with Remote”，即可对比该文件在本地和远程中的区别。</li>
+<li><strong>上传和下载</strong>：左侧资源管理器中右键点击“Sync Local -&gt; Remote”，即可上传本地文件至远程服务器；点击“Sync Remote -&gt; Local”则可下载远程文件至本地。可在View &gt; Output &gt; sftp（查看 &gt; 输出 &gt; sftp）中查看sftp日志。</li>
+<li><strong>删除远程文件</strong>：在左侧sftp管理器中右键对应文件，点击“Delete”就可直接删除远程上的对应文件。</li>
+<li><strong>打开终端</strong>：在左侧sftp管理器中右键根目录，点击“Open SSH in Terminal”就能在VSCode中打开终端并自动登录到远程服务器。</li>
+</ul>
+<h4 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h4><ul>
+<li><strong>SFTP: Set Profile</strong>：设置当前配置文件</li>
+<li><strong>SFTP: Config</strong>：为项目创建新的配置文件</li>
+<li><strong>Cancel All Transfers</strong>：停止当前传输（上传和下载）</li>
+<li><strong>SFTP: Download Active File</strong>：下载当前文件的远程版本并覆盖本地副本</li>
+<li><strong>SFTP: Download Active Folder</strong>：下载当前文件所在的整个文件夹</li>
+<li><strong>SFTP: List Active Folder</strong>：列出当前文件所在的文件夹</li>
+<li><strong>Open SSH in Terminal</strong>：VSCode中打开终端并自动登录到远程服务器</li>
+<li><strong>SFTP: Sync Local -&gt; Remote</strong>：同步本地代码至远程，可以通过syncOption更改配置。</li>
+<li><strong>SFTP: Sync Remote -&gt; Local</strong>：同步远程代码至本地</li>
+<li><strong>SFTP: Sync Both Directions</strong>：比较文件修改时间，并始终执行能使最新文件出现在两端的操作。（skipCreate和ignoreExisting配置对次命令有效）</li>
+<li><strong>SFTP: Upload Active File</strong>：上传当前文件</li>
+<li><strong>SFTP: Upload Active Folder</strong>：上传当前文件所在的整个文件夹</li>
+</ul>
+<h4 id="配置列表"><a href="#配置列表" class="headerlink" title="配置列表"></a>配置列表</h4><p>我常用的配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;demo_platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;context&quot;</span><span class="punctuation">:</span> <span class="string">&quot;demo_platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;remotePath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/opt/front_code/demo_platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;192.168.20.45&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sftp&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">22</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;root&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;uploadOnSave&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">    <span class="comment">// 如果没配置ssh</span></span><br><span class="line">    <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxxx&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="comment">// 如果用了配置了ssh</span></span><br><span class="line">    <span class="attr">&quot;privateKeyPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/Users/zhaoluting/.ssh/id_rsa&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>通用配置说明</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;标识名称，会在左侧视图中显示&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;context&quot;</span><span class="punctuation">:</span> <span class="string">&quot;映射到remotePath的本地文件路径，默认值为工作区根目录&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;协议，sftp还是ftp，默认值sftp&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;服务主机名或IP地址&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="string">&quot;端口号，默认值22&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;用于身份验证的用户名&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;remotePath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;需要连接的远程文件路径，默认‘/’&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;uploadOnSave&quot;</span><span class="punctuation">:</span> <span class="string">&quot;每次保存代码时上传，默认false&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;downloadOnOpen&quot;</span><span class="punctuation">:</span> <span class="string">&quot;只要打开文件，就从远程服务器下载，默认false&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;syncOption&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;delete&quot;</span><span class="punctuation">:</span> <span class="string">&quot;从目标路径目录中删除无关的文件&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;skipCreate&quot;</span><span class="punctuation">:</span> <span class="string">&quot;跳过在目标路径上创建新文件&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ignoreExisting&quot;</span><span class="punctuation">:</span> <span class="string">&quot;忽视更新目标路径上存在的文件&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;update&quot;</span><span class="punctuation">:</span> <span class="string">&quot;仅当远程文件上有更新时才更新目标路径&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ignore&quot;</span><span class="punctuation">:</span> <span class="string">&quot;忽略文件，数组&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ignoreFile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;忽略文件的绝对路径或相对于工作区根文件夹的相对路径&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;watcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;files&quot;</span><span class="punctuation">:</span> <span class="string">&quot;监听文件&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;autoUpload&quot;</span><span class="punctuation">:</span> <span class="string">&quot;文件更改时上传&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;autoDelete&quot;</span><span class="punctuation">:</span> <span class="string">&quot;删除文件时移除&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;remoteTimeOffsetInHours&quot;</span><span class="punctuation">:</span> <span class="string">&quot;远程和本地间的时间差，默认0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;remoteExplorer&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesExclude&quot;</span><span class="punctuation">:</span> <span class="string">&quot;配置排除文件，远程资源管理器根据此设置决定显示或隐藏哪些文件&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;concurrency&quot;</span><span class="punctuation">:</span> <span class="string">&quot;并发数，默认4&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;connectTimeout&quot;</span><span class="punctuation">:</span> <span class="string">&quot;连接超时时间，默认10000&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;limitOpenFilesOnRemote&quot;</span><span class="punctuation">:</span> <span class="string">&quot;限制远程打开的file descriptors数量，非必须不要设置此项，默认false&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>SFTP配置说明</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;agent&quot;</span><span class="punctuation">:</span> <span class="string">&quot;代理&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;privateKeyPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;本地ssh私钥的绝对路径&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;passphrase&quot;</span><span class="punctuation">:</span> <span class="string">&quot;配置ssh时的passphrase&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;interactiveAuth&quot;</span><span class="punctuation">:</span> <span class="string">&quot;键盘交互认证模式，默认false&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;algorithms&quot;</span><span class="punctuation">:</span> <span class="string">&quot;覆盖连接的默认传输层算法配置&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;sshConfigPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;SSH配置文件的绝对路径，默认~/.ssh/config&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;sshCustomParams&quot;</span><span class="punctuation">:</span> <span class="string">&quot;在终端中打开SSH附加的额外参数&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>FTPS配置说明</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;secure&quot;</span><span class="punctuation">:</span> <span class="string">&quot;是否加密，默认false&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;secureOptions&quot;</span><span class="punctuation">:</span> <span class="string">&quot;加密配置，详见https://nodejs.org/api/tls.html#tls_tls_connect_options_callback&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h3><p>Mac是Unix系统，所以自带sftp，可以使用终端建立连接<br><img src="../image/tool-sftp/4_1.jpg" width="70%"></p>
+<p>以下是ftp常用终端命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立 SFTP 连接</span></span><br><span class="line">sftp username@hostname </span><br><span class="line"></span><br><span class="line"><span class="comment"># SFTP 到 22 以外的端口</span></span><br><span class="line">sftp -P 2222 root@192.168.20.45</span><br><span class="line"></span><br><span class="line"><span class="comment"># 跳转远程主机上的目录</span></span><br><span class="line"><span class="built_in">cd</span> /opt/front_code</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出远程主机上当前目录的内容</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在远程主机上创建一个目录</span></span><br><span class="line"><span class="built_in">mkdir</span> demo_platform</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程主机上的目录，但该目录必须为空</span></span><br><span class="line"><span class="built_in">rmdir</span> demo_platform</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件从远程主机复制到本地计算机</span></span><br><span class="line">get website-logo.jpg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从远程主机复制文件夹，使用-r （递归）选项</span></span><br><span class="line">get -r images/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件从本地计算机复制到远程主机</span></span><br><span class="line">put website-logo.jpg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件夹从本地计算机复制到远程主机</span></span><br><span class="line">put -r images/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭与远程主机的连接，并退出 SFTP</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"><span class="built_in">bye</span></span><br><span class="line">quit</span><br><span class="line">!</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/book-dontKnowJS/" rel="prev" title="《你不知道的JavaScript》笔记">
+                  <i class="fa fa-chevron-left"></i> 《你不知道的JavaScript》笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-git-tag/" rel="next" title="git tag使用指南">
+                  git tag使用指南 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

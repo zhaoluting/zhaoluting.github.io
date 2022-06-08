@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#a88773" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-32x32-next.png" color="#a88773">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="之前写了挺多篇关于git的文章，也用了好几年了，这篇就来点更实用的吧。我是比较习惯使用git命令行，再配合vscode的一些小功能，sourcetree也尝试着用过，但习惯实在是改不过来，还是更喜欢用命令行。那就记录下一些我用的没那么频繁但又必须得知道的一些指令吧，不记下来我又得忘，害！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git备忘录">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-git-memo/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="之前写了挺多篇关于git的文章，也用了好几年了，这篇就来点更实用的吧。我是比较习惯使用git命令行，再配合vscode的一些小功能，sourcetree也尝试着用过，但习惯实在是改不过来，还是更喜欢用命令行。那就记录下一些我用的没那么频繁但又必须得知道的一些指令吧，不记下来我又得忘，害！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-28T02:44:02.000Z">
+<meta property="article:modified_time" content="2022-03-17T08:46:35.145Z">
+<meta property="article:author" content="zhaoluting">
+<meta property="article:tag" content="tool">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-git-memo/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-git-memo/","path":"tool-git-memo/","title":"git备忘录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>git备忘录 | zhaoluting</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="nav-number">1.</span> <span class="nav-text">推荐阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">易混淆的指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-number">3.</span> <span class="nav-text">实用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%9C%80%E6%96%B0commit%E6%8F%8F%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text">修改最新commit描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%8E%86%E5%8F%B2commit%E6%8F%8F%E8%BF%B0%EF%BC%88%E9%9D%9E%E6%9C%80%E6%96%B0%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">修改历史commit描述（非最新）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%88%A0%E9%99%A4%E5%B7%B2%E6%8F%90%E4%BA%A4%E7%9A%84commit"><span class="nav-number">3.3.</span> <span class="nav-text">强制删除已提交的commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%A4%E9%94%80commit%EF%BC%8C%E4%BC%9A%E6%96%B0%E5%A2%9E%E4%B8%80%E6%9D%A1%E2%80%9C%E5%8F%8D%E8%BD%AC%E2%80%9D%E7%9A%84commit"><span class="nav-number">3.4.</span> <span class="nav-text">撤销commit，会新增一条“反转”的commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%82%E6%97%B6%E4%B8%8D%E6%83%B3%E6%8F%90%E4%BA%A4%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%88%E9%9C%80%E8%A6%81%E5%9C%A8%E5%8E%9F%E5%85%88%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E4%BF%AE%E6%94%B9"><span class="nav-number">3.5.</span> <span class="nav-text">暂时不想提交本地代码，又需要在原先的代码上修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E5%A4%9A%E6%AC%A1%E6%8F%90%E4%BA%A4%E4%B8%AD%E7%9A%84%E6%9F%90%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%E4%BB%8E%E4%B8%80%E4%B8%AA%E5%88%86%E6%94%AF%E8%BF%81%E7%A7%BB%E5%88%B0%E5%8F%A6%E5%A4%96%E4%B8%80%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-number">3.6.</span> <span class="nav-text">把多次提交中的某一次提交从一个分支迁移到另外一个分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bug%E5%88%86%E6%94%AF%E5%90%88%E5%85%A5master%E5%88%86%E6%94%AF%E6%97%B6%E6%83%B3%E4%BF%9D%E6%8C%81%E6%95%B4%E6%B4%81%E7%9A%84commit"><span class="nav-number">3.7.</span> <span class="nav-text">bug分支合入master分支时想保持整洁的commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E5%9B%9E%E8%A2%AB%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF"><span class="nav-number">3.8.</span> <span class="nav-text">找回被删除的分支</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-32x32-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-git-memo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-32x32-next.png">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git备忘录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-28 10:44:02" itemprop="dateCreated datePublished" datetime="2022-02-28T10:44:02+08:00">2022-02-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a href="/tags/git/">之前写了挺多篇关于git的文章</a>，也用了好几年了，这篇就来点更实用的吧。我是比较习惯使用git命令行，再配合vscode的一些小功能，sourcetree也尝试着用过，但习惯实在是改不过来，还是更喜欢用命令行。那就记录下一些我用的没那么频繁但又必须得知道的一些指令吧，不记下来我又得忘，害！</p>
+<span id="more"></span>
+
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2">Pro Git</a></li>
+<li><a target="_blank" rel="noopener" href="https://backlog.com/git-tutorial/cn/">猴子都能懂的Git入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/git-tips/tips">git-tips</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.atlassian.com/git/tutorials/advanced-overview">Bitbucket-Advanced Tips</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes">git-recipes</a></li>
+</ul>
+<h2 id="易混淆的指令"><a href="#易混淆的指令" class="headerlink" title="易混淆的指令"></a>易混淆的指令</h2><ul>
+<li><strong>pull VS fetch</strong>：一般情况下用pull就行。<ul>
+<li><code>git fetch</code>：取得远端仓库的最新历史记录，不会自动merge。</li>
+<li><code>git pull</code>：可简单理解为fetch + merge，即把远端仓库的内容fetch下来后再与本地分支合并。</li>
+</ul>
+</li>
+<li><strong>revert VS reset</strong>：更建议使用revert。<ul>
+<li><code>git revert</code>：以新增一个commit的方式还原某一个commit的修改，不会改变提交历史。</li>
+<li><code>git reset</code>：回到某个commit的状态，并删除后面的commit。有风险，不建议使用。</li>
+</ul>
+</li>
+<li><strong>merge VS rebase VS Cherry-Pick</strong>：慎用rebase，参考<a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/blob/master/sources/5.1-%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6Merge%E8%BF%98%E6%98%AFRebase.md">《代码合并：Merge、Rebase 的选择》</a>。<ul>
+<li><code>git merge</code>：将两个分支合并到一起，并生成一个新的commit记录。</li>
+<li><code>git cherry-pick</code>：“复制”一个commit并在当前分支做一次完全一样的新提交。</li>
+<li><code>git rebase</code>：变基，在当前分支重演另一分支的commit，本质上是线性化、自动化的cherry-pick。绝不要在公共的分支上使用。</li>
+</ul>
+</li>
+</ul>
+<h2 id="实用技巧"><a href="#实用技巧" class="headerlink" title="实用技巧"></a>实用技巧</h2><h3 id="修改最新commit描述"><a href="#修改最新commit描述" class="headerlink" title="修改最新commit描述"></a>修改最新commit描述</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend -m <span class="string">&quot;new commit info&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改历史commit描述（非最新）"><a href="#修改历史commit描述（非最新）" class="headerlink" title="修改历史commit描述（非最新）"></a>修改历史commit描述（非最新）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># HEAD~n代表要修改前第n次提交，也可以改用&lt;commit_id&gt;</span></span><br><span class="line">git rebase -i HEAD~n</span><br><span class="line"><span class="comment"># 在出现的列表中，将需要修改的commit前的pick改为reword</span></span><br><span class="line"><span class="comment"># 提交新的commit描述</span></span><br><span class="line">git commit --amend -m <span class="string">&quot;new commit info&quot;</span></span><br><span class="line"><span class="comment"># 继续执行rebase</span></span><br><span class="line">git rebase --<span class="built_in">continue</span></span><br><span class="line"><span class="comment"># 会自动跳回原分支，再将修改的提交信息强制更新至远程</span></span><br><span class="line">git push origin -f</span><br></pre></td></tr></table></figure>
+
+<h3 id="强制删除已提交的commit"><a href="#强制删除已提交的commit" class="headerlink" title="强制删除已提交的commit"></a>强制删除已提交的commit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --soft HEAD~n</span><br><span class="line">git push origin &lt;branch_name&gt; -f</span><br></pre></td></tr></table></figure>
+
+<h3 id="撤销commit，会新增一条“反转”的commit"><a href="#撤销commit，会新增一条“反转”的commit" class="headerlink" title="撤销commit，会新增一条“反转”的commit"></a>撤销commit，会新增一条“反转”的commit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert &lt;commit_id&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="暂时不想提交本地代码，又需要在原先的代码上修改"><a href="#暂时不想提交本地代码，又需要在原先的代码上修改" class="headerlink" title="暂时不想提交本地代码，又需要在原先的代码上修改"></a>暂时不想提交本地代码，又需要在原先的代码上修改</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git stash save <span class="comment"># 暂时保存现状</span></span><br><span class="line">git stash list <span class="comment"># 显示暂存列表</span></span><br><span class="line">git stash pop <span class="comment"># 恢复暂存的操作</span></span><br><span class="line">git stash clear <span class="comment"># 删除所有暂存的操作</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="把多次提交中的某一次提交从一个分支迁移到另外一个分支"><a href="#把多次提交中的某一次提交从一个分支迁移到另外一个分支" class="headerlink" title="把多次提交中的某一次提交从一个分支迁移到另外一个分支"></a>把多次提交中的某一次提交从一个分支迁移到另外一个分支</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A-B  master</span><br><span class="line">   \</span><br><span class="line">    C-D-E-F-G develop</span><br></pre></td></tr></table></figure>
+
+<p>如果想把develop分支中的D，F两次提交移动到master分支，就可以：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git cherry-pick D</span><br><span class="line">git cherry-pick F</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="bug分支合入master分支时想保持整洁的commit"><a href="#bug分支合入master分支时想保持整洁的commit" class="headerlink" title="bug分支合入master分支时想保持整洁的commit"></a>bug分支合入master分支时想保持整洁的commit</h3><p>Squash Merge可以在merge时把分支上所有commit合并为一个commit后再merge到目标分支，不会执行commit操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --squash bugfix</span><br><span class="line">git commit -m <span class="string">&quot;bug fixed&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="找回被删除的分支"><a href="#找回被删除的分支" class="headerlink" title="找回被删除的分支"></a>找回被删除的分支</h3><p>Git branch是指向commit的引用，所以删除branch操作只会删引用，不会删除commit。但如果一个commit不在任何一个branch上，那么在一定时间后，它会被Git的回收机制删除掉。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reflog可以查看本地更新过HEAD的git命令记录，找到被删除前的commit_id</span></span><br><span class="line">git reflog</span><br><span class="line">git checkout &lt;commit_id&gt;</span><br><span class="line">git checkout -b &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-hexo-2022/" rel="prev" title="2022，新Hexo">
+                  <i class="fa fa-chevron-left"></i> 2022，新Hexo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tool-lbs-baidu/" rel="next" title="js地图开发">
+                  js地图开发 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -380,9 +380,12 @@
     <div class="post-body" itemprop="articleBody">
           <ul>
 <li>一般外网可访问且内容不敏感的话，可以直接使用微软的在线预览，体验也比较好；如果是本地、内网文件或者内容比较敏感的，还是比较建议使用插件来转换显示；</li>
+<li>如果后端来预览是最好的，有类似<a target="_blank" rel="noopener" href="https://kkfileview.keking.cn/zh-cn/index.html">kkfileview</a>这种开源产品，前端只需要iframe嵌入即可；如果后端不提供支持，那只能前端自己来实现：<ul>
 <li>PDF可以直接新窗口打开，用浏览器自带的预览功能；如果需要自定义样式，则可以使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/vue-pdf">vue-pdf</a>；</li>
 <li>excel推荐使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/xlsx">xlsx</a>，目前使用起来没什么大问题；</li>
 <li>word使用最多的是<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/mammoth">mammoth.js</a>，原理是将源文档转换为HTML，但是只支持.docx，样式也没法完全还原，注重还原度的话可以先转成PDF再预览；</li>
+</ul>
+</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -1175,7 +1178,7 @@
 
 <div class="copyright">
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -24,15 +24,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-  <meta name="description" content="一般外网可访问且内容不敏感的话，可以直接使用微软的在线预览，体验也比较好；如果是本地、内网文件或者内容比较敏感的，还是比较建议使用插件来转换显示； PDF可以直接新窗口打开，用浏览器自带的预览功能；如果需要自定义样式，则可以使用vue-pdf； excel推荐使用xlsx，目前使用起来没什么大问题； word使用最多的是mammoth.js，原理是将源文档转换为HTML，但是只支持.docx，样">
+  <meta name="description" content="一般外网可访问且内容不敏感的话，可以直接使用微软的在线预览，体验也比较好；如果是本地、内网文件或者内容比较敏感的，还是比较建议使用插件来转换显示； 如果后端来预览是最好的，有类似kkfileview这种开源产品，前端只需要iframe嵌入即可；如果后端不提供支持，那只能前端自己来实现： PDF可以直接新窗口打开，用浏览器自带的预览功能；如果需要自定义样式，则可以使用vue-pdf； excel推">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue文件预览">
 <meta property="og:url" content="https://zhaoluting.github.io/tool-file-preview/index.html">
 <meta property="og:site_name" content="zhaoluting">
-<meta property="og:description" content="一般外网可访问且内容不敏感的话，可以直接使用微软的在线预览，体验也比较好；如果是本地、内网文件或者内容比较敏感的，还是比较建议使用插件来转换显示； PDF可以直接新窗口打开，用浏览器自带的预览功能；如果需要自定义样式，则可以使用vue-pdf； excel推荐使用xlsx，目前使用起来没什么大问题； word使用最多的是mammoth.js，原理是将源文档转换为HTML，但是只支持.docx，样">
+<meta property="og:description" content="一般外网可访问且内容不敏感的话，可以直接使用微软的在线预览，体验也比较好；如果是本地、内网文件或者内容比较敏感的，还是比较建议使用插件来转换显示； 如果后端来预览是最好的，有类似kkfileview这种开源产品，前端只需要iframe嵌入即可；如果后端不提供支持，那只能前端自己来实现： PDF可以直接新窗口打开，用浏览器自带的预览功能；如果需要自定义样式，则可以使用vue-pdf； excel推">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-07T08:19:34.000Z">
-<meta property="article:modified_time" content="2022-06-08T06:45:18.780Z">
+<meta property="article:modified_time" content="2023-01-13T08:29:18.706Z">
 <meta property="article:author" content="zhaoluting">
 <meta property="article:tag" content="tool">
 <meta name="twitter:card" content="summary">
@@ -291,9 +291,12 @@
     <div class="post-body" itemprop="articleBody">
         <ul>
 <li>一般外网可访问且内容不敏感的话，可以直接使用微软的在线预览，体验也比较好；如果是本地、内网文件或者内容比较敏感的，还是比较建议使用插件来转换显示；</li>
+<li>如果后端来预览是最好的，有类似<a target="_blank" rel="noopener" href="https://kkfileview.keking.cn/zh-cn/index.html">kkfileview</a>这种开源产品，前端只需要iframe嵌入即可；如果后端不提供支持，那只能前端自己来实现：<ul>
 <li>PDF可以直接新窗口打开，用浏览器自带的预览功能；如果需要自定义样式，则可以使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/vue-pdf">vue-pdf</a>；</li>
 <li>excel推荐使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/xlsx">xlsx</a>，目前使用起来没什么大问题；</li>
 <li>word使用最多的是<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/mammoth">mammoth.js</a>，原理是将源文档转换为HTML，但是只支持.docx，样式也没法完全还原，注重还原度的话可以先转成PDF再预览；</li>
+</ul>
+</li>
 </ul>
 <span id="more"></span>
 
@@ -356,7 +359,7 @@
 
 <div class="copyright">
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

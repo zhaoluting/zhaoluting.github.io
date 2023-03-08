@@ -3414,11 +3414,8 @@
 </li>
 <li><p>请求对象：从JavaScript发起调用到内核执行完I&#x2F;O操作的过渡过程中，存在一种中间产物，叫做请求对象。从JavaScript传入的参数和当前方法都被封装在这个请求对象中，其中回调函数则被设置在这个对象的oncomplete_sym属性上。<br><img src="/image/asynchronous/%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1.png" alt="请求对象"><br>假设fs.open()，根据指定路径和参数打开文件。在JS发起调用后，JS调用Node的核心模块（lib&#x2F;fs.js），核心模块调用C++内建模块(node_file.cc)，內建模块通过libuv判断平台(是*nix还是win)并进行系统调用。在进行系统调用时，从JS层传入的方法和参数都被封装在一个请求对象FSReqWrap中，请求对象被放在线程池中等待执行。JS立即返回继续下面的操作。</p>
 </li>
-<li><p>I&#x2F;O线程池：在Node中，JS是在单线程中执行的，但是内部完成I&#x2F;O工作的另有线程池，使用一个主进程和多个I&#x2F;O线程来模拟异步I&#x2F;O。当主线程发起I&#x2F;O调用时，I&#x2F;O操作会被放在I&#x2F;O线程来执行，主线程继续执行下面的任务。I&#x2F;O操作不管是否阻塞，都不会影响JS执行线程的执行。在I&#x2F;O线程完成操作后会带着数据通知主线程发起回调。<br><img src="/image/asynchronous/%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="多线程"></p>
+<li><p>I&#x2F;O线程池：在Node中，JS是在单线程中执行的，但是内部完成I&#x2F;O工作的另有线程池，使用一个主进程和多个I&#x2F;O线程来模拟异步I&#x2F;O。当主线程发起I&#x2F;O调用时，I&#x2F;O操作会被放在I&#x2F;O线程来执行，主线程继续执行下面的任务。I&#x2F;O操作不管是否阻塞，都不会影响JS执行线程的执行。在I&#x2F;O线程完成操作后会带着数据通知主线程发起回调。<br><img src="/image/asynchronous/%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="多线程"><br><strong>因此，Node.js 的单线程仅仅是指 JavaScript 运行在单线程中，而并非 Node.js 是单线程。</strong></p>
 </li>
-</ul>
-<p><strong>因此，Node.js 的单线程仅仅是指 JavaScript 运行在单线程中，而并非 Node.js 是单线程。</strong></p>
-<ul>
 <li><p>事件队列：Node.js 在主线程里维护了一个事件队列，当接到请求后，就将该请求作为一个事件放入这个队列中，然后继续接收其他请求。当主线程空闲时(没有请求接入时)，就开始循环事件队列，检查队列中是否有要处理的事件，这时要分两种情况：如果是非 I&#x2F;O 任务，就亲自处理，并通过回调函数返回到上层调用；如果是 I&#x2F;O 任务，就从 线程池 中拿出一个线程来处理这个事件，并指定回调函数，然后继续循环队列中的其他事件。</p>
 </li>
 <li><p>事件循环 (Event Loop)：在进程启动时，Node会创建一个类似于While(true)的循环，每执行一次循环体的过程称为Tick。每个Tick过程中观察者会查看是否有事件需要处理，如果有就取出事件及其相关的回调函数并执行。然后进入下一个Tick。如果没有事件处理，就退出进程。<br><img src="/image/asynchronous/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.png" alt="事件循环"></p>
@@ -3473,7 +3470,7 @@
 </ul>
 </li>
 <li>争议类文章：<ul>
-<li><a href="https://mp.weixin.qq.com/safe/dispute?action=info&amp;__biz=MzIxMjgxMDAwOA==&amp;mid=2247485963&amp;idx=1&amp;sn=661d71f440962cebc08594abb124bd20#wechat_redirect">https://mp.weixin.qq.com/safe/dispute?action=info&amp;__biz=MzIxMjgxMDAwOA==&amp;mid=2247485963&amp;idx=1&amp;sn=661d71f440962cebc08594abb124bd20#wechat_redirect</a></li>
+<li><a href="https://mp.weixin.qq.com/safe/dispute?action=info&__biz=MzIxMjgxMDAwOA==&mid=2247485963&idx=1&sn=661d71f440962cebc08594abb124bd20#wechat_redirect">https://mp.weixin.qq.com/safe/dispute?action=info&amp;__biz=MzIxMjgxMDAwOA==&amp;mid=2247485963&amp;idx=1&amp;sn=661d71f440962cebc08594abb124bd20#wechat_redirect</a></li>
 </ul>
 </li>
 </ol>
@@ -4212,7 +4209,9 @@ table th:first-of-type {
 <li>点击DOM树视图里面的节点，区域2显示相关信息</li>
 <li>直接在某个节点上双击即可修改，且能实时在浏览器里面得到反馈。</li>
 <li>拖拽节点可以直接调整顺序，也可以拖拽节点到编辑器</li>
-<li>浏览器对例如Video、Password等组件进行了封装，无法查看到组件的详细代码，不利于调试。Settings → Preferences → Elements → 勾选Show user agent shadow DOM,这样能够在元素标签器中显示被隐藏的组件代码<h3 id="区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。"><a href="#区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。" class="headerlink" title="区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。"></a>区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。</h3></li>
+<li>浏览器对例如Video、Password等组件进行了封装，无法查看到组件的详细代码，不利于调试。Settings → Preferences → Elements → 勾选Show user agent shadow DOM,这样能够在元素标签器中显示被隐藏的组件代码</li>
+</ul>
+<h3 id="区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。"><a href="#区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。" class="headerlink" title="区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。"></a>区域②：编辑修改并实时显示当前选中元素的CSS样式、属性等。</h3><ul>
 <li>Styles标签页: 显示用户定义的样式，还有开发者工具添加的样式；<ul>
 <li>顶部”Filter”输入框 : 快速查找样式</li>
 <li>顶部”:hov”按钮 : 可强制改变元素状态,:active(当元素被鼠标按下还没有松开，处于激活状态时所显示的状态),:hover(鼠标悬停时显示的状态),:focus(元素获得光标焦点时的状态),:visited(元素被点击后显示的状态)</li>
@@ -4555,12 +4554,12 @@ table th:first-of-type {
 <li>详细信息（Detail）: 当有具体事件被选择时，该面板展示这个事件的更多详细信息。如果没有事件被选择，该面板展示当前所选时间段的一些信息。<ul>
 <li>精确到毫秒级的分析，以及按调用层级，事件分类的整理<ul>
 <li>Summary面板:从宏观层面概括了浏览器加载的总时间<ul>
-<li>颜色：蓝色    ；英文： Loading；含义：加载</li>
-<li>颜色：黄色    ；英文： Scripting；含义：    脚本</li>
-<li>颜色：紫色    ；英文： Rendering；含义：    渲染</li>
-<li>颜色：绿色    ；英文： Painting；含义：    绘制</li>
-<li>颜色：深灰    ；英文： Other；含义：    其他</li>
-<li>颜色：浅灰    ；英文： Idle；含义：    空闲</li>
+<li>颜色：蓝色	；英文： Loading；含义：加载</li>
+<li>颜色：黄色	；英文： Scripting；含义：	脚本</li>
+<li>颜色：紫色	；英文： Rendering；含义：	渲染</li>
+<li>颜色：绿色	；英文： Painting；含义：	绘制</li>
+<li>颜色：深灰	；英文： Other；含义：	其他</li>
+<li>颜色：浅灰	；英文： Idle；含义：	空闲</li>
 </ul>
 </li>
 <li>Bottom-Up面板：The Heavy (Bottom Up) view is available in the Bottom-Up tab<ul>
@@ -4803,7 +4802,7 @@ table th:first-of-type {
   </entry>
   <entry>
     <title>docker安装</title>
-    <url>/tool-docker/</url>
+    <url>/tool-docker-install/</url>
     <content><![CDATA[<p>现公司技术栈为<a href="https://learnku.com/docs/laravel/6.x">Laravel</a> + vue，前后端未分离，开发人员都需要使用docker。公司电脑大家都一样，安装起来还是挺顺利的，但最近由于疫情开始远程办公，自己装docker是着实费了老大的劲儿，发现自己对docker真的是一窍不通，那就趁现在有空学习下吧。</p>
 <span id="more"></span>
 
@@ -4851,6 +4850,125 @@ table th:first-of-type {
 </li>
 <li><p>最后，感谢同事的帮助~</p>
 </li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker入门</title>
+    <url>/tool-docker-intro/</url>
+    <content><![CDATA[<p>2013年3月，Docker创始人Solomon Hykes首次公开了Docker这一产品，瞬时风靡全球。Docker将容器技术大众化，并解决了困扰数百万开发人员的“matrix from hell”问题，使容器技术成为主流。这个划时代的开源项目也解决了一个世纪难题：在我电脑上是好的😑</p>
+<span id="more"></span>
+
+<p><img src="/image/tool-docker/meme_1.png"></p>
+<h2 id="了解docker"><a href="#了解docker" class="headerlink" title="了解docker"></a>了解docker</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p><img src="/image/tool-docker/docker_logo.png"><br>Docker与虚拟机通过操作系统实现隔离不同，容器技术只隔离应用程序的运行时环境，对进程进行封装隔离，属于操作系统层面的虚拟化技术。Docker底层的核心技术包括Linux上的命名空间（Namespaces，用于隔离控制）、控制组（Control groups，用于资源分配）、联合文件系统（Union file systems，用于文件系统的镜像存储、写时复制、镜像合并）和容器格式（Container format）。</p>
+<p>UnionFS是Docker镜像的基础，是一种分层、轻量级并且高性能的文件系统，支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下。镜像包含操作系统完整的root文件系统，体积往往比较庞大，所以Docker就利用UnionFS技术，将其设计为分层存储的架构。镜像一层一层地构建，前一层是后一层的基础，每一层构建完就不会再发生改变，后一层上的任何改变只发生在自己这一层。分层存储的特征使得镜像的复用、定制变的更为容易。同样，容器也是分层存储，每一个容器运行时，是以镜像为基础层，在其上创建一个当前容器的存储层，可以称这个为容器运行时读写而准备的存储层为容器存储层。</p>
+<p><img src="/image/tool-docker/theory_1.png"></p>
+<ul>
+<li><strong>镜像Images</strong>：特殊的文件系统，提供容器运行时所需的程序、库、资源、配置等文件，还包含为运行时准备的一些配置参数，如匿名卷、环境变量、用户等。镜像不包含动态数据，其内容在构建后不会改变。</li>
+<li><strong>容器Container</strong>：容器是独立运行、相互隔离的一个或一组应用，是镜像创建的运行实例，实质是进程，可以简单理解为<code>Container = 简易版操作系统 + 应用软件（含依赖组件）</code>。</li>
+<li><strong>客户端Client</strong>：客户端通过命令行或者其他工具使用<a href="https://docs.docker.com/develop/sdk/">Docker SDK</a>与Docker的守护进程通信。</li>
+<li><strong>主机Host</strong>：一个物理或者虚拟的机器用于执行Docker守护进程和容器。</li>
+<li><strong>仓库Registry</strong>：集中存储、分发镜像的服务，类似代码仓库，分为公有仓库和私有仓库。<a href="https://hub.docker.com/">Docker Hub</a>是官方维护的公共仓库。<a href="https://docs.docker.com/registry/">docker-registry</a>是官方提供的用于构建私有镜像仓库的工具。</li>
+<li><strong>注册服务器Registry</strong>：管理仓库的具体服务器，每个服务器上可以有多个仓库，而每个仓库下面有多个镜像。例如仓库地址<code>docker.io/ubuntu</code>，<code>docker.io</code>是注册服务器地址，<code>ubuntu</code>是仓库名。</li>
+<li><strong>Dockerfile</strong>：用来构建镜像的配置文件，定义了如何生成镜像，内容包含了一条条构建镜像所需的指令和说明。</li>
+<li><strong>Docker Compose</strong>：是用于定义和运行多容器Docker应用程序的工具。通过docker-compose.yml来配置应用程序需要的所有服务，一个命令就可以从YML文件配置中创建并启动所有服务。</li>
+<li><strong>Docker Machine</strong>：官方的一个在多种平台上快速安装Docker环境的工具，允许在虚拟宿主机上安装Docker Engine，并使用 docker-machine命令管理这些宿主机。也可以集中管理所有的docker主机，比如快速给100台服务器安装docker。</li>
+</ul>
+<h3 id="重要生命周期"><a href="#重要生命周期" class="headerlink" title="重要生命周期"></a>重要生命周期</h3><p><img src="/image/tool-docker/theory_2.png"></p>
+<ul>
+<li><strong>Created</strong>：容器已创建，容器所需的相关资源已经准备就绪，但容器中的程序还未处于运行状态。</li>
+<li><strong>Running&#x2F;Up</strong>：容器正在运行，也就是容器中的应用正在运行。</li>
+<li><strong>Paused</strong>：容器已暂停，容器中的所有进程都处于暂停状态。</li>
+<li><strong>Stopped</strong>：容器已停止，占用的资源和沙盒环境都依然存在，容器内主进程被终止。</li>
+<li><strong>Deleted</strong>：容器已删除，相关占用的资源及存储在Docker中的管理信息也都已释放和移除。</li>
+</ul>
+<h3 id="数据管理"><a href="#数据管理" class="headerlink" title="数据管理"></a>数据管理</h3><p>容器存储层的生存周期和容器一样，容器消亡时，容器存储层也随之消亡。所以，容器存储层一定要保持无状态化，所有文件写入操作都应使用数据卷或绑定宿主机目录，直接对宿主机或网络存储发生读写，性能和稳定性更高，容器删除后数据也不会丢失。</p>
+<p><img src="/image/tool-docker/theory_3.png"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Volume（数据卷）</th>
+<th>Bind mount(挂载主机目录)</th>
+<th>tmpfs mount</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据存储位置</td>
+<td>&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;…&#x2F;_data</td>
+<td>宿主机任意目录</td>
+<td>宿主机内存中</td>
+</tr>
+<tr>
+<td>对已有挂载点影响</td>
+<td>原有数据复制到volume中</td>
+<td>隐藏并替换为 volume</td>
+<td>-</td>
+</tr>
+<tr>
+<td>是否支持单个文件</td>
+<td>不支持，必须是目录</td>
+<td>支持</td>
+<td>-</td>
+</tr>
+<tr>
+<td>移植性</td>
+<td>移植性强，无需指定host目录</td>
+<td>移植性弱，与host path绑定</td>
+<td>-</td>
+</tr>
+<tr>
+<td>是否支持持久化</td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>受docker管理和保护</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>由docker管理，更安全便捷，多数情况是最优选择</td>
+<td>需要Docker以外的进程访问或修改存储层</td>
+<td>数据不需要持久化</td>
+</tr>
+</tbody></table>
+<h3 id="网络模式"><a href="#网络模式" class="headerlink" title="网络模式"></a>网络模式</h3><p>Docker默认有三种网络，“bridge”、“host”、“none”，可以通过<code>docker network ls</code>查看。</p>
+<ul>
+<li><strong>bridge（系统）</strong>：默认模式，为每个容器设置network namespace、ip地址等，并将容器连接到docker0网桥（docker0是Docker进程启动时创建的默认虚拟网桥）。如果需要多个docker容器在同一个宿主机上进行通信，可直接使用默认的bridge模式。</li>
+<li><strong>host（系统）</strong>：直接使用宿主机的IP地址与外界通信，容器内部的服务端口也可以使用宿主机的端口，不需要进行NAT。如果对网络传输效率有较高要求或需要处理大量端口，且不考虑容器的隔离性的情况下，就可以选择host模式，但是要注意端口占用的问题。</li>
+<li><strong>none（系统）</strong>：禁用网络功能，只有lo接口(localhost本地环回接口)，不为容器创建任何网络环境。一些对安全性要求高并且不需要联网的应用可以使用none网络。</li>
+<li><strong>自定义（推荐）</strong>：建议使用自定义网桥来更好地控制容器之间的通信，这样可以为容器提供自己的网络环境，同时保持容器之间的隔离性。</li>
+<li><strong>container</strong>：新容器会和一个指定容器共享IP、端口范围等，这样两个容器之间可以使用localhost高效快速通信。</li>
+<li><strong>Overlay</strong>：在多个Docker主机之间创建一个虚拟网络，适用于分布式应用程序，允许容器在不同主机上运行并相互通信。</li>
+<li><strong>Macvlan</strong>：容器将获得与主机相同的MAC地址和网络配置，适用于需要直接连接到物理网络的应用程序。</li>
+</ul>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
+<li><strong>Docker容器后台运行，必须有一个前台进程</strong>：以后台模式启动一个容器<code>docker run -d --name mycontainer nginx</code>，启动后<code>docker ps -a</code>会发现容器并不在运行，如果不是那些一直挂起的命令，运行结束会自动退出。所以为了让容器持续在后台运行，需要将程序以前台进程的形式运行。比如运行<code>docker run -d mycontainer /bin/sh -c &quot;while true; do echo hello; sleep 2; done&quot;</code>（这个命令一直在打印）。</li>
+<li><strong>定制镜像应选择Dockerfile，慎用docker commit</strong>：<code>docker commit</code>虽然可以比较直观的帮助理解镜像分层存储的概念，但对镜像的操作都是黑箱的，这种黑箱镜像的维护工作非常痛苦，而且每一次修改都会让镜像更加臃肿一次，例如，删除前一层文件的操作，实际不是真的删除，而是仅在当前层标记为该文件已删除，该文件会一直跟随镜像。Dockerfile脚本就能完美解决<code>docker commit</code>无法重复、镜像构建透明性、体积的问题。</li>
+</ul>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>Portainer是一款轻量级的应用，它提供了图形化界面，用于方便地管理Docker环境，包括单机环境和集群环境。虽然可视化工具用起来很简单，但还是建议系统学习下命令行。因为网上很多教程都只提供了命令行的安装方式，看懂命令行后才知道如何在工具中配置。</p>
+<h3 id="镜像常用命令"><a href="#镜像常用命令" class="headerlink" title="镜像常用命令"></a>镜像常用命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 去下载镜像，先从本地找，没有去镜像，最后没有去 hub，标签不写默认为 lastest</span></span><br><span class="line">$ docker pull [镜像名]:[标签Tag]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出本机的所有 image 文件，-a 显示本地所有镜像（包括中间镜像），-q 只显示镜像ID，--digests 显示镜像的摘要信息</span></span><br><span class="line">$ docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除 image 文件, -f 强制删除镜像</span></span><br><span class="line">$ docker rmi [镜像名][:标签Tag]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询镜像名称，--no-trunc 显示完整描述，--filter=stars=30 列出star不少于指定值的镜像，--filter=is-automated=true 列出自动构建类型的镜像</span></span><br><span class="line">$ docker search [关键字]</span><br></pre></td></tr></table></figure>
+
+<h3 id="容器常用命令"><a href="#容器常用命令" class="headerlink" title="容器常用命令"></a>容器常用命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出本机正在运行的容器，-a 列出本机所有容器包括终止运行的容器，-q 静默模式只显示容器编号，-l 显示最近创建的容器</span></span><br><span class="line">$ docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建并启动容器</span></span><br><span class="line">$ docker run [option] [容器名]</span><br><span class="line">  <span class="comment">#参数说明</span></span><br><span class="line">  --name <span class="comment"># 为容器指定一个名称；</span></span><br><span class="line">  -d <span class="comment"># 容器启动后进入后台，并返回容器ID，即启动守护式容器；</span></span><br><span class="line">  -P <span class="comment"># 随机端口映射；</span></span><br><span class="line">  -p 80:8080 <span class="comment"># 将本地80端口映射到容器的8080端口；</span></span><br><span class="line">  bash <span class="comment"># 容器启动以后，内部第一个执行的命令；</span></span><br><span class="line">  -it <span class="comment"># 以交互模式运行容器，同时为容器分配伪输入终端，容器的Shell会映射到当前的Shell；</span></span><br><span class="line">  --<span class="built_in">rm</span> <span class="comment"># 在容器终止运行后自动删除容器文件；</span></span><br><span class="line">  --restart=always <span class="comment"># 设置容器自启动；</span></span><br><span class="line">  <span class="comment"># 挂载映射命令</span></span><br><span class="line">  -v 容器内路径    <span class="comment">#匿名挂载</span></span><br><span class="line">  -v 卷名:容器内路径    <span class="comment">#具名挂载</span></span><br><span class="line">  -v /宿主机路径:容器内路径   <span class="comment">#指定路径挂载</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">$ docker start [容器ID]/[容器Names]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启容器</span></span><br><span class="line">$ docker restart [容器ID]/[容器Names]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 终止容器运行</span></span><br><span class="line">$ docker <span class="built_in">kill</span> [容器ID]  <span class="comment"># 强行终止，相当于向容器里面的主进程发出 SIGKILL 信号，那些正在进行中的操作会全部丢失</span></span><br><span class="line">$ docker stop [容器ID]  <span class="comment"># 从容终止，相当于向容器里面的主进程发出 SIGTERM 信号，然后过一段时间再发出 SIGKILL 信号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 终止运行的容器文件，依然会占据硬盘空间，-f 强制删除可以删除正在运行的容器</span></span><br><span class="line">$ docker <span class="built_in">rm</span> [容器ID]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器的输出，-t加入时间戳，-f跟随最新日志打印，--tail数字显示最后多少条，如果docker run时，没有使用-it，就要用这个命令查看输出</span></span><br><span class="line">$ docker logs -tf --<span class="built_in">tail</span> [显示条数] [容器ID]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器中进行的进程信息</span></span><br><span class="line">$ docker top [容器ID]/[容器Names]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有容器的名字跟端口号</span></span><br><span class="line">$ docker port [容器ID]/[容器Names]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出容器</span></span><br><span class="line">$ <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">$ docker attach [容器ID]      <span class="comment"># 退出容器时会让容器停止，本机的输入直接输到容器中</span></span><br><span class="line">$ docker <span class="built_in">exec</span> -it [容器ID]    <span class="comment"># 退出容器时不会让容器停止，在已运行的容器中执行命令，不创建和启动新的容器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置容器在docker启动时自动启动</span></span><br><span class="line">$ docker container update --restart=always [容器名字]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器文件拷贝到本机</span></span><br><span class="line">$ docker <span class="built_in">cp</span> [容器ID]/[容器Names]:[要拷贝的文件目录] [本机目录]</span><br><span class="line"><span class="comment"># 本机文件拷贝到容器</span></span><br><span class="line">$ docker <span class="built_in">cp</span> [本机目录] [容器ID]/[容器Names]:[要拷贝的文件目录]</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a href="http://help.websoft9.com/docker-guide">Docker镜像部署与运维指南</a></li>
+<li><a href="https://vuepress.mirror.docker-practice.com/">Docker — 从入门到实践</a></li>
+<li><a href="https://shanyue.tech/">前端工程化</a></li>
+<li><a href="https://juejin.cn/post/6875323565479034894">手摸手带你 Docker 从入门到实践</a></li>
+<li><a href="https://mp.weixin.qq.com/s/_riSVxNdPsbyQf9qAoT4fQ">docker + webhook 从零实现前端自动化部署</a></li>
+<li><a href="https://mp.weixin.qq.com/s/qXZdEIGbwtNW1CAewwAdXQ">前端人应该知道的Centos&#x2F;Docker&#x2F;Nginx&#x2F;Node&#x2F;Jenkins的基本操作</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -5989,9 +6107,9 @@ table th:first-of-type {
 <p><strong>以下是我们前端人员常关注的地方：</strong></p>
 <ol>
 <li>一般对应的是 注解中的 @ApiOperation，用在方法上，说明方法的作用。<br>   - 合格点：用中文简单描述。</li>
-<li>一般对应的是 注解中的 @ApiModelProperty，用于描述一个model的属性。<br>   - 合格点：<br> - 有枚举类的属性加上枚举类说明，属性多的情况下尽量多加点中文注释。<br>        - response格式写完整，不能{ “code”: 0, “data”: {} }  了事。</li>
-<li>一般对应的是 注解中的 @ApiParam 或者 @ApiImplicitParam， 用于对每个参数的描述。<br>   - 合格点：<br> - params格式完整。<br>        - 参数多的情况下尽量用中文注释。</li>
+<li>一般对应的是 注解中的 @ApiModelProperty，用于描述一个model的属性。<br>   - 合格点：<br> - 有枚举类的属性加上枚举类说明，属性多的情况下尽量多加点中文注释。</li>
 </ol>
+<p>        - response格式写完整，不能{ “code”: 0, “data”: {} }  了事。<br>3. 一般对应的是 注解中的 @ApiParam 或者 @ApiImplicitParam， 用于对每个参数的描述。<br>   - 合格点：<br>        - params格式完整。<br>        - 参数多的情况下尽量用中文注释。</p>
 <br/>
 一般只要**以下三点达成共识**，那么对接的效率就会事半功倍，也不容易引起不愉快的争吵：
 - 后端写swagger文档时在以上关注点上下点功夫（一般是从代码中提取注释即可自动生成文档，所以对后端代码可读性也是有好处的）；

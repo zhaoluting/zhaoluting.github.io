@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#6BA6E7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#6BA6E7" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/image/global/favicon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/image/global/favicon-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/image/global/favicon-next.png">
+  <link rel="mask-icon" href="/image/global/favicon-next.png" color="#6BA6E7">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/pace/1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://lib.baomitu.com/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhaoluting.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.15.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#a88773","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="阅读本文推荐方式克隆marp-themes &#x3D;&gt; 根据《开始使用》安装插件 &#x3D;&gt; 打开resource&#x2F;documentation&#x2F;marp.md &#x3D;&gt; 点击“预览”按钮。  Marp(Markdown Presentation Ecosystem)是一款可以轻松将Markdown转换为HTML&#x2F;PDF&#x2F;PPTX的工具，能让">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Marp for VS Code">
+<meta property="og:url" content="https://zhaoluting.github.io/tool-marp-vscode/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="阅读本文推荐方式克隆marp-themes &#x3D;&gt; 根据《开始使用》安装插件 &#x3D;&gt; 打开resource&#x2F;documentation&#x2F;marp.md &#x3D;&gt; 点击“预览”按钮。  Marp(Markdown Presentation Ecosystem)是一款可以轻松将Markdown转换为HTML&#x2F;PDF&#x2F;PPTX的工具，能让">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://marp.app/assets/marp-logo.svg">
+<meta property="article:published_time" content="2023-04-24T07:30:34.000Z">
+<meta property="article:modified_time" content="2023-05-05T06:26:37.434Z">
+<meta property="article:author" content="zhaoluting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://marp.app/assets/marp-logo.svg">
+
+
+<link rel="canonical" href="https://zhaoluting.github.io/tool-marp-vscode/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhaoluting.github.io/tool-marp-vscode/","path":"tool-marp-vscode/","title":"Marp for VS Code"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Marp for VS Code | zhaoluting</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhaoluting</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">开始使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-Syntaxes"><span class="nav-number">2.</span> <span class="nav-text">语法 Syntaxes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4-Directives"><span class="nav-number">3.</span> <span class="nav-text">指令 Directives</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E6%8C%87%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">全局指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">3.2.</span> <span class="nav-text">局部指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E6%A0%87%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">自适应标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">数学公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%8E%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">美化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87"><span class="nav-number">9.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%BB%E9%A2%98"><span class="nav-number">10.</span> <span class="nav-text">自定义主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">11.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaoluting"
+      src="/image/global/favicon-next.png">
+  <p class="site-author-name" itemprop="name">zhaoluting</p>
+  <div class="site-description" itemprop="description">前端小开发</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoluting" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoluting" rel="noopener me" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:839327424@qq.com" title="E-Mail → mailto:839327424@qq.com" rel="noopener me" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://zhaoluting.github.io/about/" title="More → https:&#x2F;&#x2F;zhaoluting.github.io&#x2F;about&#x2F;" rel="noopener me"><i class="vcard fa-fw"></i>More</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/tool-marp-vscode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/global/favicon-next.png">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Marp for VS Code | zhaoluting">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Marp for VS Code
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-24 15:30:34" itemprop="dateCreated datePublished" datetime="2023-04-24T15:30:34+08:00">2023-04-24</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="https://marp.app/assets/marp-logo.svg" height="30"/>
+
+<blockquote>
+<p><strong>阅读本文推荐方式</strong><br>克隆<a target="_blank" rel="noopener" href="https://github.com/zhaoluting/marp-themes.git">marp-themes</a> &#x3D;&gt; 根据《<a href="/tool-marp-vscode/#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8">开始使用</a>》安装插件 &#x3D;&gt; 打开<code>resource/documentation/marp.md</code> &#x3D;&gt; 点击“预览”按钮。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://marp.app/">Marp</a>(Markdown Presentation Ecosystem)是一款可以轻松将Markdown转换为HTML&#x2F;PDF&#x2F;PPTX的工具，能让我们专注于PPT的内容而不是排版。如果你是精通Markdown和css的程序员，那么用起来会更加顺手。</p>
+<span id="more"></span>
+
+<p>Marp的优点显而易见，对于喜欢Markdown、讨厌做PPT的人来说是一大利器，写好一套属于自己的主题样式就是一劳永逸。缺点就是排版没有那么灵活，也不支持动画效果，导出的PPT文件无法二次编辑。但对于程序员来说，不需要花里胡哨的PPT，Marp已经非常够用了。</p>
+<p>Marp有两种使用方式，<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode">Marp for VS Code</a>和<a target="_blank" rel="noopener" href="https://github.com/marp-team/marp-cli">Marp CLI</a>。Marp for VS Code已经能够满足大多数使用场景，也更加便捷。如果插件无法满足你的需求，那么就可以选择Marp CLI，它支持更丰富的功能。本文就简单介绍下如何使用Marp for VS Code。</p>
+<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><ul>
+<li>如果还不会熟练使用Markdown，可以查阅<a target="_blank" rel="noopener" href="https://markdown.com.cn/">Markdown中文教程</a>进行学习。</li>
+<li>在VS Code中安装<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode">Marp for VS Code</a>插件。</li>
+<li>新建Markdown文件（后缀名为<code>.md</code>），在头部插入以下代码，点击右上角预览按钮即可实时编辑。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">marp:</span> <span class="literal">true</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>点击VS code右上角marp标志，选择<code>Export Slide Deck</code>可以导出PDF、HTML、PPT等格式文件（注意：导出的PPT不能编辑）。</li>
+<li>点击VS code右上角marp标志，选择<code>Toggle Marp Feature For Current Markdown</code>可以切换预览模式。</li>
+</ul>
+<h2 id="语法-Syntaxes"><a href="#语法-Syntaxes" class="headerlink" title="语法 Syntaxes"></a>语法 Syntaxes</h2><p>Marp的Markdown语法基于<a target="_blank" rel="noopener" href="https://commonmark.org/">CommonMark</a>，有一些值得注意的语法：</p>
+<ul>
+<li>使用<code>---</code>或<code>___</code>或<code>***</code>或<code>- - -</code>来拆分幻灯片。</li>
+<li>段落中的换行符将自动转换为<code>&lt;br/&gt;</code>，也可以直接使用<code>&lt;br/&gt;</code>换行。</li>
+<li>支持一些（不常见的）列表标记，如<code>*</code>和<code>1)</code> 。</li>
+<li>支持GitHub Flavored Markdown(GFM)的一些扩展语法，如自动链接、表情符号简码(例如:smile:)、删除线 (<code>~~strike~~</code>)、代码块语法高亮、表格。</li>
+<li>出于安全原因，Marp默认情况下只允许使用<code>&lt;style&gt;</code>和<code>&lt;br /&gt;</code>这两种HTML标签。如需启用所有HTML标签，请在当前工具中更改配置。</li>
+</ul>
+<h2 id="指令-Directives"><a href="#指令-Directives" class="headerlink" title="指令 Directives"></a>指令 Directives</h2><p>文档头部必须要有<a target="_blank" rel="noopener" href="https://jekyllrb.com/docs/front-matter/">front-matter</a>来定义指令。指令分为全局指令（Global directives，控制所有幻灯片）和局部指令（Local directives，控制特定幻灯片）。定义方式也有两种：</p>
+<p><strong>front-matter头部定义全局指令：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">paginate:</span> <span class="literal">true</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>HTML注释定义局部指令：</strong><br>注释也用于PPT演示者备注，但当它被解析为指令时则不会被收集展示。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">theme: default</span></span><br><span class="line"><span class="comment">paginate: true</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<!-- 这里是一段给演讲者看的备注 -->
+
+<h3 id="全局指令"><a href="#全局指令" class="headerlink" title="全局指令"></a>全局指令</h3><p>全局指令有<strong>title</strong>、<strong>author</strong>、<strong>description</strong>、<strong>keywords</strong>（逗号分隔）这类描述信息，也有<strong>url</strong>、<strong>image</strong>这类HTML专用属性，以下是常用的几种全局指令。</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>marp</strong></td>
+<td>是否在VSCode中启用Marp。</td>
+</tr>
+<tr>
+<td align="center"><strong>theme</strong></td>
+<td>指定样式主题，<a target="_blank" rel="noopener" href="https://github.com/marp-team/marp-core/tree/main/themes">内置主题</a>有<code>Default</code>、<code>Gaia</code>、<code>Uncover</code>。</td>
+</tr>
+<tr>
+<td align="center"><strong>style</strong></td>
+<td>用于快捷调整整体主题的CSS。</td>
+</tr>
+<tr>
+<td align="center"><strong>size</strong></td>
+<td>指定幻灯片尺寸比例，内置尺寸有<code>4:3</code>、<code>16:9</code>、<code>4K</code>。</td>
+</tr>
+<tr>
+<td align="center"><strong>headingDivider</strong></td>
+<td>在指定级别标题前自动添加幻灯片分隔符，支持1~6数字或数组。</td>
+</tr>
+<tr>
+<td align="center"><strong>math</strong></td>
+<td>指定数学渲染引擎，支持<code>mathjax</code>、<code>katex</code>，建议显式声明。</td>
+</tr>
+</tbody></table>
+<h3 id="局部指令"><a href="#局部指令" class="headerlink" title="局部指令"></a>局部指令</h3><!-- 
+_header: 这里是header，还能**bold** _italic_
+_footer: ![w:30px](https://marp.app/assets/marp-logo.svg) 这里是footer
+-->
+
+<ul>
+<li>局部指令会将设置应用于当前页和后续页，若想仅适用于当前页，可添加下划线前缀，如<code>_paginate</code>。</li>
+<li>除下面的常用属性，还有<strong>color</strong>、<strong>backgroundColor</strong>、<strong>backgroundImage</strong>、<strong>backgroundPosition</strong>、<strong>backgroundRepeat</strong>、<strong>backgroundSize</strong>这类样式属性。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>paginate</strong></td>
+<td>设置为<code>true</code>，将在右下角显示页码。</td>
+</tr>
+<tr>
+<td align="center"><strong>header</strong></td>
+<td>指定幻灯片页眉内容，支持内联Markdown。</td>
+</tr>
+<tr>
+<td align="center"><strong>footer</strong></td>
+<td>指定幻灯片页脚内容，支持内联Markdown。</td>
+</tr>
+<tr>
+<td align="center"><strong>class</strong></td>
+<td>为单页幻灯片外层元素<code>&lt;section&gt;</code>设置class属性。</td>
+</tr>
+</tbody></table>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>Markdown一般是使用<code>-</code>和<code>1. </code>来展示列表，Marp支持使用<code>*</code>和<code>1) </code>实现逐条显示的动画效果（仅支持HTML，在PDF和PPT只是普通列表）。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1) One</span><br><span class="line">2) Two</span><br><span class="line">3) Three</span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> One</span><br><span class="line"><span class="bullet">*</span> Two</span><br><span class="line"><span class="bullet">*</span> Three</span><br></pre></td></tr></table></figure>
+
+<h2 id="自适应标题"><a href="#自适应标题" class="headerlink" title="自适应标题"></a>自适应标题</h2><p>当在标题中插入<code>&lt;!--fit--&gt;</code>，标题将被缩放以适合单行。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">#### &lt;!--fit--&gt;小标题也可以哦</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>Marp支持MathJax、KaTeX这两种主流数学渲染引擎，属性值分别为<code>mathjax</code>、<code>katex</code>，不同版本Marp默认引擎不一致，建议显式声明，更多信息请查阅<a target="_blank" rel="noopener" href="https://marp.app/docs/guide/math-typesetting">官方文档-Math typesetting</a>。</p>
+<ul>
+<li>使用<code>$</code>符号包裹即可使用行内公式，例如<code>$ax^2+bc+c$</code>。</li>
+<li>使用<code>$$</code>包裹就会渲染为公式块，如：</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$$</span></span><br><span class="line"><span class="string">f(x)</span> <span class="string">=</span></span><br><span class="line">  <span class="string">\int_&#123;-\infty&#125;^\infty</span></span><br><span class="line">  <span class="string">\hat</span> <span class="string">f(\xi)\,e^&#123;2</span> <span class="string">\pi</span> <span class="string">i</span> <span class="string">\xi</span> <span class="string">x&#125;</span></span><br><span class="line">  <span class="string">\,d\xi</span></span><br><span class="line"><span class="string">$$</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>点击右上角Marp标志，选择<code>Open Extension Settings</code>可快速打开Marp设置页面。</p>
+<ul>
+<li><strong>Breaks</strong>：设置如何渲染换行符。</li>
+<li><strong>Chrome Path</strong>：设置浏览器自定义路径以导出PDF、PPTX和图片。如果为空，则会自动寻找已安装的浏览器。</li>
+<li><strong>Enable HTML</strong>：是否启用所有HTML标签，默认只允许使用<code>style</code>和<code>br</code>标签。</li>
+<li><strong>Export Type</strong>：选择默认的导出文件类型。</li>
+<li><strong>Math Typesetting</strong>：选择默认的数学渲染引擎。</li>
+<li><strong>Outline Extension</strong>：是否启用编辑器大纲视图功能。</li>
+<li><strong>Pdf: Note Annotations</strong>：是否将演示者注释作为备注添加到导出的PDF中。</li>
+<li><strong>Pdf: Outlines</strong>：设置是否在导出的PDF中添加书签。</li>
+<li><strong>Strict Path Resolution During Export</strong>：是否在导出过程中启用严格的路径解析。</li>
+<li><strong>Themes</strong>：声明主题样式文件路径，可以是本地文件，也可以是远程文件链接。</li>
+</ul>
+<p>也可以打开&#x2F;新建<strong>工作区配置文件</strong><code>.vscode/settings.json</code>来更好地管理设置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.breaks&quot;</span><span class="punctuation">:</span> <span class="string">&quot;on&quot;</span><span class="punctuation">,</span> <span class="comment">// 渲染换行符</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.chromePath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span> <span class="comment">// 浏览器路径</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.enableHtml&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span> <span class="comment">// 启用所有HTML标签</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.exportType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pdf&quot;</span><span class="punctuation">,</span> <span class="comment">// 默认的导出文件类型</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.mathTypesetting&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mathjax&quot;</span><span class="punctuation">,</span> <span class="comment">// 默认的数学渲染引擎</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.outlineExtension&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span> <span class="comment">// 启用大纲视图</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.pdf.noteAnnotations&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span> <span class="comment">// 将注释作为备注添加到导出的PDF中</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.pdf.outlines&quot;</span><span class="punctuation">:</span> <span class="string">&quot;headings&quot;</span><span class="punctuation">,</span> <span class="comment">// 在导出的PDF中添加书签</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.strictPathResolutionDuringExport&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span> <span class="comment">// 导出禁用严格的路径解析</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.themes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">// 声明主题样式文件</span></span><br><span class="line">    <span class="string">&quot;./themes/companyLightBlue.css&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>美化PPT有多种方式</p>
+<ul>
+<li>学会排版设计，灵活利用图片。</li>
+<li>使用<code>theme</code>指令直接套用写好的主题样式。</li>
+<li>指令设置<code>style</code>、<code>background</code>、<code>class</code>等相关样式属性。</li>
+<li>使用<code>&lt;style&gt;</code>在MD文档中编写内联样式，<code>scoped</code>可以只应用在当页。</li>
+<li>在设置中启用HTML功能后，可以直接插入html代码。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">_backgroundImage: &quot;linear-gradient(45deg, #384ac0, #586ec6, #6f93cb, #80b9d0)&quot;</span></span><br><span class="line"><span class="comment">_color: white</span></span><br><span class="line"><span class="comment">_paginate: false</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">h2</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">font-size</span>: <span class="number">68px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">background-image</span>:<span class="built_in">-webkit-linear-gradient</span>(top, <span class="number">#fff</span>, <span class="number">#C7D9FB</span>);</span></span><br><span class="line"><span class="language-css">    -webkit-<span class="attribute">background-clip</span>: text;</span></span><br><span class="line"><span class="language-css">    -webkit-text-fill-<span class="attribute">color</span>: transparent;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">text-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">20px</span> <span class="number">#0000000d</span>;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">bg cover opacity:.4</span>](<span class="link">../../images/marp/bg_shadow.png</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><ul>
+<li>通过<code>w:</code>和<code>h:</code>关键字定义宽高。<code>![w:100px h:40px](https://fakeimg.pl/800x600/67b8e3/fff/?text=inline-pic1)</code></li>
+<li>支持<a target="_blank" rel="noopener" href="https://marpit.marp.app/image-syntax?id=image-filters">CSS filters</a>，属性有<code>blur</code>、<code>brightness</code>、<code>contrast</code>、<code>drop-shadow</code>、<code>grayscale</code>、<code>hue-rotate</code>、<code>opacity</code>等。<code>![brightness:.8 sepia:50% w:100px h:40px](https://fakeimg.pl/800x600/67b8e3/fff/?text=inline-pic)</code></li>
+<li>添加<code>bg</code>设置背景图片，可设置背景大小(<code>cover</code>、<code>contain</code>、<code>fit</code>、<code>auto</code>、<code>x%</code>)、拆分背景（<code>left</code>、<code>right</code>）和多重背景排列（默认横向，<code>vertical</code>可改为纵向）。</li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">bg vertical right</span>](<span class="link">https://fakeimg.pl/800x600/0288d1/fff/?text=A</span>)</span><br><span class="line">![<span class="string">bg</span>](<span class="link">https://fakeimg.pl/800x600/02669d/fff/?text=B</span>)</span><br><span class="line">![<span class="string">bg</span>](<span class="link">https://fakeimg.pl/800x600/67b8e3/fff/?text=C</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义主题"><a href="#自定义主题" class="headerlink" title="自定义主题"></a>自定义主题</h2><p>创建样式文件<code>./themes/your-theme.css</code>，第一行须为<code>/* @theme theme-name */</code>。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @theme your-theme */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 可引入远程样式文件，如修改代码高亮主题、引入字体文件等 */</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 可继承其他主题样式。当涉及Sass、Less这类文件时，建议使用@import-theme引入 */</span></span><br><span class="line"><span class="keyword">@import-theme</span> <span class="string">&#x27;Gaia&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">section</span> &#123; <span class="comment">/* section是每张幻灯片的根元素 */</span></span><br><span class="line">  <span class="attribute">width</span>: <span class="number">960px</span>; <span class="comment">/* 可通过设置width和height修改幻灯片尺寸 */</span></span><br><span class="line">  <span class="attribute">height</span>: <span class="number">720px</span>;</span><br><span class="line">  <span class="comment">/* 支持使用变量，详见https://github.com/marp-team/marp-core/tree/main/themes */</span></span><br><span class="line">  <span class="attr">--color-background</span>: <span class="number">#ddd</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* :root和section类似，但:root优先级比section高。*/</span></span><br><span class="line"><span class="selector-pseudo">:root</span><span class="selector-class">.contentPage</span> &#123; <span class="comment">/* 可自定义类的样式，在MD文档中使用class指令即可 */</span></span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#02669d</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 自定义页码样式 */</span></span><br><span class="line"><span class="selector-tag">section</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&#x27;Page &#x27;</span> <span class="built_in">attr</span>(data-marpit-pagination) <span class="string">&#x27; / &#x27;</span> <span class="built_in">attr</span>(data-marpit-pagination-total); <span class="comment">/* 可添加页码前缀和总页码 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 自定义页眉和页脚样式 */</span></span><br><span class="line"><span class="selector-tag">header</span>, <span class="selector-tag">footer</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开或新建工作区配置文件<code>.vscode/settings.json</code>，引入主题文件，支持本地文件和远程文件：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;markdown.marp.themes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;https://example.com/foo/bar/custom-theme.css&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;./themes/your-theme.css&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在Markdown文件中定义theme指令，主题名为样式文件头部第一行<code>@theme</code>后的名称。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">marp: true</span><br><span class="line"><span class="section">theme: your-theme</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Use your own theme</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://marpit.marp.app/">Marp官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/marp-team/marp-core/blob/main/themes">Marp-theme</a></li>
+<li><a target="_blank" rel="noopener" href="https://caizhiyuan.gitee.io/categories/skills/20200730-marp.html">用 Marp 基于 markdown 制作幻灯片 | CAI</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cunhapaulo/marpstyle">marpstyle</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tool-docker-intro/" rel="prev" title="docker入门">
+                  <i class="fa fa-chevron-left"></i> docker入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">134k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:08</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
